@@ -1,0 +1,6 @@
+spring:
+  mvc:
+    servlet:
+      path: /api
+  profiles:
+    active: ${profile}
