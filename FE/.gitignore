@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# dotenv environment variables directory
+env/
+
+# build
+dist/
+build/
+
+# conf
+.prettierignore
+.idea/
