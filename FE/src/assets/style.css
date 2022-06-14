@@ -29,7 +29,7 @@ i {
 .ic-search:before {
   content: '\e900';
 }
-.ic-checkbox-active .path1:before {
+.ic-checkbox-active .path1.accent:before {
   content: '\e901';
   color: rgb(20, 20, 43);
 }
@@ -38,7 +38,7 @@ i {
   margin-left: -1em;
   color: rgb(254, 254, 254);
 }
-.ic-checkbox-disable .path1:before {
+.ic-checkbox-disable .path1.accent:before {
   content: '\e903';
   color: rgb(20, 20, 43);
 }
@@ -51,7 +51,7 @@ i {
   content: '\e90d';
   color: rgb(254, 254, 254);
 }
-.ic-checkbox-initial .path2:before {
+.ic-checkbox-initial .path2.accent:before {
   content: '\e90e';
   margin-left: -1em;
   color: rgb(20, 20, 43);
