@@ -10,16 +10,24 @@ module.exports = {
     },
   },
   plugins: ['prettier'],
-  extends: ['airbnb', 'airbnb/hooks', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
   rules: {
     'prettier/prettier': 'error',
     'import/prefer-default-export': 'off',
     'react-hooks/exhaustive-deps': 'warn',
-    'react/jsx-props-no-spreading': 'warn',
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': ['warn', { extensions: ['tsx', 'jsx'] }],
     'react/react-in-jsx-scope': 'off',
     'implicit-arrow-linebreak': 'off',
     'function-paren-newline': 'off',
+    'react/require-default-props': 'off',
+    'arrow-parens': ['warn', 'as-needed'],
+    'react/prop-types': 'off',
     'import/order': [
       'error',
       {
