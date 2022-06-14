@@ -17,7 +17,8 @@
       "@mocks/*": ["src/mocks/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@recoil/*": ["src/recoil/*"]
     }
   },
   "include": ["src"],

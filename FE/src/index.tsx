@@ -1,6 +1,9 @@
 import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { RecoilRoot } from 'recoil';
 
 import './index.css';
 import './assets/style.css';
@@ -16,12 +19,19 @@ if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
 
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <App />
-  </ThemeProvider>,
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <RecoilRoot>
+        <GlobalStyle />
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </RecoilRoot>
+    </ThemeProvider>
+  </QueryClientProvider>,
 );
