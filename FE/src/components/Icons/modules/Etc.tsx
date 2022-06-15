@@ -54,3 +54,7 @@ export function Calendar(props: Props) {
 export function Clip(props: Props) {
   return <S.Icon className="ic-paper-clip" {...props} />;
 }
+
+export function ArrowDown(props: Props) {
+  return <S.Icon className="ic-arrow-down" {...props} />;
+}
