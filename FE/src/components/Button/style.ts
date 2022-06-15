@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { inlineFlexbox } from '@styles/mixin';
+import { inlineFlexbox, typoXSmall, typoMedium } from '@styles/mixin';
 
 // 버튼
 // 색상에 따라 Normal, Outlined
@@ -27,6 +27,7 @@ export const Button = styled.button<{
     outlined ? theme.color.blue : theme.color.offWhite};
   border: 2px solid
     ${({ theme, outlined }) => (outlined ? theme.color.blue : 'transparent')};
+  ${({ size }) => (size === 'sm' ? typoXSmall(700) : typoMedium(700))};
 
   &:hover {
     background-color: ${({ theme, outlined }) =>
@@ -56,3 +57,5 @@ export const Button = styled.button<{
     margin-right: 4px;
   }
 `;
+
+export const TextButton = styled.button<{}>``;
