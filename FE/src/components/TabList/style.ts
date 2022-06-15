@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { TabLayer } from './Tab/style';
 
 export const TabListLayer = styled.div`
-  display: flex;
+  display: inline-flex;
 
   ${TabLayer} {
     border: 1px solid ${({ theme }) => theme.color.line};
