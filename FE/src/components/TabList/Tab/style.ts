@@ -9,6 +9,7 @@ export const Count = styled.span``;
 export const TabLayer = styled.button<{ isActive?: boolean }>`
   width: 10rem;
   border-left: 1px solid transparent;
+  height: 100%;
 
   padding: 0.375rem 0;
   color: ${({ theme }) => theme.color.label};

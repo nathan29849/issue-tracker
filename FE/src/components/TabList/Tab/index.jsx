@@ -1,12 +1,15 @@
 import React from 'react';
+import { useMatch } from 'react-router-dom';
 
 import * as S from './style';
 
 const maxDisplayCount = 99;
 
-function Tab({ icon, title, count, isActive = false }) {
+function Tab({ icon, title, count, link }) {
+  const match = useMatch(link);
+
   return (
-    <S.TabLayer isActive={isActive}>
+    <S.TabLayer isActive={!!match}>
       <S.Icon>{icon}</S.Icon>
       <S.Title>{title}</S.Title>
       <S.Count>

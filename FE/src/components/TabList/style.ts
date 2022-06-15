@@ -6,4 +6,8 @@ export const TabListLayer = styled.div`
   border-radius: 11px;
   border: 1px solid ${({ theme }) => theme.color.line};
   overflow: hidden;
+
+  a {
+    height: 100%;
+  }
 `;
