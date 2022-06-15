@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
-@Slf4j
 @Component
 public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 
@@ -46,16 +43,12 @@ public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 	}
 
 	public GithubUser getUser(String accessToken) {
-		ResponseSpec responseSpec = WebClient.create()
+		return WebClient.create()
 			.get()
 			.uri(URI.create(resourcePath))
 			.header(HttpHeaders.ACCEPT, "application/vnd.github.v3+json")
 			.header(HttpHeaders.AUTHORIZATION, "token " + accessToken)
-			.retrieve();
-
-		log.info(responseSpec.toString());
-
-		return responseSpec
+			.retrieve()
 			.bodyToMono(GithubUser.class)
 			.block();
 	}

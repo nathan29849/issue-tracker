@@ -19,7 +19,7 @@ public class OAuthService {
 
 	@Transactional
 	public User upsertUser(User user) {
-		log.info("Auth ID = {}", user.getAuthId());
+		log.debug("Auth ID = {}", user.getAuthId());
 
 		Optional<User> optionalUser = userRepository.findByAuthId(user.getAuthId());
 

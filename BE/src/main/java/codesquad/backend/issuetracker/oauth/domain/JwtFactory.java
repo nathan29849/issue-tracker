@@ -22,7 +22,7 @@ public class JwtFactory {
 	public static String create(User user, int expiredTime) {
 		Date now = new Date();
 
-		log.info("JWT EXPIRED TIME = {}", new Date(now.getTime() + expiredTime).toString());
+		log.debug("JWT EXPIRED TIME = {}", new Date(now.getTime() + expiredTime));
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())

@@ -46,14 +46,14 @@ public class GithubAuthController {
 
 	@GetMapping
 	public ResponseEntity<Void> login() {
-		log.info("AuthPath = {}", githubAuthPath);
+		log.debug("AuthPath = {}", githubAuthPath);
 		URI location = UriComponentsBuilder
 			.fromPath(githubAuthPath)
 			.queryParam("client_id", clientId)
 			.build()
 			.toUri();
 
-		log.info("Location = {}", location.toString());
+		log.debug("Location = {}", location);
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
 			.header(HttpHeaders.LOCATION, location.toString())
 			.build();
