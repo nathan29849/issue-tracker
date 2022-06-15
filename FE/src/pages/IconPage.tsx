@@ -1,6 +1,6 @@
 import I from '@components/Icons';
 
-export default function Icons() {
+export default function IconPage() {
   return (
     <fieldset style={{ width: 10 }}>
       <legend>

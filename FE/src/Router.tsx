@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
+import ButtonPage from '@pages/ButtonPage';
+import IconPage from '@pages/IconPage';
 import Issue from '@pages/Issue';
 import Label from '@pages/Label';
 import Login from '@pages/Login';
@@ -17,6 +19,8 @@ export default function Router() {
           <Route path="label" element={<Label />} />
           <Route path="milestone" element={<Milestone />} />
         </Route>
+        <Route path="/icons" element={<IconPage />} />
+        <Route path="/buttons" element={<ButtonPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
