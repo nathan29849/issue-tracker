@@ -31,10 +31,16 @@ const fontSize = {
   display: calcRem(32),
 };
 
+const zIndex = {
+  header: 1000,
+};
+
 const theme = {
   color,
   fontSize,
+  zIndex,
 };
 
 export default theme;
 export type Color = typeof color;
+export type ZIndex = typeof zIndex;
