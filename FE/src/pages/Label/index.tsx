@@ -1,3 +1,9 @@
+import TabList from '@components/TabList';
+
 export default function Label() {
-  return <div>Label</div>;
+  return (
+    <div>
+      <TabList />
+    </div>
+  );
 }
