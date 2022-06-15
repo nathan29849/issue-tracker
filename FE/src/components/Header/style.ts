@@ -13,7 +13,7 @@ export const Logo = styled.h1`
 `;
 
 export const UserAvatar = styled.button`
-  border: 3px solid ${({ theme }) => theme.color.body};
+  border: 2px solid ${({ theme }) => theme.color.body};
   border-radius: 50%;
   overflow: hidden;
   width: 2.75rem;
