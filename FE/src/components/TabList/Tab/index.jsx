@@ -4,9 +4,9 @@ import * as S from './style';
 
 const maxDisplayCount = 99;
 
-function Tab({ icon, title, count }) {
+function Tab({ icon, title, count, isActive = false }) {
   return (
-    <S.TabLayer>
+    <S.TabLayer isActive={isActive}>
       <S.Icon>{icon}</S.Icon>
       <S.Title>{title}</S.Title>
       <S.Count>
