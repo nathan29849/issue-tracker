@@ -9,8 +9,7 @@ export default function FilterBar() {
     <S.FilterBarLayer>
       <S.FilterButton>
         <span>필터</span>
-        {/* TODO: Arrow Down SVG 추가해야함  */}
-        <I.Search />
+        <I.ArrowDown />
       </S.FilterButton>
       <S.SearchBar>
         <S.Icon>
