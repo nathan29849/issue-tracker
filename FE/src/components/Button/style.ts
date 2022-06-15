@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { flexbox } from '@styles/mixin';
+import { inlineFlexbox } from '@styles/mixin';
 
 // 버튼
 // 색상에 따라 Normal, Outlined
@@ -11,7 +11,7 @@ export const Button = styled.button<{
   outlined?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }>`
-  ${flexbox({ jc: 'center', ai: 'center' })}
+  ${inlineFlexbox({ jc: 'center', ai: 'center' })}
   font-weight: 700;
   padding: 0 24px;
 
