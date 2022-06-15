@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+
 import { typoSmall } from '@styles/mixin';
 
-const FilterStyle = styled.div`
+export const FilterLayer = styled.div`
   cursor: pointer;
 
   span {
@@ -10,11 +11,3 @@ const FilterStyle = styled.div`
     margin-right: 0.5rem;
   }
 `;
-
-export default function Filter({ ...props }) {
-  return (
-    <FilterStyle>
-      <span>{props.label}</span>
-    </FilterStyle>
-  );
-}
