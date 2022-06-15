@@ -28,6 +28,8 @@ module.exports = {
     'react/require-default-props': 'off',
     'arrow-parens': ['warn', 'as-needed'],
     'react/prop-types': 'off',
+    'no-nested-ternary': 'off',
+    'react/function-component-definition': 'off',
     'import/order': [
       'error',
       {
