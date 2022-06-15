@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { flexbox } from '@styles/mixin';
+import theme from '@styles/theme';
 
 export const NavigationLayer = styled.header`
   height: 4rem;
@@ -17,16 +18,10 @@ export const RightLayer = styled.nav`
   ${flexbox({ dir: 'row', jc: 'flex-start', ai: 'center' })}
 `;
 
-export const OpenedIssue = styled.div`
-  color: ${({ theme }) => theme.color.titleActive};
-  span {
-    margin-left: 0.375rem;
-  }
-`;
-
-export const ClosedIssue = styled.div`
-  color: ${({ theme }) => theme.color.label};
-
+export const IssueLabel = styled.div`
+  cursor: pointer;
+  color: ${(props: { labelStatus: boolean }) =>
+    props.labelStatus ? theme.color.titleActive : theme.color.label};
   span {
     margin-left: 0.375rem;
   }
