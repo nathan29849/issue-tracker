@@ -3,6 +3,7 @@
     "target": "es5",
     "lib": ["DOM", "esnext"],
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "module": "commonjs",
     "allowJs": true,
     "sourceMap": true,
