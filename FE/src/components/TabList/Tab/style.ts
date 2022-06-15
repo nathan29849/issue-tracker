@@ -8,6 +8,7 @@ export const Count = styled.span``;
 
 export const TabLayer = styled.button`
   width: 10rem;
+  height: 2.5rem;
   padding: 0.375rem 0;
   color: ${({ theme }) => theme.color.label};
   ${flexbox({ jc: 'center' })};
