@@ -9,12 +9,16 @@ export default function IssuePage() {
   return (
     <div>
       <S.Header>
-        <FilterBar />
-        <TabList />
-        <Button>
-          <I.Plus />
-          이슈 추가
-        </Button>
+        <S.HeaderLeft>
+          <FilterBar />
+        </S.HeaderLeft>
+        <S.HeaderRight>
+          <TabList />
+          <Button>
+            <I.Plus />
+            이슈 추가
+          </Button>
+        </S.HeaderRight>
       </S.Header>
     </div>
   );
