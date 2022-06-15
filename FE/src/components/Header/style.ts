@@ -8,7 +8,9 @@ export const Temp = styled.div`
   height: 2.75rem;
 `;
 
-export const Heading = styled.h1``;
+export const Logo = styled.h1`
+  cursor: pointer;
+`;
 
 export const UserAvatar = styled.div``;
 
