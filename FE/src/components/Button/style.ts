@@ -13,11 +13,12 @@ export const Button = styled.button<{
 }>`
   ${inlineFlexbox({ jc: 'center', ai: 'center' })}
   font-weight: 700;
-  padding: 0 24px;
+  padding: 0 1.5rem;
 
   min-width: ${({ size }) =>
-    size === 'lg' ? 340 : size === 'md' ? 240 : 120}px;
-  height: ${({ size }) => (size === 'lg' ? 64 : size === 'md' ? 56 : 40)}px;
+    size === 'lg' ? 21.25 : size === 'md' ? 15 : 7.5}rem;
+
+  height: ${({ size }) => (size === 'lg' ? 4 : size === 'md' ? 3.5 : 2.5)}rem;
   border-radius: ${({ size }) => (size === 'lg' || size === 'md' ? 20 : 11)}px;
 
   background-color: ${({ theme, outlined }) =>
@@ -43,6 +44,7 @@ export const Button = styled.button<{
       outlined ? theme.color.blue : theme.color.offWhite};
     border-color: ${({ theme }) => theme.color.lightBlue};
     border-width: 4px;
+    padding: 0 1.375rem;
   }
 
   &:disabled {
