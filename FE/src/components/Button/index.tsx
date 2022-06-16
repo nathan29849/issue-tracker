@@ -2,37 +2,62 @@ import React from 'react';
 
 import * as S from './style';
 
-export const Button: React.FC<
+import { OverridableProps } from '@utils/types';
+
+type ButtonProps<T extends React.ElementType> = OverridableProps<
+  T,
   {
     children: React.ReactNode;
     outlined?: boolean;
     size?: 'sm' | 'md' | 'lg';
-  } & React.ComponentPropsWithoutRef<'button'>
-> = ({ children, outlined = false, size = 'sm', ...rest }) => (
-  <S.Button type="button" outlined={outlined} size={size} {...rest}>
-    <span>{children}</span>
-  </S.Button>
-);
+  }
+>;
 
-export const TextButton: React.FC<
+type TextButtonProps<T extends React.ElementType> = OverridableProps<
+  T,
   {
     children: React.ReactNode;
     size?: 'sm' | 'md';
-  } & React.ComponentPropsWithoutRef<'button'>
-> = ({ children, size = 'sm', ...rest }) => (
-  <S.TextButton size={size} {...rest}>
-    {children}
-  </S.TextButton>
-);
+  }
+>;
 
-export const LoginButton: React.FC<
+type LoginButtonProps<T extends React.ElementType> = OverridableProps<
+  T,
   {
     children: React.ReactNode;
     textColor?: string;
     bgColor?: string;
-  } & React.ComponentPropsWithoutRef<'button'>
-> = ({ children, textColor = '#fff', bgColor = '#000', ...rest }) => (
-  <S.LoginButton bgColor={bgColor} textColor={textColor} {...rest}>
+  }
+>;
+
+export const Button = <T extends React.ElementType = 'button'>({
+  children,
+  outlined = false,
+  size = 'sm',
+  ...restProps
+}: ButtonProps<T>) => (
+  <S.Button type="button" outlined={outlined} size={size} {...restProps}>
+    <span>{children}</span>
+  </S.Button>
+);
+
+export const TextButton = <T extends React.ElementType = 'button'>({
+  children,
+  size = 'sm',
+  ...restProps
+}: TextButtonProps<T>) => (
+  <S.TextButton size={size} {...restProps}>
+    {children}
+  </S.TextButton>
+);
+
+export const LoginButton = <T extends React.ElementType = 'button'>({
+  children,
+  bgColor = '#000',
+  textColor = '#fff',
+  ...restProps
+}: LoginButtonProps<T>) => (
+  <S.LoginButton bgColor={bgColor} textColor={textColor} {...restProps}>
     {children}
   </S.LoginButton>
 );
