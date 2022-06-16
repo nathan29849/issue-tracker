@@ -22,11 +22,13 @@ public class User {
 
 	private String authId;
 	private String username;
+	private String userSecret;
 	private String imageUrl;
 
-	public User(String authId, String username, String imageUrl) {
+	public User(String authId, String username, String userSecret, String imageUrl) {
 		this.authId = authId;
 		this.username = username;
+		this.userSecret = userSecret;
 		this.imageUrl = imageUrl;
 	}
 
