@@ -1,13 +1,16 @@
 import { atom } from 'recoil';
 
-interface IUserTypes {
+export interface IAssigneeTypes {
   id: number;
   content: { imageUrl: string; name: string };
 }
 
-export const userState = atom<{ info: IUserTypes[] }>({
-  key: 'userState',
+type AssigneeStateTypes = { info: IAssigneeTypes[] } & { none: boolean };
+
+export const assigneeState = atom<AssigneeStateTypes>({
+  key: 'assigneeState',
   default: {
+    none: true,
     info: [
       {
         id: 1,

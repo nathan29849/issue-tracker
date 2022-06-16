@@ -1,21 +1,21 @@
 import { atom } from 'recoil';
 
-interface IUserTypes {
+export interface IAuthorTypes {
   id: number;
   content: { imageUrl: string; name: string };
 }
 
-export const userState = atom<{ info: IUserTypes[] }>({
+export const authorState = atom<{ info: IAuthorTypes[] }>({
   key: 'userState',
   default: {
     info: [
       {
         id: 1,
-        content: { imageUrl: 'image', name: 'assignee1' },
+        content: { imageUrl: 'image', name: 'cola' },
       },
       {
         id: 2,
-        content: { imageUrl: 'image', name: 'assignee1' },
+        content: { imageUrl: 'image', name: 'muffin' },
       },
     ],
   },
