@@ -19,7 +19,8 @@
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@constants/*": ["src/constants/*"],
-      "@recoil/*": ["src/recoil/*"]
+      "@recoil/*": ["src/recoil/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"],
