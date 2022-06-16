@@ -17,12 +17,44 @@ export default function Filter({
   filterPopupData,
   handleFilterClick,
 }: IFilterProps) {
+  const callback = () => {
+    console.log('데이터 필터되는 콜백함수');
+  };
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true);
+    useComponentVisible(true, callback);
   const handleOnFilterPopup = () => {
     handleFilterClick(label, true);
     setIsComponentVisible(true);
   };
+
+  const getModalItem = (popupData: any) => {
+    switch (label) {
+      case '담당자':
+      case '작성자':
+        return (
+          <>
+            <div className="filter__image" imageUrl={popupData.imageUrl}></div>
+            <div className="filter__name">{popupData.name}</div>
+          </>
+        );
+      case '레이블':
+        return (
+          <>
+            <div className="filter__color">{popupData.color}</div>
+            <div className="filter__name">{popupData.name}</div>
+          </>
+        );
+      case '마일스톤':
+        return (
+          <>
+            <div className="filter__name">{popupData.name}</div>
+          </>
+        );
+      default:
+        throw Error('label type not found');
+    }
+  };
+
   return (
     <S.FilterLayer onClick={handleOnFilterPopup}>
       <span className="filter__label">{label}</span>
@@ -51,11 +83,10 @@ export default function Filter({
                   <div
                     className="filter__item-wrapper"
                     key={`popup-${popupData.id}`}
-                    onClick={() => {
-                      // callback 함수 받기 (filter or add func)
-                    }}
                   >
-                    <div className="filter__item"></div>
+                    <div className="filter__item">
+                      {getModalItem(popupData.content)}
+                    </div>
                     <div className="filter__check">
                       <I.Circle.Check />
                     </div>

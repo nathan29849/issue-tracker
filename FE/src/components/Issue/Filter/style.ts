@@ -55,4 +55,23 @@ export const FilterPopup = styled.div`
   .filter__item {
     display: flex;
   }
+
+  .filter__image {
+    background-image: url('https://source.unsplash.com/user/erondu/20x20');
+    border-radius: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+  }
+
+  .filter__color {
+    border-radius: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .filter__name {
+    ${typoMedium(400)}
+    color: ${({ theme }) => theme.color.body}
+  }
 `;
