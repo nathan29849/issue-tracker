@@ -7,7 +7,7 @@ interface Flexbox {
 }
 
 interface AlignPos {
-  pos?: 'absolute' | 'fixed';
+  (pos?: 'absolute' | 'fixed'): string;
 }
 
 /* flexbox */
@@ -26,19 +26,19 @@ export const inlineFlexbox = ({ dir = 'row', jc, ai }: Flexbox) => `
 `;
 
 /* align position */
-export const alignPosX = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosX: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   left: 50%;
   transform: translateX(-50%);
 `;
 
-export const alignPosY = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosY: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   top: 50%;
   transform: translateY(-50%);
 `;
 
-export const alignPosXY = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosXY: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   left: 50%;
   top: 50%;
