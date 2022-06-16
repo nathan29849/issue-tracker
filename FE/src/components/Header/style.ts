@@ -30,4 +30,5 @@ export const HeaderLayer = styled.header`
   z-index: ${({ theme }) => theme.zIndex.header}
   height: auto;
   padding: 1.5625rem 0;
+  margin-bottom: 2rem;
 `;

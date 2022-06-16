@@ -13,3 +13,5 @@ export const HeaderRight = styled.div`
   display: flex;
   gap: 8px;
 `;
+
+export const IssuePageLayer = styled.div``;

@@ -7,7 +7,7 @@ import TabList from '@components/TabList';
 
 export default function IssuePage() {
   return (
-    <div>
+    <S.IssuePageLayer>
       <S.Header>
         <S.HeaderLeft>
           <FilterBar />
@@ -20,6 +20,6 @@ export default function IssuePage() {
           </Button>
         </S.HeaderRight>
       </S.Header>
-    </div>
+    </S.IssuePageLayer>
   );
 }
