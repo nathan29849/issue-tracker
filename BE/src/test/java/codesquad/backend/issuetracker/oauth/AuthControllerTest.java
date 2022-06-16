@@ -1,7 +1,7 @@
 package codesquad.backend.issuetracker.oauth;
 
 import codesquad.backend.issuetracker.oauth.application.OAuthService;
-import codesquad.backend.issuetracker.oauth.domain.github.GithubOAuthClient;
+import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
 import codesquad.backend.issuetracker.oauth.presentation.controller.GithubAuthController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

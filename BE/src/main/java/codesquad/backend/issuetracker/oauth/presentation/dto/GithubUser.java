@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.oauth.domain.github;
+package codesquad.backend.issuetracker.oauth.presentation.dto;
 
 import codesquad.backend.issuetracker.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,9 +15,5 @@ public class GithubUser {
 
 	@JsonProperty("avatar_url")
 	private String imageUrl;
-
-	public User toEntity() {
-		return new User(githubId, username, imageUrl);
-	}
 
 }

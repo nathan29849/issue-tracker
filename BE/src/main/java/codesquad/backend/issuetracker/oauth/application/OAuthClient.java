@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.oauth.domain.github;
+package codesquad.backend.issuetracker.oauth.application;
 
 public interface OAuthClient<T, U> {
 

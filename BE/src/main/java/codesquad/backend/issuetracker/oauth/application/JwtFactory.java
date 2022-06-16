@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.oauth.domain;
+package codesquad.backend.issuetracker.oauth.application;
 
 import codesquad.backend.issuetracker.user.domain.User;
 import io.jsonwebtoken.Jwts;
@@ -22,12 +22,13 @@ public class JwtFactory {
 	public static String create(User user, int expiredTime) {
 		Date now = new Date();
 
-		log.debug("JWT EXPIRED TIME = {}", new Date(now.getTime() + expiredTime));
+		Date exp = new Date(now.getTime() + expiredTime);
+		log.debug("JWT EXPIRED TIME = {}", exp);
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())
 			.setClaims(createJwtClaims(user))
-			.setExpiration(new Date(now.getTime() + expiredTime))
+			.setExpiration(exp)
 			.signWith(KEY, SignatureAlgorithm.HS256)
 			.compact();
 	}

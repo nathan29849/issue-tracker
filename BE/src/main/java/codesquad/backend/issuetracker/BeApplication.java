@@ -10,8 +10,8 @@ public class BeApplication {
 
 	@PostConstruct
 	public void started() {
-		// timezone GMT 셋팅
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+		// Timezone UTC 셋팅
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 
 	public static void main(String[] args) {

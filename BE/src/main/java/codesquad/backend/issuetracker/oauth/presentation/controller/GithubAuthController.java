@@ -1,10 +1,10 @@
 package codesquad.backend.issuetracker.oauth.presentation.controller;
 
 import codesquad.backend.issuetracker.oauth.application.OAuthService;
-import codesquad.backend.issuetracker.oauth.domain.JwtFactory;
-import codesquad.backend.issuetracker.oauth.domain.github.GithubOAuthClient;
-import codesquad.backend.issuetracker.oauth.domain.github.GithubToken;
-import codesquad.backend.issuetracker.oauth.domain.github.GithubUser;
+import codesquad.backend.issuetracker.oauth.application.JwtFactory;
+import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private static final int EXPIRED_TIME = 86_400;
+	private static final int EXPIRED_SECOND = 24 * 60 * 60;
 
 
 	private final String clientId;
@@ -65,11 +65,16 @@ public class GithubAuthController {
 	) {
 		GithubToken githubToken = authClient.getToken(code);
 		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
-		User user = authService.upsertUser(githubUser.toEntity());
+		User user = authService.upsertUser(
+			new User(
+				githubUser.getGithubId(),
+				githubUser.getUsername(),
+				githubUser.getImageUrl()
+			));
 
-		String accessToken = JwtFactory.create(user, EXPIRED_TIME);
+		String accessToken = JwtFactory.create(user, EXPIRED_SECOND);
 		ResponseCookie cookie = ResponseCookie.from("access_token", accessToken)
-			.maxAge(EXPIRED_TIME)
+			.maxAge(EXPIRED_SECOND)
 			.path("/")
 			.build();
 

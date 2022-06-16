@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.user.domain;
 
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Getter
 @Entity
@@ -28,10 +30,10 @@ public class User {
 		this.imageUrl = imageUrl;
 	}
 
-	public User update(User user) {
-		if (user == null){
-		return null;
-		}
+	public User update(@NonNull User user) {
+		/*
+		update 시에도 검증 필요
+		 */
 		this.authId = user.getAuthId();
 		this.username = user.getUsername();
 		this.imageUrl = user.getImageUrl();

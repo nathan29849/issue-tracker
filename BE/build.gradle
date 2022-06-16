@@ -25,8 +25,6 @@ dependencies {
 
     /* Web */
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    /* OAuth */
     implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.0'
 
     /* JWT  */
