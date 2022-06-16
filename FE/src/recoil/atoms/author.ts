@@ -2,7 +2,8 @@ import { atom } from 'recoil';
 
 export interface IAuthorTypes {
   id: number;
-  content: { imageUrl: string; name: string };
+  imageUrl: string;
+  name: string;
 }
 
 export const authorState = atom<{ info: IAuthorTypes[] }>({
@@ -11,11 +12,14 @@ export const authorState = atom<{ info: IAuthorTypes[] }>({
     info: [
       {
         id: 1,
-        content: { imageUrl: 'image', name: 'cola' },
+        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        name: 'cola',
       },
       {
         id: 2,
-        content: { imageUrl: 'image', name: 'muffin' },
+
+        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        name: 'muffin',
       },
     ],
   },

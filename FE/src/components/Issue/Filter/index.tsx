@@ -1,8 +1,9 @@
 import useComponentVisible from '@hooks/useComponentVisible.jsx';
-import Popup from './Popup';
+import Popup from '@components/Popup/Popup';
 import * as S from './style';
 import { FilterLabelTypes } from '@components/Issue/Navigation';
 import I from '@components/Icons';
+import { getModalItem } from '@components/Popup/Content';
 
 interface IFilterProps {
   onPopup: boolean;
@@ -21,38 +22,10 @@ export default function Filter({
     console.log('데이터 필터되는 콜백함수');
   };
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true, callback);
+    useComponentVisible(false, callback);
   const handleOnFilterPopup = () => {
     handleFilterClick(label, true);
     setIsComponentVisible(true);
-  };
-
-  const getModalItem = (popupData: any) => {
-    switch (label) {
-      case '담당자':
-      case '작성자':
-        return (
-          <>
-            <div className="filter__image" imageUrl={popupData.imageUrl}></div>
-            <div className="filter__name">{popupData.name}</div>
-          </>
-        );
-      case '레이블':
-        return (
-          <>
-            <div className="filter__color">{popupData.color}</div>
-            <div className="filter__name">{popupData.name}</div>
-          </>
-        );
-      case '마일스톤':
-        return (
-          <>
-            <div className="filter__name">{popupData.name}</div>
-          </>
-        );
-      default:
-        throw Error('label type not found');
-    }
   };
 
   return (
@@ -85,7 +58,7 @@ export default function Filter({
                     key={`popup-${popupData.id}`}
                   >
                     <div className="filter__item">
-                      {getModalItem(popupData.content)}
+                      {getModalItem(label, popupData)}
                     </div>
                     <div className="filter__check">
                       <I.Circle.Check />
