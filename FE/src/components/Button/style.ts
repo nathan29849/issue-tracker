@@ -5,6 +5,7 @@ import {
   typoXSmall,
   typoMedium,
   typoSmall,
+  simpleOpacityTransition,
 } from '@styles/mixin';
 
 // 버튼
@@ -96,17 +97,17 @@ export const LoginButton = styled.button<{
 }>`
   ${inlineFlexbox({ jc: 'center', ai: 'center' })}
   ${typoMedium(700)};
+  ${simpleOpacityTransition({
+    delay: 300,
+    hoverOpacity: 0.8,
+    activeOpacity: 1,
+  })}
   padding: 0 1.5rem;
   min-width: 21.25rem;
   height: 4rem;
   border-radius: 20px;
   color: ${({ textColor }) => textColor};
   background-color: ${({ bgColor }) => bgColor};
-  transition: opacity 300ms;
-
-  &:hover {
-    opacity: 0.8;
-  }
 
   &:disabled {
     opacity: 0.4;

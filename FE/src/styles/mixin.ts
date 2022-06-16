@@ -71,3 +71,25 @@ export const typoXSmall = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.xs};
   font-weight: ${fontWeight};
 `;
+
+interface SimpleOpacityTransition {
+  delay: number;
+  hoverOpacity: number;
+  activeOpacity: number;
+}
+
+export const simpleOpacityTransition = ({
+  delay,
+  hoverOpacity,
+  activeOpacity,
+}: SimpleOpacityTransition) => `
+  transition: opacity ${delay}ms;
+   &:hover {
+    opacity: ${hoverOpacity};
+  }
+
+  &:active {
+    opacity: ${activeOpacity};
+  }
+
+`;
