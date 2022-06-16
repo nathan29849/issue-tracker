@@ -18,7 +18,7 @@ public class JwtTest {
 			"AS2DFA5SDF4DSF3AS2DF",
 			"https://avatars.githubusercontent.com/u/67811880?v=4");
 
-		String jws = JwtFactory.create(user, 86400, TokenType.ACCESS);
+		String jws = JwtFactory.create(user, 86400);
 		Claims claims = Jwts.parserBuilder()
 			.setSigningKey(JwtFactory.getKey())
 			.build()

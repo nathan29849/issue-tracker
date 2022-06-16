@@ -20,7 +20,7 @@ public class JwtFactory {
 		return KEY;
 	}
 
-	public static String create(User user, int expiredTime, TokenType type) {
+	public static String create(User user, int expiredTime) {
 		Date now = new Date();
 
 		Date exp = new Date(now.getTime() + expiredTime);
@@ -28,7 +28,7 @@ public class JwtFactory {
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())
-			.setClaims(createJwtClaims(user, type))
+			.setClaims(createJwtClaims(user))
 			.setExpiration(exp)
 			.signWith(KEY, SignatureAlgorithm.HS256)
 			.compact();
@@ -42,9 +42,8 @@ public class JwtFactory {
 		return header;
 	}
 
-	private static Map<String, Object> createJwtClaims(User user, TokenType type) {
+	private static Map<String, Object> createJwtClaims(User user) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("sub", type.getType());
 		claims.put("userSecret", user.getUserSecret());
 		return claims;
 	}

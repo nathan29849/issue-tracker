@@ -25,9 +25,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private static final int ACCESS_EXPIRED_SECOND = 60 * 60;
-	private static final int REFRESH_EXPIRED_SECOND = 24 * 60 * 60;
-
 	private final String clientId;
 	private final String githubAuthPath;
 	private final GithubOAuthClient authClient;
@@ -78,17 +75,17 @@ public class GithubAuthController {
 			));
 
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS, ACCESS_EXPIRED_SECOND))
-			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH, REFRESH_EXPIRED_SECOND))
+			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
+			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
 			.header(HttpHeaders.LOCATION, "/")
 			.build();
 	}
 
-	private String getCookie(User user, TokenType type, int expiredSecond) {
-		String token = JwtFactory.create(user, expiredSecond, type);
+	private String getCookie(User user, TokenType type) {
+		String token = JwtFactory.create(user, type.getTime());
 		return ResponseCookie
 			.from(type.getType(), token)
-			.maxAge(expiredSecond)
+			.maxAge(type.getTime())
 			.path("/")
 			.build()
 			.toString();
