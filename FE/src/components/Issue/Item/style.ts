@@ -4,9 +4,10 @@ import { flexbox, typoMedium, typoSmall } from '@styles/mixin';
 export const ItemLayer = styled.div`
   position: relative;
   padding: 1rem 2rem;
-  background-color: #fefefe;
-  border-bottom: 1px solid #d9dbe9;
-  ${flexbox({ dir: 'row', jc: 'flex-start', ai: 'flex-start' })}
+  background-color: ${({ theme }) => theme.color.offWhite};
+  border-top: 1px solid;
+  border-color: ${({ theme }) => theme.color.line};
+  ${flexbox({ dir: 'row', jc: 'flex-start', ai: 'flex-start' })};
 `;
 
 export const ContentLayer = styled.div`
