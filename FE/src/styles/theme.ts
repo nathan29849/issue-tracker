@@ -31,19 +31,16 @@ const fontSize = {
   display: calcRem(32),
 };
 
-const lineHeight = {
-  xs: calcRem(20),
-  sm: calcRem(28),
-  md: calcRem(32),
-  lg: calcRem(40),
-  display: calcRem(48),
+const zIndex = {
+  header: 1000,
 };
 
 const theme = {
   color,
   fontSize,
-  lineHeight,
+  zIndex,
 };
 
 export default theme;
 export type Color = typeof color;
+export type ZIndex = typeof zIndex;

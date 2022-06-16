@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil';
 
 import './index.css';
 import './assets/style.css';
+import './assets/ad.css';
 
 import App from './App';
 

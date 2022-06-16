@@ -50,10 +50,8 @@ const reset = css`
   ol,
   ul,
   li,
-  fieldset,
   form,
   label,
-  legend,
   table,
   caption,
   tbody,
@@ -119,6 +117,10 @@ const reset = css`
 const style = css`
   ${reset};
 
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     font-size: 1rem;
   }
@@ -140,6 +142,11 @@ const style = css`
   textarea {
     border: 0;
     outline: 0 !important;
+    padding: 0;
+  }
+
+  button {
+    cursor: pointer;
   }
 `;
 

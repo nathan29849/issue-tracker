@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
-import Issue from '@pages/Issue';
+import ButtonPage from '@pages/ButtonPage';
+import IconPage from '@pages/IconPage';
+import IssuePage from '@pages/IssuePage';
 import Label from '@pages/Label';
 import Login from '@pages/Login';
 import Milestone from '@pages/Milestone';
@@ -13,10 +15,12 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/issue" element={<Layout />}>
-          <Route index element={<Issue />} />
+          <Route index element={<IssuePage />} />
           <Route path="label" element={<Label />} />
           <Route path="milestone" element={<Milestone />} />
         </Route>
+        <Route path="/icons" element={<IconPage />} />
+        <Route path="/buttons" element={<ButtonPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
