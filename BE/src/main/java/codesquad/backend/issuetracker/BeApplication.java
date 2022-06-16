@@ -10,7 +10,6 @@ public class BeApplication {
 
 	@PostConstruct
 	public void started() {
-		// Timezone UTC 셋팅
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 

@@ -5,6 +5,7 @@ import codesquad.backend.issuetracker.oauth.application.JwtFactory;
 import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
+import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +25,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private static final int EXPIRED_SECOND = 24 * 60 * 60;
-
+	private static final int ACCESS_EXPIRED_SECOND = 60 * 60;
+	private static final int REFRESH_EXPIRED_SECOND = 24 * 60 * 60;
 
 	private final String clientId;
 	private final String githubAuthPath;
@@ -63,24 +64,33 @@ public class GithubAuthController {
 	public ResponseEntity<Void> callback(
 		@RequestParam(value = "code", required = false) String code
 	) {
+		log.debug("Auth Code = {}", code);
 		GithubToken githubToken = authClient.getToken(code);
 		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
+
+		log.debug("User Secret = {}", githubUser.getUserSecret());
 		User user = authService.upsertUser(
 			new User(
 				githubUser.getGithubId(),
 				githubUser.getUsername(),
+				githubUser.getUserSecret(),
 				githubUser.getImageUrl()
 			));
 
-		String accessToken = JwtFactory.create(user, EXPIRED_SECOND);
-		ResponseCookie cookie = ResponseCookie.from("access_token", accessToken)
-			.maxAge(EXPIRED_SECOND)
-			.path("/")
-			.build();
-
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-			.header(HttpHeaders.SET_COOKIE, cookie.toString())
+			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS, ACCESS_EXPIRED_SECOND))
+			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH, REFRESH_EXPIRED_SECOND))
 			.header(HttpHeaders.LOCATION, "/")
 			.build();
+	}
+
+	private String getCookie(User user, TokenType type, int expiredSecond) {
+		String token = JwtFactory.create(user, expiredSecond, type);
+		return ResponseCookie
+			.from(type.getType(), token)
+			.maxAge(expiredSecond)
+			.path("/")
+			.build()
+			.toString();
 	}
 }

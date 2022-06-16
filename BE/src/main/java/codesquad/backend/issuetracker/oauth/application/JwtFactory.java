@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.oauth.application;
 
+import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,7 +20,7 @@ public class JwtFactory {
 		return KEY;
 	}
 
-	public static String create(User user, int expiredTime) {
+	public static String create(User user, int expiredTime, TokenType type) {
 		Date now = new Date();
 
 		Date exp = new Date(now.getTime() + expiredTime);
@@ -27,7 +28,7 @@ public class JwtFactory {
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())
-			.setClaims(createJwtClaims(user))
+			.setClaims(createJwtClaims(user, type))
 			.setExpiration(exp)
 			.signWith(KEY, SignatureAlgorithm.HS256)
 			.compact();
@@ -41,9 +42,10 @@ public class JwtFactory {
 		return header;
 	}
 
-	private static Map<String, Object> createJwtClaims(User user) {
+	private static Map<String, Object> createJwtClaims(User user, TokenType type) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("authId", user.getAuthId());
+		claims.put("sub", type.getType());
+		claims.put("userSecret", user.getUserSecret());
 		return claims;
 	}
 }
