@@ -1,14 +1,36 @@
 import Filter from '@components/Issue/Filter';
 import I from '@components/Icons';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { issueState } from '@recoil/atoms/issue';
+import { assigneeState } from '@recoil/atoms/assignee';
+import { authorState } from '@recoil/atoms/author';
 import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
 import { useState } from 'react';
 
+export type FilterLabelTypes = '담당자' | '레이블' | '마일스톤' | '작성자';
+
 export default function Navigation() {
-  const [labelStatus, setLabelStatus] = useState({ open: true, close: false });
   const filterLabels = ['담당자', '레이블', '마일스톤', '작성자'];
-  const issues = useRecoilValue(issueState);
+
+  const assignee = useRecoilValue(assigneeState);
+  const author = useRecoilValue(authorState);
+  const [issues, setIssues] = useRecoilState(issueState);
+
+  const [popupState, setPopupState] = useState({
+    담당자: false,
+    레이블: false,
+    마일스톤: false,
+    작성자: false,
+  });
+
+  const [filterPopupData, setFilterPoupData] = useState({
+    담당자: assignee,
+    레이블: assignee,
+    마일스톤: author,
+    작성자: author,
+  });
+  const [labelStatus, setLabelStatus] = useState({ open: true, close: false });
+
   const openIssueCount = issues.filter(issue => issue.status === 'open').length;
   const closeIssueCount = issues.filter(
     issue => issue.status === 'close',
@@ -26,6 +48,16 @@ export default function Navigation() {
         close: true,
       });
     }
+  };
+
+  const handleFilterClick = (label: string, status: boolean) => {
+    setPopupState(popupState => {
+      return { ...popupState, [label]: status };
+    });
+  };
+
+  const onPopup = (label: FilterLabelTypes) => {
+    return popupState[label] ? true : false;
   };
 
   return (
@@ -49,8 +81,16 @@ export default function Navigation() {
         </IssueLabel>
       </LeftLayer>
       <RightLayer>
-        {filterLabels.map((label: string) => {
-          return <Filter key={`${label}`} label={label} />;
+        {filterLabels.map((label: any) => {
+          return (
+            <Filter
+              key={label}
+              onPopup={onPopup(label)}
+              label={label}
+              filterPopupData={filterPopupData[label]}
+              handleFilterClick={handleFilterClick}
+            />
+          );
         })}
       </RightLayer>
     </NavigationLayer>
