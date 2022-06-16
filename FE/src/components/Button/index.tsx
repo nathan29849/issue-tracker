@@ -24,3 +24,15 @@ export const TextButton: React.FC<
     {children}
   </S.TextButton>
 );
+
+export const LoginButton: React.FC<
+  {
+    children: React.ReactNode;
+    textColor?: string;
+    bgColor?: string;
+  } & React.ComponentPropsWithoutRef<'button'>
+> = ({ children, textColor = '#fff', bgColor = '#000', ...rest }) => (
+  <S.LoginButton bgColor={bgColor} textColor={textColor} {...rest}>
+    {children}
+  </S.LoginButton>
+);
