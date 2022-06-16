@@ -26,7 +26,8 @@ export const TabLayer = styled.button<{ isActive?: boolean }>`
     font-weight: 700;
   }
 
-  & + & {
+  // TODO: 개선 방법 생각해보기
+  a + a > & {
     border-left-color: ${({ theme }) => theme.color.line};
   }
 
