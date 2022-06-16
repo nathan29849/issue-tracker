@@ -33,6 +33,7 @@ export const FilterPopup = styled.div`
   border: 1px solid;
   border-color: #d9dbe9;
   z-index: 10;
+  overflow: hidden;
 
   header {
     ${flexbox({ dir: 'row', jc: 'flex-start', ai: 'center' })}
