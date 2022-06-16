@@ -29,7 +29,11 @@ export default function Navigation() {
     마일스톤: author,
     작성자: author,
   });
-  const [labelStatus, setLabelStatus] = useState({ open: true, close: false });
+
+  const [labelIssueStatus, setLabelIssueStatus] = useState({
+    open: true,
+    close: false,
+  });
 
   const openIssueCount = issues.filter(issue => issue.status === 'open').length;
   const closeIssueCount = issues.filter(
@@ -38,12 +42,12 @@ export default function Navigation() {
 
   const handleLabelClick = (status: string) => {
     if (status === 'open') {
-      setLabelStatus({
+      setLabelIssueStatus({
         open: true,
         close: false,
       });
     } else if (status === 'close') {
-      setLabelStatus({
+      setLabelIssueStatus({
         open: false,
         close: true,
       });
@@ -65,7 +69,7 @@ export default function Navigation() {
       <LeftLayer>
         <I.CheckBox.Initial color="#D9DBE9" />
         <IssueLabel
-          labelStatus={labelStatus.open}
+          labelIssueStatus={labelIssueStatus.open}
           onClick={() => handleLabelClick('open')}
         >
           <I.Circle.Alert />
@@ -73,7 +77,7 @@ export default function Navigation() {
         </IssueLabel>
 
         <IssueLabel
-          labelStatus={labelStatus.close}
+          labelIssueStatus={labelIssueStatus.close}
           onClick={() => handleLabelClick('close')}
         >
           <I.Bucket />
