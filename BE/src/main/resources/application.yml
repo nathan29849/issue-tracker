@@ -1,0 +1,15 @@
+oauth:
+    github:
+      client-id: 817844c46a4b764a838e
+      client-secret: ${CLIENT_SECRET}
+      redirect-uri: http://localhost:8080/api/oauth/github/callback
+      authorize-path: https://github.com/login/oauth/authorize
+      access-token-path: https://github.com/login/oauth/access_token
+      resource-path: https://api.github.com/user
+
+spring:
+  mvc:
+    servlet:
+      path: /api
+  profiles:
+    active: ${profile}
