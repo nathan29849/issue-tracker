@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+export const Main = styled.div``;
+
 export const Header = styled.header`
   display: flex;
   margin-bottom: 1.5rem;
