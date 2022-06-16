@@ -16,7 +16,7 @@ export default function Header() {
           <I.Logo.Small />
         </S.Logo>
       </Link>
-      <UserAvatar src={defaultImageUrl} size="sm" />
+      <UserAvatar as="button" src={defaultImageUrl} size="lg" />
     </S.HeaderLayer>
   );
 }
