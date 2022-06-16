@@ -6,8 +6,19 @@ export const Button: React.FC<{
   children: React.ReactNode;
   outlined?: boolean;
   size?: 'sm' | 'md' | 'lg';
-}> = ({ children, outlined = false, size = 'sm' }) => (
-  <S.Button type="button" outlined={outlined} size={size}>
+  disabled?: boolean;
+}> = ({ children, outlined = false, size = 'sm', disabled = false }) => (
+  <S.Button type="button" disabled={disabled} outlined={outlined} size={size}>
     <span>{children}</span>
   </S.Button>
+);
+
+export const TextButton: React.FC<{
+  children: React.ReactNode;
+  size?: 'sm' | 'md';
+  disabled?: boolean;
+}> = ({ children, size = 'sm', disabled = false }) => (
+  <S.TextButton size={size} disabled={disabled}>
+    {children}
+  </S.TextButton>
 );

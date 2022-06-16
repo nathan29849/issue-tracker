@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 
-import { inlineFlexbox, typoXSmall, typoMedium } from '@styles/mixin';
+import {
+  inlineFlexbox,
+  typoXSmall,
+  typoMedium,
+  typoSmall,
+} from '@styles/mixin';
 
 // 버튼
 // 색상에 따라 Normal, Outlined
@@ -51,11 +56,36 @@ export const Button = styled.button<{
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    pointer-events: none;
   }
 
   i {
-    margin-right: 4px;
+    margin-right: 0.25rem;
   }
 `;
 
-export const TextButton = styled.button<{}>``;
+export const TextButton = styled.button<{ size: 'sm' | 'md' }>`
+  background-color: inherit;
+  color: ${({ theme }) => theme.color.label};
+
+  ${({ size }) => (size === 'sm' ? typoXSmall(700) : typoSmall(700))}
+
+  &:hover {
+    color: ${({ theme }) => theme.color.body};
+  }
+
+  &:active {
+    color: ${({ theme }) => theme.color.titleActive};
+  }
+
+  &:disabled {
+    color: ${({ theme }) => theme.color.body};
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  i {
+    margin-right: 0.25rem;
+  }
+`;
