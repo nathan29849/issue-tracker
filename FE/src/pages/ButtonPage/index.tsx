@@ -16,6 +16,7 @@ export default function ButtonPage() {
           <br />
           <Button outlined>Outlined Small Button</Button>
           <br />
+          <br />
         </div>
         <div>
           <Button size="md">Medium Button</Button>
@@ -24,6 +25,7 @@ export default function ButtonPage() {
             Outlined Medium Button
           </Button>
           <br />
+          <br />
         </div>
         <div>
           <Button size="lg">Large Button</Button>
@@ -31,6 +33,7 @@ export default function ButtonPage() {
           <Button outlined size="lg">
             Outlined Large Button
           </Button>
+          <br />
           <br />
         </div>
         <div>
