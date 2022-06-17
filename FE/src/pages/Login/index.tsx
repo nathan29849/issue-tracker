@@ -19,15 +19,14 @@ export default function Login() {
         <LoginButton
           bgColor={theme.color.titleActive}
           textColor={theme.color.offWhite}
-          onClick={() => {
-            navigate('/issue');
-          }}
+          as="a"
         >
           GitHub 계정으로 로그인
         </LoginButton>
         <LoginButton
           bgColor="#f9e000"
           textColor="#181600"
+          as="a"
           onClick={() => {
             navigate('/issue');
           }}

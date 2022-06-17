@@ -12,7 +12,7 @@ export const OAuthLayer = styled.div`
   flex-direction: column;
   width: min-content;
 
-  button + button {
+  > * + * {
     margin-top: 1rem;
   }
 `;

@@ -34,9 +34,16 @@ export const Button = <T extends React.ElementType = 'button'>({
   children,
   outlined = false,
   size = 'sm',
+  as,
   ...restProps
 }: ButtonProps<T>) => (
-  <S.Button type="button" outlined={outlined} size={size} {...restProps}>
+  <S.Button
+    as={as ?? 'button'}
+    type="button"
+    outlined={outlined}
+    size={size}
+    {...restProps}
+  >
     <span>{children}</span>
   </S.Button>
 );
@@ -44,9 +51,10 @@ export const Button = <T extends React.ElementType = 'button'>({
 export const TextButton = <T extends React.ElementType = 'button'>({
   children,
   size = 'sm',
+  as,
   ...restProps
 }: TextButtonProps<T>) => (
-  <S.TextButton size={size} {...restProps}>
+  <S.TextButton as={as ?? 'button'} size={size} {...restProps}>
     {children}
   </S.TextButton>
 );
@@ -55,9 +63,15 @@ export const LoginButton = <T extends React.ElementType = 'button'>({
   children,
   bgColor = '#000',
   textColor = '#fff',
+  as,
   ...restProps
 }: LoginButtonProps<T>) => (
-  <S.LoginButton bgColor={bgColor} textColor={textColor} {...restProps}>
+  <S.LoginButton
+    as={as ?? 'button'}
+    bgColor={bgColor}
+    textColor={textColor}
+    {...restProps}
+  >
     {children}
   </S.LoginButton>
 );
