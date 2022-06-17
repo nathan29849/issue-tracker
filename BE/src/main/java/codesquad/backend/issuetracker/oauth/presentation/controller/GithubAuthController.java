@@ -74,7 +74,7 @@ public class GithubAuthController {
 				githubUser.getImageUrl()
 			));
 
-		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY) // User 정보도 보내주기 (Client측에서 유저정보를 식별하기 위함)
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
 			.header(HttpHeaders.LOCATION, "/")

@@ -2,7 +2,6 @@ package codesquad.backend.issuetracker.oauth;
 
 import static org.assertj.core.api.Assertions.*;
 import codesquad.backend.issuetracker.oauth.application.JwtFactory;
-import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

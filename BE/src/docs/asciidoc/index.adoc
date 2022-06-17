@@ -1,0 +1,13 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= Airbnb API
+
+== 메인 히어로 이미지 조회
+
+=== Request
+include::{snippets}/get-hello-spring/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-hello-spring/http-response.adoc[]
