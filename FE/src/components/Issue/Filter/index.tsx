@@ -1,8 +1,9 @@
 import useComponentVisible from '@hooks/useComponentVisible.jsx';
-import Popup from './Popup';
+import Popup from '@components/Popup/Popup';
 import * as S from './style';
 import { FilterLabelTypes } from '@components/Issue/Navigation';
 import I from '@components/Icons';
+import { getModalItem } from '@components/Popup/Content';
 
 interface IFilterProps {
   onPopup: boolean;
@@ -17,12 +18,16 @@ export default function Filter({
   filterPopupData,
   handleFilterClick,
 }: IFilterProps) {
+  const callback = () => {
+    console.log('데이터 필터되는 콜백함수');
+  };
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true);
+    useComponentVisible(false, callback);
   const handleOnFilterPopup = () => {
     handleFilterClick(label, true);
     setIsComponentVisible(true);
   };
+
   return (
     <S.FilterLayer onClick={handleOnFilterPopup}>
       <span className="filter__label">{label}</span>
@@ -51,11 +56,10 @@ export default function Filter({
                   <div
                     className="filter__item-wrapper"
                     key={`popup-${popupData.id}`}
-                    onClick={() => {
-                      // callback 함수 받기 (filter or add func)
-                    }}
                   >
-                    <div className="filter__item"></div>
+                    <div className="filter__item">
+                      {getModalItem(label, popupData)}
+                    </div>
                     <div className="filter__check">
                       <I.Circle.Check />
                     </div>

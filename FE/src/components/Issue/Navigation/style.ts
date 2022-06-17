@@ -20,8 +20,8 @@ export const RightLayer = styled.nav`
 
 export const IssueLabel = styled.div`
   cursor: pointer;
-  color: ${(props: { labelStatus: boolean }) =>
-    props.labelStatus ? theme.color.titleActive : theme.color.label};
+  color: ${(props: { labelIssueStatus: boolean }) =>
+    props.labelIssueStatus ? theme.color.titleActive : theme.color.label};
   span {
     margin-left: 0.375rem;
   }

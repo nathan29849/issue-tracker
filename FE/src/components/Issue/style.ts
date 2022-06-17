@@ -5,4 +5,5 @@ export const IssueWrapperLayer = styled.section`
   border: 1px solid;
   border-radius: 1rem;
   border-color: ${({ theme }) => theme.color.line};
+  overflow: hidden;
 `;

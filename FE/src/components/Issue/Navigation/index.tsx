@@ -4,16 +4,26 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { issueState } from '@recoil/atoms/issue';
 import { assigneeState } from '@recoil/atoms/assignee';
 import { authorState } from '@recoil/atoms/author';
+import { mileStoneState } from '@recoil/atoms/milestone';
 import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
 import { useState } from 'react';
+import { labelState } from '@recoil/atoms/label';
 
-export type FilterLabelTypes = '담당자' | '레이블' | '마일스톤' | '작성자';
+export type FilterLabelTypes =
+  | '이슈'
+  | '담당자'
+  | '레이블'
+  | '마일스톤'
+  | '작성자';
 
 export default function Navigation() {
   const filterLabels = ['담당자', '레이블', '마일스톤', '작성자'];
 
-  const assignee = useRecoilValue(assigneeState);
-  const author = useRecoilValue(authorState);
+  const assigneeData = useRecoilValue(assigneeState);
+  const labelData = useRecoilValue(labelState);
+  const milestoneData = useRecoilValue(mileStoneState);
+  const authorData = useRecoilValue(authorState);
+
   const [issues, setIssues] = useRecoilState(issueState);
 
   const [popupState, setPopupState] = useState({
@@ -24,12 +34,16 @@ export default function Navigation() {
   });
 
   const [filterPopupData, setFilterPoupData] = useState({
-    담당자: assignee,
-    레이블: assignee,
-    마일스톤: author,
-    작성자: author,
+    담당자: assigneeData,
+    레이블: labelData,
+    마일스톤: milestoneData,
+    작성자: authorData,
   });
-  const [labelStatus, setLabelStatus] = useState({ open: true, close: false });
+
+  const [labelIssueStatus, setLabelIssueStatus] = useState({
+    open: true,
+    close: false,
+  });
 
   const openIssueCount = issues.filter(issue => issue.status === 'open').length;
   const closeIssueCount = issues.filter(
@@ -38,12 +52,12 @@ export default function Navigation() {
 
   const handleLabelClick = (status: string) => {
     if (status === 'open') {
-      setLabelStatus({
+      setLabelIssueStatus({
         open: true,
         close: false,
       });
     } else if (status === 'close') {
-      setLabelStatus({
+      setLabelIssueStatus({
         open: false,
         close: true,
       });
@@ -65,7 +79,7 @@ export default function Navigation() {
       <LeftLayer>
         <I.CheckBox.Initial color="#D9DBE9" />
         <IssueLabel
-          labelStatus={labelStatus.open}
+          labelIssueStatus={labelIssueStatus.open}
           onClick={() => handleLabelClick('open')}
         >
           <I.Circle.Alert />
@@ -73,7 +87,7 @@ export default function Navigation() {
         </IssueLabel>
 
         <IssueLabel
-          labelStatus={labelStatus.close}
+          labelIssueStatus={labelIssueStatus.close}
           onClick={() => handleLabelClick('close')}
         >
           <I.Bucket />
