@@ -34,6 +34,7 @@ export default function Login() {
         <LoginButton
           bgColor={theme.color.titleActive}
           textColor={theme.color.offWhite}
+          as="a"
           onClick={handleLoginClick}
         >
           GitHub 계정으로 로그인
@@ -41,7 +42,8 @@ export default function Login() {
 
         <LoginButton
           bgColor="#f9e000"
-          textColor="#9c9a82"
+          textColor="#181600"
+          as="a"
           onClick={() => {
             navigate('/issue');
           }}
