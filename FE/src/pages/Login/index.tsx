@@ -9,6 +9,21 @@ import theme from '@styles/theme';
 export default function Login() {
   const navigate = useNavigate();
 
+  const handleLoginClick = async () => {
+    const serverUrl = 'http://13.125.92.201/api/oauth/github';
+    try {
+      const data = await fetch(serverUrl).then(response =>
+        // get accessToken, refreshToken
+        // cookie save
+        console.log(response.json()),
+      );
+      // alert('이동');
+      // navigate('/issue');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <S.LoginPageLayer>
       <S.LogoLayer>
@@ -19,15 +34,14 @@ export default function Login() {
         <LoginButton
           bgColor={theme.color.titleActive}
           textColor={theme.color.offWhite}
-          onClick={() => {
-            navigate('/issue');
-          }}
+          onClick={handleLoginClick}
         >
           GitHub 계정으로 로그인
         </LoginButton>
+
         <LoginButton
           bgColor="#f9e000"
-          textColor="#181600"
+          textColor="#9c9a82"
           onClick={() => {
             navigate('/issue');
           }}
