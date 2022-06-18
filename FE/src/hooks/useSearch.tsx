@@ -13,7 +13,9 @@ export const useSearch = (
     if (paramValue.includes(targetString)) {
       return;
     }
-    const newSearchParams = `${paramKey}=${paramValue} ${targetString}`;
+
+    const newSearchValue = `${paramValue} ${targetString}`.trim();
+    const newSearchParams = `${paramKey}=${newSearchValue}`;
     setSearchParams(newSearchParams);
   };
 
