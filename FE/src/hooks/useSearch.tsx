@@ -17,5 +17,23 @@ export const useSearch = (
     setSearchParams(newSearchParams);
   };
 
-  return { paramValue, add };
+  const replace = (key: string, value: string) => {
+    const targetString = [key, value].join(sep);
+    const regex = new RegExp(`${key}${sep}\\w*`, 'g');
+
+    if (paramValue.includes(targetString)) {
+      return;
+    }
+
+    const newParamValue = `${paramValue
+      .replace(regex, '')
+      .split(' ')
+      .filter(Boolean)
+      .join(' ')} ${targetString}`.trim();
+    const newSearchParams = `${paramKey}=${newParamValue}`;
+
+    setSearchParams(newSearchParams);
+  };
+
+  return { paramValue, add, replace };
 };
