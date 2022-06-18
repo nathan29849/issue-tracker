@@ -1,9 +1,21 @@
 import { useSearchParams } from 'react-router-dom';
 
-// 서치 파라미터중 특정 키에 해당하는 값을 반환하는 Hook
-export const useSearch = (paramKey: string, defaultValue: string) => {
-  const [searchParams] = useSearchParams();
-  const paramValue = searchParams.get(paramKey);
+export const useSearch = (
+  paramKey: string,
+  defaultValue: string,
+  sep = ':',
+) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramValue = searchParams.get(paramKey) ?? defaultValue;
 
-  return paramValue ?? defaultValue;
+  const add = (key: string, value: string) => {
+    const targetString = [key, value].join(sep);
+    if (paramValue.includes(targetString)) {
+      return;
+    }
+    const newSearchParams = `${paramKey}=${paramValue} ${targetString}`;
+    setSearchParams(newSearchParams);
+  };
+
+  return { paramValue, add };
 };
