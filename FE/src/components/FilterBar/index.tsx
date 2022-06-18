@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+
 import * as S from './style';
 
 import I from '@components/Icons';
@@ -28,7 +30,14 @@ export default function FilterBar() {
     <S.FilterBarLayer>
       <S.FilterButton onClick={handleOnFilterPopup}>
         <span>필터</span>
-        <div ref={ref}>
+        <div
+          ref={ref}
+          css={css`
+            position: absolute;
+            left: 0;
+            top: 3rem;
+          `}
+        >
           {isComponentVisible && (
             <Popup>
               <header>이슈 필터</header>
