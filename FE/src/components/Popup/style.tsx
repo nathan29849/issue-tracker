@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { flexbox, typoMedium } from '@styles/mixin';
 
 export const FilterPopup = styled.div`

@@ -1,9 +1,9 @@
 import * as S from './style';
-import Popup from '@components/Popup/Popup';
-import useComponentVisible from '@hooks/useComponentVisible.jsx';
-import { getModalItem } from '@components/Popup/Content';
 
 import I from '@components/Icons';
+import { getModalItem } from '@components/Popup/Content';
+import Popup from '@components/Popup/Popup';
+import useComponentVisible from '@hooks/useComponentVisible.jsx';
 
 export default function FilterBar() {
   const issueFilterData = {
@@ -32,24 +32,20 @@ export default function FilterBar() {
         <div ref={ref}>
           {isComponentVisible && (
             <Popup>
-              <header>
-                {'이슈'} {'필터'}
-              </header>
-              {issueFilterData.info.map((popupData: any) => {
-                return (
-                  <div
-                    className="filter__item-wrapper"
-                    key={`${popupData.status}`}
-                  >
-                    <div className="filter__item">
-                      {getModalItem('이슈', popupData)}
-                    </div>
-                    <div className="filter__check">
-                      <I.Circle.Check />
-                    </div>
+              <header>이슈 필터</header>
+              {issueFilterData.info.map((popupData: any) => (
+                <div
+                  className="filter__item-wrapper"
+                  key={`${popupData.status}`}
+                >
+                  <div className="filter__item">
+                    {getModalItem('이슈', popupData)}
                   </div>
-                );
-              })}
+                  <div className="filter__check">
+                    <I.Circle.Check />
+                  </div>
+                </div>
+              ))}
             </Popup>
           )}
         </div>

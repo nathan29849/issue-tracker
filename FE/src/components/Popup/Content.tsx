@@ -16,7 +16,7 @@ export const getModalItem = (label: string, popupData: any) => {
               height: 1.25rem;
               margin-right: 0.5rem;
             `}
-          ></div>
+          />
           <div className="filter__name">{popupData.name}</div>
         </>
       );
@@ -31,16 +31,12 @@ export const getModalItem = (label: string, popupData: any) => {
               height: 1.25rem;
               margin-right: 0.5rem;
             `}
-          ></div>
+          />
           <div className="filter__name">{popupData.name}</div>
         </>
       );
     case '마일스톤':
-      return (
-        <>
-          <div className="filter__name">{popupData.name}</div>
-        </>
-      );
+      return <div className="filter__name">{popupData.name}</div>;
     default:
       throw Error('label type not found');
   }

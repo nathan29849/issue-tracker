@@ -1,9 +1,11 @@
-import Navigation from '@components/Issue/Navigation';
-import Item from '@components/Issue/Item';
-import { issueState } from '@recoil/atoms/issue';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
+
 import { IssueWrapperLayer } from './style';
+
+import Item from '@components/Issue/Item';
+import Navigation from '@components/Issue/Navigation';
+import { issueState } from '@recoil/atoms/issue';
 
 export default function Issue() {
   const [issue, setIssue] = useRecoilState(issueState);
@@ -17,14 +19,12 @@ export default function Issue() {
   });
 
   return (
-    <>
-      <IssueWrapperLayer>
-        <Navigation />
-        {issue &&
-          issue.map(issueData => {
-            return <Item issue={issueData} key={`issue-${issueData.id}`} />;
-          })}
-      </IssueWrapperLayer>
-    </>
+    <IssueWrapperLayer>
+      <Navigation />
+      {issue &&
+        issue.map(issueData => (
+          <Item issue={issueData} key={`issue-${issueData.id}`} />
+        ))}
+    </IssueWrapperLayer>
   );
 }
