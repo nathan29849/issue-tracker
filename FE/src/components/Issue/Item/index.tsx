@@ -4,7 +4,19 @@ import { ItemLayer, ContentLayer, Title, Description } from './style';
 
 import I from '@components/Icons';
 
-export default function Item({ issue }: any) {
+interface IIssueItem {
+  id: number;
+  author: { name: string; imageUrl: string }[];
+  date: string;
+  labels: string[];
+  manager: string[];
+  milestone: string;
+  number: number;
+  status: string;
+  title: string;
+}
+
+export default function Item({ issue }: { issue: IIssueItem }) {
   return (
     <ItemLayer>
       <I.CheckBox.Initial color="#D9DBE9" />

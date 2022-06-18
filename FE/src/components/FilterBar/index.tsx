@@ -1,25 +1,24 @@
 import * as S from './style';
 
 import I from '@components/Icons';
-import { getModalItem } from '@components/Popup/Content';
+import Contents from '@components/Popup/Contents';
 import Popup from '@components/Popup/Popup';
+import { IPopupData } from '@components/Popup/type';
 import useComponentVisible from '@hooks/useComponentVisible.jsx';
 
 export default function FilterBar() {
   const issueFilterData = {
     info: [
-      { status: 'open', name: '열린 이슈' },
-      { status: 'mine', name: '내가 작성한 이슈' },
-      { status: 'assignedToMe', name: '나에게 할당된 이슈' },
-      { status: 'comment', name: '내가 댓글을 남긴 이슈' },
-      { status: 'close', name: '닫힌 이슈' },
+      { id: 1, status: 'open', name: '열린 이슈' },
+      { id: 2, status: 'mine', name: '내가 작성한 이슈' },
+      { id: 3, status: 'assignedToMe', name: '나에게 할당된 이슈' },
+      { id: 4, status: 'comment', name: '내가 댓글을 남긴 이슈' },
+      { id: 5, status: 'close', name: '닫힌 이슈' },
     ],
   };
-  const callback = () => {
-    console.log('데이터 필터되는 콜백함수');
-  };
+
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(false, callback);
+    useComponentVisible(false);
 
   const handleOnFilterPopup = () => {
     setIsComponentVisible(true);
@@ -33,18 +32,12 @@ export default function FilterBar() {
           {isComponentVisible && (
             <Popup>
               <header>이슈 필터</header>
-              {issueFilterData.info.map((popupData: any) => (
-                <div
-                  className="filter__item-wrapper"
-                  key={`${popupData.status}`}
-                >
-                  <div className="filter__item">
-                    {getModalItem('이슈', popupData)}
-                  </div>
-                  <div className="filter__check">
-                    <I.Circle.Check />
-                  </div>
-                </div>
+              {issueFilterData.info.map((popupData: IPopupData) => (
+                <Contents
+                  key={`popup-${popupData.id}`}
+                  label="이슈"
+                  popupData={popupData}
+                />
               ))}
             </Popup>
           )}

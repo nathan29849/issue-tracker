@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 
-export const getModalItem = (label: string, popupData: any) => {
+import { IPopupData } from '@components/Popup/type';
+
+export const getModalItem = (label: string, popupData: IPopupData) => {
   switch (label) {
     case '이슈':
       return <div id={popupData.status}>{popupData.name}</div>;

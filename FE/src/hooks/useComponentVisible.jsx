@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export default function useComponentVisible(initialIsVisible, callback) {
+export default function useComponentVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] =
     useState(initialIsVisible);
   const ref = useRef(null);
@@ -11,7 +11,6 @@ export default function useComponentVisible(initialIsVisible, callback) {
         setIsComponentVisible(false);
       }
       if (e.target.closest('.filter__item-wrapper')) {
-        callback();
         setIsComponentVisible(false);
       }
     }
