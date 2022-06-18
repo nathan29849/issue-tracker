@@ -30,14 +30,20 @@ export const SearchBar = styled.div`
   position: relative;
   border-left: 1px solid ${({ theme }) => theme.color.line};
   ${flexbox({ jc: 'center', ai: 'center' })};
+
+  input {
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
 `;
 
 export const FilterButton = styled.div`
+  position: relative;
   cursor: pointer;
   width: 8rem;
   padding: 0.375rem 1.5rem;
   color: ${({ theme }) => theme.color.label};
   background-color: ${({ theme }) => theme.color.background};
+  border-radius: 0.75rem 0 0 0.75rem;
   ${flexbox({ jc: 'space-between', ai: 'center' })};
   ${typoSmall(700)}
 
@@ -55,8 +61,7 @@ export const FilterBarLayer = styled.form`
   display: inline-flex;
   height: 2.5rem;
   border: 1px solid ${({ theme }) => theme.color.line};
-  border-radius: 11px;
-  overflow: hidden;
+  border-radius: 0.75rem;
 
   &:focus-within {
     border-color: black;

@@ -11,15 +11,15 @@ import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
 import { mileStoneState } from '@recoil/atoms/milestone';
 
-export type FilterLabelTypes =
-  | '이슈'
-  | '담당자'
-  | '레이블'
-  | '마일스톤'
-  | '작성자';
+export type FilterLabelTypes = '담당자' | '레이블' | '마일스톤' | '작성자';
 
 export default function Navigation() {
-  const filterLabels = ['담당자', '레이블', '마일스톤', '작성자'];
+  const filterLabels: FilterLabelTypes[] = [
+    '담당자',
+    '레이블',
+    '마일스톤',
+    '작성자',
+  ];
 
   const assigneeData = useRecoilValue(assigneeState);
   const labelData = useRecoilValue(labelState);
@@ -66,8 +66,8 @@ export default function Navigation() {
     }
   };
 
-  const handleFilterClick = (label: string, status: boolean) => {
-    setPopupState(popupState => ({ ...popupState, [label]: status }));
+  const handleFilterClick = (label: FilterLabelTypes, status: boolean) => {
+    setPopupState(prevPopupState => ({ ...prevPopupState, [label]: status }));
   };
 
   const onPopup = (label: FilterLabelTypes) => !!popupState[label];
@@ -93,12 +93,12 @@ export default function Navigation() {
         </IssueLabel>
       </LeftLayer>
       <RightLayer>
-        {filterLabels.map((label: any) => (
+        {filterLabels.map((label: FilterLabelTypes) => (
           <Filter
             key={label}
             onPopup={onPopup(label)}
             label={label}
-            filterPopupData={filterPopupData[label]}
+            filterPopupData={filterPopupData[label].info}
             handleFilterClick={handleFilterClick}
           />
         ))}
