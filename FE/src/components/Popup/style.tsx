@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { flexbox, typoMedium } from '@styles/mixin';
+import { flexbox, typoMedium, typoSmall } from '@styles/mixin';
 
 const moveDownAnimation = keyframes`
   from {
@@ -34,6 +34,7 @@ export const FilterPopup = styled.div`
     ${typoMedium(400)}
     border-radius: 1rem 1rem 0 0;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.titleActive};
   }
 
   .filter__item-wrapper {
@@ -45,11 +46,14 @@ export const FilterPopup = styled.div`
   }
 
   .filter__item {
-    display: flex;
+    ${flexbox({ ai: 'center' })};
+    color: ${({ theme }) => theme.color.body};
+    height: 1.6875rem;
+    ${typoSmall(400)};
   }
 
   .filter__name {
-    ${typoMedium(400)}
-    color: ${({ theme }) => theme.color.body}
+    ${typoSmall(400)};
+    color: ${({ theme }) => theme.color.body};
   }
 `;
