@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+
 import * as S from './style';
 
 import { FilterLabelTypes } from '@components/Issue/Navigation';
@@ -43,7 +45,15 @@ export default function Filter({
        *  */}
 
       {onPopup && (
-        <div ref={ref}>
+        <div
+          ref={ref}
+          css={css`
+            position: absolute;
+            display: inline-flex;
+            right: 0;
+            top: 2rem;
+          `}
+        >
           {isComponentVisible && (
             <Popup>
               <header>{label} 필터</header>
