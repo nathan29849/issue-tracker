@@ -1,9 +1,10 @@
-import useComponentVisible from '@hooks/useComponentVisible.jsx';
-import Popup from '@components/Popup/Popup';
 import * as S from './style';
-import { FilterLabelTypes } from '@components/Issue/Navigation';
+
 import I from '@components/Icons';
+import { FilterLabelTypes } from '@components/Issue/Navigation';
 import { getModalItem } from '@components/Popup/Content';
+import Popup from '@components/Popup/Popup';
+import useComponentVisible from '@hooks/useComponentVisible.jsx';
 
 interface IFilterProps {
   onPopup: boolean;
@@ -31,7 +32,7 @@ export default function Filter({
   return (
     <S.FilterLayer onClick={handleOnFilterPopup}>
       <span className="filter__label">{label}</span>
-      <S.ArrowDown></S.ArrowDown>
+      <S.ArrowDown />
       {/**
        * // TODO
        * 초기에 여러개의 필터 팝업창 중에 하나의 필터 팝업창만 어떻게 띄울까 고민함
@@ -48,24 +49,20 @@ export default function Filter({
         <div ref={ref}>
           {isComponentVisible && (
             <Popup>
-              <header>
-                {label} {'필터'}
-              </header>
-              {filterPopupData.info.map((popupData: any) => {
-                return (
-                  <div
-                    className="filter__item-wrapper"
-                    key={`popup-${popupData.id}`}
-                  >
-                    <div className="filter__item">
-                      {getModalItem(label, popupData)}
-                    </div>
-                    <div className="filter__check">
-                      <I.Circle.Check />
-                    </div>
+              <header>{label} 필터</header>
+              {filterPopupData.info.map((popupData: any) => (
+                <div
+                  className="filter__item-wrapper"
+                  key={`popup-${popupData.id}`}
+                >
+                  <div className="filter__item">
+                    {getModalItem(label, popupData)}
                   </div>
-                );
-              })}
+                  <div className="filter__check">
+                    <I.Circle.Check />
+                  </div>
+                </div>
+              ))}
             </Popup>
           )}
         </div>

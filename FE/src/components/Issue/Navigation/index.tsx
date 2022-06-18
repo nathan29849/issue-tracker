@@ -1,13 +1,15 @@
-import Filter from '@components/Issue/Filter';
-import I from '@components/Icons';
+import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { issueState } from '@recoil/atoms/issue';
+
+import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
+
+import I from '@components/Icons';
+import Filter from '@components/Issue/Filter';
 import { assigneeState } from '@recoil/atoms/assignee';
 import { authorState } from '@recoil/atoms/author';
-import { mileStoneState } from '@recoil/atoms/milestone';
-import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
-import { useState } from 'react';
+import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
+import { mileStoneState } from '@recoil/atoms/milestone';
 
 export type FilterLabelTypes =
   | '이슈'
@@ -65,14 +67,10 @@ export default function Navigation() {
   };
 
   const handleFilterClick = (label: string, status: boolean) => {
-    setPopupState(popupState => {
-      return { ...popupState, [label]: status };
-    });
+    setPopupState(popupState => ({ ...popupState, [label]: status }));
   };
 
-  const onPopup = (label: FilterLabelTypes) => {
-    return popupState[label] ? true : false;
-  };
+  const onPopup = (label: FilterLabelTypes) => !!popupState[label];
 
   return (
     <NavigationLayer>
@@ -95,17 +93,15 @@ export default function Navigation() {
         </IssueLabel>
       </LeftLayer>
       <RightLayer>
-        {filterLabels.map((label: any) => {
-          return (
-            <Filter
-              key={label}
-              onPopup={onPopup(label)}
-              label={label}
-              filterPopupData={filterPopupData[label]}
-              handleFilterClick={handleFilterClick}
-            />
-          );
-        })}
+        {filterLabels.map((label: any) => (
+          <Filter
+            key={label}
+            onPopup={onPopup(label)}
+            label={label}
+            filterPopupData={filterPopupData[label]}
+            handleFilterClick={handleFilterClick}
+          />
+        ))}
       </RightLayer>
     </NavigationLayer>
   );

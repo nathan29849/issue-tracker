@@ -1,10 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
-
 import ButtonPage from '@pages/ButtonPage';
 import IconPage from '@pages/IconPage';
-
 import IssuePage from '@pages/IssuePage';
 import Label from '@pages/Label';
 import Login from '@pages/Login';

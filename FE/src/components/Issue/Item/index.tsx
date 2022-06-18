@@ -1,6 +1,8 @@
-import I from '@components/Icons';
 import { css } from '@emotion/react';
+
 import { ItemLayer, ContentLayer, Title, Description } from './style';
+
+import I from '@components/Icons';
 
 export default function Item({ issue }: any) {
   return (
