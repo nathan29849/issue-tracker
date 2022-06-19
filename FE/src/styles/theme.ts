@@ -33,6 +33,10 @@ const fontSize = {
 
 const zIndex = {
   header: 1000,
+  issuePage: {
+    header: 900, // Filter-Bar 영역
+    main: 800, // Issue-List 영역
+  },
 };
 
 const theme = {
