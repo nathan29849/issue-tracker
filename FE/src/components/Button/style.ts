@@ -20,6 +20,7 @@ export const Button = styled.button<{
   ${inlineFlexbox({ jc: 'center', ai: 'center' })}
   font-weight: 700;
   padding: 0 1.5rem;
+  cursor: pointer;
 
   min-width: ${({ size }) =>
     size === 'lg' ? 21.25 : size === 'md' ? 15 : 7.5}rem;
@@ -68,6 +69,7 @@ export const Button = styled.button<{
 export const TextButton = styled.button<{ size: 'sm' | 'md' }>`
   background-color: inherit;
   color: ${({ theme }) => theme.color.label};
+  cursor: pointer;
 
   ${({ size }) => (size === 'sm' ? typoXSmall(700) : typoSmall(700))}
 
@@ -108,6 +110,7 @@ export const LoginButton = styled.button<{
   border-radius: 20px;
   color: ${({ textColor }) => textColor};
   background-color: ${({ bgColor }) => bgColor};
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.4;
