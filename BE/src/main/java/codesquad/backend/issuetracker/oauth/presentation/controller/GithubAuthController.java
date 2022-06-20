@@ -90,4 +90,13 @@ public class GithubAuthController {
 			.build()
 			.toString();
 	}
+
+	@GetMapping("/refresh")
+	public ResponseEntity<GithubLoginUserDto> refresh(
+		HttpServletRequest request
+	) {
+		User user = (User) request.getAttribute("user");
+		log.debug("user: {}", user);
+		return tokenResponse(user);
+	}
 }
