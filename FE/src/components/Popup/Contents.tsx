@@ -6,15 +6,24 @@ import theme from '@styles/theme';
 interface ContentsProps {
   label: string;
   popupData: IPopupData;
+  handleItemClick?: any;
 }
 
-export default function Contents({ label, popupData }: ContentsProps) {
+export default function Contents({
+  label,
+  popupData,
+  handleItemClick,
+}: ContentsProps) {
   return (
-    <div className="filter__item-wrapper">
+    <button
+      type="button"
+      className="filter__item-button"
+      onClick={() => handleItemClick(popupData)}
+    >
       <div className="filter__item">{getModalItem(label, popupData)}</div>
       <div className="filter__check">
         <I.Circle.Check color={theme.color.body} />
       </div>
-    </div>
+    </button>
   );
 }

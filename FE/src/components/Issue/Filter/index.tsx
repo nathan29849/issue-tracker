@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 import * as S from './style';
 
 import { FilterLabelTypes } from '@components/Issue/Navigation';
+import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
-import Popup from '@components/Popup/Popup';
 import { IPopupData } from '@components/Popup/type';
 import useComponentVisible from '@hooks/useComponentVisible.jsx';
+import { useSearch } from '@hooks/useSearch';
 
 interface IFilterProps {
   onPopup: boolean;
@@ -25,7 +26,13 @@ export default function Filter({
     useComponentVisible(false);
   const handleOnFilterPopup = () => {
     handleFilterClick(label, true);
-    setIsComponentVisible(true);
+    setIsComponentVisible(!isComponentVisible);
+  };
+  const { replace } = useSearch('q', 'is:open');
+
+  const handleItemClick = (popupData: IPopupData) => {
+    replace(popupData.status, popupData.name);
+    setIsComponentVisible(false);
   };
 
   return (
@@ -62,6 +69,7 @@ export default function Filter({
                   key={`popup-${popupData.id}`}
                   label={label}
                   popupData={popupData}
+                  handleItemClick={handleItemClick}
                 />
               ))}
             </Popup>
