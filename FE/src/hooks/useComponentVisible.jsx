@@ -10,9 +10,6 @@ export default function useComponentVisible(initialIsVisible) {
       if (!ref.current.contains(e.target)) {
         setIsComponentVisible(false);
       }
-      if (e.target.closest('.filter__item-wrapper')) {
-        setIsComponentVisible(false);
-      }
     }
   };
 

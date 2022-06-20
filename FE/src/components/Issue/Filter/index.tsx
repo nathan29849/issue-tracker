@@ -3,8 +3,8 @@ import { css } from '@emotion/react';
 import * as S from './style';
 
 import { FilterLabelTypes } from '@components/Issue/Navigation';
+import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
-import Popup from '@components/Popup/Popup';
 import { IPopupData } from '@components/Popup/type';
 import useComponentVisible from '@hooks/useComponentVisible.jsx';
 
