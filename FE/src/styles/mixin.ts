@@ -73,13 +73,13 @@ export const typoXSmall = (fontWeight: FontWeight) => `
 `;
 
 interface SimpleOpacityTransition {
-  delay: number;
+  delay?: number;
   hoverOpacity: number;
   activeOpacity: number;
 }
 
 export const simpleOpacityTransition = ({
-  delay,
+  delay = 0,
   hoverOpacity,
   activeOpacity,
 }: SimpleOpacityTransition) => `
