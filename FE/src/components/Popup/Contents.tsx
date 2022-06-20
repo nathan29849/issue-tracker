@@ -6,7 +6,10 @@ import theme from '@styles/theme';
 interface ContentsProps {
   label: string;
   popupData: IPopupData;
-  handleItemClick?: any;
+  handleItemClick: (
+    e: React.MouseEvent<HTMLElement>,
+    popupData: IPopupData,
+  ) => void;
 }
 
 export default function Contents({
@@ -18,7 +21,7 @@ export default function Contents({
     <button
       type="button"
       className="filter__item-button"
-      onClick={() => handleItemClick(popupData)}
+      onClick={e => handleItemClick(e, popupData)}
     >
       <div className="filter__item">{getModalItem(label, popupData)}</div>
       <div className="filter__check">

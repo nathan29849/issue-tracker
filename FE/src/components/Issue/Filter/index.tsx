@@ -30,7 +30,11 @@ export default function Filter({
   };
   const { replace } = useSearch('q', 'is:open');
 
-  const handleItemClick = (popupData: IPopupData) => {
+  const handleItemClick = (
+    e: React.MouseEvent<HTMLElement>,
+    popupData: IPopupData,
+  ) => {
+    e.stopPropagation();
     replace(popupData.status, popupData.name);
     setIsComponentVisible(false);
   };

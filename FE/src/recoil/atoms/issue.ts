@@ -8,7 +8,7 @@ export interface IIssueTypes {
   manager: string[];
   labels: string[];
   milestone: string;
-  author: object[];
+  author: { name: string; imageUrl: string }[];
   date: string;
 }
 

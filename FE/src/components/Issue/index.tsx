@@ -11,7 +11,7 @@ export default function Issue() {
   const [issue, setIssue] = useRecoilState(issueState);
 
   useQuery('issueData', () => {
-    fetch('http://localhost:8080/issue').then(res => {
+    fetch('issue').then(res => {
       res.json().then(result => {
         setIssue(result);
       });
