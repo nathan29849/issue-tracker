@@ -3,6 +3,7 @@ package codesquad.backend.issuetracker.oauth.application;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.user.domain.User;
 import codesquad.backend.issuetracker.user.infrastructure.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class OAuthService {
 		findUser.update(user);
 		userRepository.save(findUser);
 		return user;
+	}
+
+	public Optional<User> findByUserSecret(String userSecret) {
+		return userRepository.findByUserSecret((userSecret));
 	}
 }

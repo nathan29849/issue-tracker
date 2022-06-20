@@ -5,9 +5,11 @@ import codesquad.backend.issuetracker.oauth.application.JwtFactory;
 import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
 import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -58,7 +60,7 @@ public class GithubAuthController {
 	}
 
 	@GetMapping("/callback")
-	public ResponseEntity<Void> callback(
+	public ResponseEntity<GithubLoginUserDto> callback(
 		@RequestParam(value = "code", required = false) String code
 	) {
 		log.debug("Auth Code = {}", code);
@@ -68,15 +70,19 @@ public class GithubAuthController {
 		log.debug("User Secret = {}", githubUser.getUserSecret());
 		User user = authService.upsertUser(githubUser);
 
-		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+		return tokenResponse(user);
+	}
+
+	private ResponseEntity<GithubLoginUserDto> tokenResponse(User user) {
+		return ResponseEntity.status(HttpStatus.OK)
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
 			.header(HttpHeaders.LOCATION, "/")
-			.build();
+			.body(new GithubLoginUserDto(user.getAuthId(), user.getUsername(), user.getImageUrl()));
 	}
 
 	private String getCookie(User user, TokenType type) {
-		String token = JwtFactory.create(user, type.getTime());
+		String token = JwtFactory.create(user, type);
 		return ResponseCookie
 			.from(type.getType(), token)
 			.maxAge(type.getTime())

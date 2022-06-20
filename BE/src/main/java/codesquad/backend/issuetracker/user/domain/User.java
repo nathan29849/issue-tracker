@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 
 @Getter
 @Entity
+@ToString
 @NoArgsConstructor
 public class User {
 
