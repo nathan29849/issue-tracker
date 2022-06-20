@@ -1,5 +1,6 @@
 import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
+import { Label, IssueLabel } from '@components/Label';
 
 export default function ButtonPage() {
   return (
@@ -74,6 +75,37 @@ export default function ButtonPage() {
             Medium Disabled Button
           </TextButton>
           <br />
+        </div>
+      </fieldset>
+
+      <fieldset style={{ display: 'inline-block' }}>
+        <legend>
+          <h2>Label</h2>
+        </legend>
+
+        <div>
+          <Label>레이블 예시</Label>
+          <br />
+          <br />
+          <Label bgColor="#94f">레이블 예시</Label>
+          <br />
+          <br />
+          <Label bgColor="#ccc" darkText>
+            레이블 예시
+          </Label>
+        </div>
+      </fieldset>
+
+      <fieldset style={{ display: 'inline-block' }}>
+        <legend>
+          <h2>Issue Label</h2>
+        </legend>
+
+        <div>
+          <IssueLabel />
+          <br />
+          <br />
+          <IssueLabel closed />
         </div>
       </fieldset>
     </>
