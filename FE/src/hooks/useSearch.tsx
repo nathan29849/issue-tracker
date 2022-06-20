@@ -37,5 +37,16 @@ export const useSearch = (
     setSearchParams(newSearchParams);
   };
 
-  return { paramValue, add, replace };
+  const init = (param1: string | { paramValue: string }, param2?: string) => {
+    if (typeof param1 === 'string') {
+      const [key, value] = [param1, param2];
+
+      setSearchParams(`${paramKey}=${key}${sep}${value}`);
+      return;
+    }
+
+    setSearchParams(`${paramKey}=${param1.paramValue}`);
+  };
+
+  return { paramValue, add, replace, init };
 };
