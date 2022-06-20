@@ -21,7 +21,7 @@ export const Input = <T extends React.ElementType = 'input'>({
   width,
   placeholder,
   size = 'sm',
-  value = '',
+  value = undefined,
   disabled = false,
   error = false,
   success = false,
@@ -31,7 +31,7 @@ export const Input = <T extends React.ElementType = 'input'>({
     width={width}
     size={size}
     disabled={disabled}
-    active={!!value.length}
+    active={!!value?.length}
     error={error}
     success={success}
   >
