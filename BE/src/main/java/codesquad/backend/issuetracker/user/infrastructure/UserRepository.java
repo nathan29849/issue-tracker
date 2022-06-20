@@ -2,21 +2,11 @@ package codesquad.backend.issuetracker.user.infrastructure;
 
 import codesquad.backend.issuetracker.user.domain.User;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	@PersistenceContext
-	private EntityManager em;
-
-	public void save(User user) {
-		em.persist(user);
-	}
-
-	public Optional<User> findByAuthId(String authId){
-		return Optional.empty();
-	};
+	Optional<User> findByUserSecret(String userSecret);
 }

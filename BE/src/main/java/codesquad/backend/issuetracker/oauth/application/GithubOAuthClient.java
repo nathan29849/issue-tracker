@@ -31,6 +31,7 @@ public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 		this.clientSecret = clientSecret;
 	}
 
+	@Override
 	public GithubToken getToken(String code) {
 		return WebClient.create()
 			.post()
@@ -43,6 +44,7 @@ public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 			.block();
 	}
 
+	@Override
 	public GithubUser getUser(String accessToken) {
 		return WebClient.create()
 			.get()
