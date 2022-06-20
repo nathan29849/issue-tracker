@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.oauth.application;
 
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.user.domain.User;
 import codesquad.backend.issuetracker.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,17 @@ public class OAuthService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public User upsertUser(User user) {
-		log.debug("Auth ID = {}", user.getAuthId());
+	public User upsertUser(GithubUser githubUser) {
+		log.debug("Auth ID = {}", githubUser.getGithubId());
 
-		User findUser = userRepository.findByAuthId(user.getAuthId())
+		User user = new User(
+			githubUser.getGithubId(),
+			githubUser.getUsername(),
+			githubUser.getUserSecret(),
+			githubUser.getImageUrl()
+		);
+
+		User findUser = findByUserSecret((user.getUserSecret()))
 			.orElse(user);
 		findUser.update(user);
 		userRepository.save(findUser);

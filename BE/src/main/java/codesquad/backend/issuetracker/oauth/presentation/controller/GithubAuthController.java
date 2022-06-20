@@ -66,13 +66,7 @@ public class GithubAuthController {
 		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
 
 		log.debug("User Secret = {}", githubUser.getUserSecret());
-		User user = authService.upsertUser(
-			new User(
-				githubUser.getGithubId(),
-				githubUser.getUsername(),
-				githubUser.getUserSecret(),
-				githubUser.getImageUrl()
-			));
+		User user = authService.upsertUser(githubUser);
 
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
