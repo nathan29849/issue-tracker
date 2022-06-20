@@ -8,8 +8,14 @@ export const useSearch = (
   const [searchParams, setSearchParams] = useSearchParams();
   const paramValue = searchParams.get(paramKey) ?? defaultValue;
 
-  const add = (key: string, value: string) => {
+  const add = (param1: string | { paramValue: string }, param2?: string) => {
+    const [key, value] =
+      typeof param1 === 'string'
+        ? [param1, param2]
+        : param1.paramValue.split(sep);
+
     const targetString = [key, value].join(sep);
+
     if (paramValue.includes(targetString)) {
       return;
     }
