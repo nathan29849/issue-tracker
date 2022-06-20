@@ -16,6 +16,7 @@ export const Option = styled.li<{ checked?: boolean }>`
     activeOpacity: 0.7,
   })};
 
+  flex-shrink: 0;
   user-select: none;
   color: ${({ theme, checked }) =>
     checked ? theme.color.titleActive : theme.color.body};
@@ -30,13 +31,15 @@ export const Option = styled.li<{ checked?: boolean }>`
 `;
 
 export const Options = styled.ul`
-  ${flexbox({ ai: 'center' })};
+  ${inlineFlexbox({ ai: 'center' })};
+  white-space: nowrap;
   height: 100%;
 `;
 
 export const Title = styled.header`
   ${flexbox({ ai: 'center' })};
   ${typoXSmall(700)};
+  flex-shrink: 0;
   padding-right: 3.625rem;
   color: ${({ theme }) => theme.color.label};
   height: 100%;
