@@ -26,12 +26,15 @@ export default function FilterBar() {
   // TODO 차후에 수정필요 replace 함수 대신 다른 함수로 작업
   const { replace } = useSearch('q', 'is:open');
 
-  // TODO handleOnFilterPopup 내에서 setIsComponentVisible 함수 2번씩 렌더링 되는 현상 원인 파악 필요.
   const handleOnFilterPopup = () => {
-    setIsComponentVisible(!isComponentVisible);
+    setIsComponentVisible(true);
   };
 
-  const handleItemClick = (popupData: IPopupData) => {
+  const handleItemClick = (
+    e: React.MouseEvent<HTMLElement>,
+    popupData: IPopupData,
+  ) => {
+    e.stopPropagation();
     replace(popupData.status, popupData.name);
     setIsComponentVisible(false);
   };
