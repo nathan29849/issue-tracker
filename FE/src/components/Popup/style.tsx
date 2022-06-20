@@ -15,9 +15,6 @@ const moveDownAnimation = keyframes`
 `;
 
 export const FilterPopup = styled.div`
-  //position: absolute;
-  //top: 2rem;
-  //right: 0;
   width: 15rem;
   min-height: 2.75rem;
   border-radius: 1rem;
@@ -37,8 +34,9 @@ export const FilterPopup = styled.div`
     color: ${({ theme }) => theme.color.titleActive};
   }
 
-  .filter__item-wrapper {
+  .filter__item-button {
     ${flexbox({ dir: 'row', jc: 'space-between', ai: 'center' })}
+    width: 100%;
     padding: 0.5rem 1rem;
     background-color: ${({ theme }) => theme.color.offWhite};
     border-top: 1px solid;

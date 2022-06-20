@@ -17,7 +17,7 @@ export default function Contents({
   return (
     <button
       type="button"
-      className="filter__item-wrapper"
+      className="filter__item-button"
       onClick={() => handleItemClick(popupData)}
     >
       <div className="filter__item">{getModalItem(label, popupData)}</div>
