@@ -44,4 +44,31 @@ const getIssue = rest.get('/issue', (req, res, ctx) =>
   ),
 );
 
-export const handlers = [getUser, getIssue];
+const getLable = rest.get('/issue/label', (req, res, ctx) =>
+  res(
+    ctx.status(200),
+    ctx.delay(1000),
+    ctx.json([
+      {
+        id: 1,
+        color: '#F7F7FC',
+        name: 'duplicate',
+        darkText: true,
+      },
+      {
+        id: 2,
+        color: '#004DE3',
+        name: 'documentation',
+        darkText: false,
+      },
+      {
+        id: 3,
+        color: '#C60B00',
+        name: 'bug',
+        darkText: false,
+      },
+    ]),
+  ),
+);
+
+export const handlers = [getUser, getIssue, getLable];
