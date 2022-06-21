@@ -13,7 +13,7 @@ public class GithubUser {
 	private String username;
 
 	@JsonProperty("node_id")
-	private String userSecret;
+	private String nodeId;
 
 	@JsonProperty("avatar_url")
 	private String imageUrl;

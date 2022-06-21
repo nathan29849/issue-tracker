@@ -1,6 +1,5 @@
 package codesquad.backend.issuetracker.common.config;
 
-import codesquad.backend.issuetracker.oauth.application.OAuthService;
 import codesquad.backend.issuetracker.oauth.interceptor.AuthInterceptor;
 import codesquad.backend.issuetracker.oauth.interceptor.RefreshInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +14,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-	private final OAuthService oAuthService;
+	private final AuthInterceptor authInterceptor;
+	private final RefreshInterceptor refreshInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
-		registry.addInterceptor(new AuthInterceptor(oAuthService))
+		registry.addInterceptor(authInterceptor)
 			.order(1)
 			.addPathPatterns("/**")
-			.excludePathPatterns("/error/**", "/oauth/**");
+			.excludePathPatterns("/oauth/**", "/error/**");
 
-		registry.addInterceptor(new RefreshInterceptor(oAuthService))
+		registry.addInterceptor(refreshInterceptor)
 			.order(2)
 			.addPathPatterns("/oauth/github/refresh/**");
 	}
@@ -34,6 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 
 		registry.addMapping("/**")
-			.allowedOrigins("http://localhost:3000", "http://3.36.69.201");
+			.allowedOrigins("http://localhost:3000")
+			.allowedMethods("*");
 	}
 }

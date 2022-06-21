@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
@@ -22,11 +23,17 @@ public abstract class CommonInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 		Object handler) throws Exception {
 
+		if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
+			log.info("preFlight! Request URL={}", request.getRequestURL());
+			log.info("preFlight! Request URI={}", request.getRequestURI());
+			return true; // 왜 될까? 분명 preFlight 는 이 곳을 거치지 않아야 하는데..
+		}
+
 		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 		tokenValidationCheck(authorizationHeader);
 		Claims claims = getClaims(authorizationHeader);
 		User user = userValidationCheck(claims);
-		request.setAttribute("user", user);
+		request.setAttribute("nodeId", user.getNodeId());
 
 		return true;
 	}

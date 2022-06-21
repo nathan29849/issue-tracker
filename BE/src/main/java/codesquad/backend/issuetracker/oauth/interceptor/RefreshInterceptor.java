@@ -7,8 +7,10 @@ import codesquad.backend.issuetracker.oauth.application.OAuthService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class RefreshInterceptor extends CommonInterceptor {
 
 	public RefreshInterceptor(OAuthService oAuthService) {

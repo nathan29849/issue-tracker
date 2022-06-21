@@ -70,7 +70,7 @@ public class GithubAuthController {
 		GithubToken githubToken = authClient.getToken(code);
 		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
 
-		log.debug("User Secret = {}", githubUser.getUserSecret());
+		log.debug("Node Id = {}", githubUser.getNodeId());
 		User user = oAuthService.upsertUser(githubUser);
 
 		return tokenResponse(user);
