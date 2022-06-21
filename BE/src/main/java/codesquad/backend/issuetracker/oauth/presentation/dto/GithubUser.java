@@ -1,6 +1,5 @@
 package codesquad.backend.issuetracker.oauth.presentation.dto;
 
-import codesquad.backend.issuetracker.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -12,6 +11,9 @@ public class GithubUser {
 
 	@JsonProperty("name")
 	private String username;
+
+	@JsonProperty("node_id")
+	private String nodeId;
 
 	@JsonProperty("avatar_url")
 	private String imageUrl;

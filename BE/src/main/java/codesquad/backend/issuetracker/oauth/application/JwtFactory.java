@@ -1,10 +1,13 @@
 package codesquad.backend.issuetracker.oauth.application;
 
+import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,16 +22,16 @@ public class JwtFactory {
 		return KEY;
 	}
 
-	public static String create(User user, int expiredTime) {
-		Date now = new Date();
+	public static String create(User user, TokenType type) {
 
-		Date exp = new Date(now.getTime() + expiredTime);
-		log.debug("JWT EXPIRED TIME = {}", exp);
+		Date expired = Date.from(Instant.now().plusSeconds(type.getTime()));
+
+		log.debug("JWT EXPIRED TIME = {}", expired);
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())
 			.setClaims(createJwtClaims(user))
-			.setExpiration(exp)
+			.setExpiration(expired)
 			.signWith(KEY, SignatureAlgorithm.HS256)
 			.compact();
 	}
@@ -43,7 +46,15 @@ public class JwtFactory {
 
 	private static Map<String, Object> createJwtClaims(User user) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("authId", user.getAuthId());
+		claims.put("nodeId", user.getNodeId());
 		return claims;
+	}
+
+	public static Claims parseClaims(String token) {
+		return Jwts.parserBuilder()
+			.setSigningKey(KEY)
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
 	}
 }

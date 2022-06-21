@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.oauth.application;
 
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.user.domain.User;
 import codesquad.backend.issuetracker.user.infrastructure.UserRepository;
 import java.util.Optional;
@@ -16,21 +17,24 @@ public class OAuthService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public User upsertUser(User user) {
-		log.debug("Auth ID = {}", user.getAuthId());
+	public User upsertUser(GithubUser githubUser) {
+		log.debug("Auth ID = {}", githubUser.getGithubId());
 
-		User findUser = userRepository.findByAuthId(user.getAuthId())
+		User user = new User(
+			githubUser.getGithubId(),
+			githubUser.getUsername(),
+			githubUser.getUserSecret(),
+			githubUser.getImageUrl()
+		);
+
+		User findUser = findByNodeId((user.getNodeId()))
 			.orElse(user);
 		findUser.update(user);
 		userRepository.save(findUser);
-
-//		Optional<User> optionalUser = userRepository.findByAuthId(user.getAuthId());
-//
-//		if (optionalUser.isPresent()) {
-//			User findUser = optionalUser.get();
-//			user = findUser.update(user);
-//		}
-//		userRepository.save(user);
 		return user;
+	}
+
+	public Optional<User> findByNodeId(String nodeId) {
+		return userRepository.findByNodeId((nodeId));
 	}
 }

@@ -1,6 +1,6 @@
 oauth:
     github:
-      client-id: 817844c46a4b764a838e
+      client-id: 7c1ae0a1030ddb407582
       client-secret: ${CLIENT_SECRET}
       redirect-uri: http://localhost:8080/api/oauth/github/callback
       authorize-path: https://github.com/login/oauth/authorize
