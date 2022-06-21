@@ -7,7 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
-import java.util.Calendar;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,17 +23,15 @@ public class JwtFactory {
 	}
 
 	public static String create(User user, TokenType type) {
-		Date now = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(now);
-		cal.add(Calendar.SECOND, type.getTime());
 
-		log.debug("JWT EXPIRED TIME = {}", cal.getTime());
+		Date expired = Date.from(Instant.now().plusSeconds(type.getTime()));
+
+		log.debug("JWT EXPIRED TIME = {}", expired);
 
 		return Jwts.builder()
 			.setHeader(createJwtHeader())
 			.setClaims(createJwtClaims(user))
-			.setExpiration(cal.getTime())
+			.setExpiration(expired)
 			.signWith(KEY, SignatureAlgorithm.HS256)
 			.compact();
 	}
