@@ -1,6 +1,5 @@
 package codesquad.backend.issuetracker.user.domain;
 
-import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,13 +23,13 @@ public class User {
 
 	private String authId;
 	private String username;
-	private String userSecret;
+	private String nodeId;
 	private String imageUrl;
 
-	public User(String authId, String username, String userSecret, String imageUrl) {
+	public User(String authId, String username, String nodeId, String imageUrl) {
 		this.authId = authId;
 		this.username = username;
-		this.userSecret = userSecret;
+		this.nodeId = nodeId;
 		this.imageUrl = imageUrl;
 	}
 

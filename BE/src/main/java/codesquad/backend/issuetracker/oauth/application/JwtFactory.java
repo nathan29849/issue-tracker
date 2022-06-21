@@ -46,7 +46,7 @@ public class JwtFactory {
 
 	private static Map<String, Object> createJwtClaims(User user) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("userSecret", user.getUserSecret());
+		claims.put("nodeId", user.getNodeId());
 		return claims;
 	}
 

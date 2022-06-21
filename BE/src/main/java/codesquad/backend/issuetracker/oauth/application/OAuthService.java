@@ -27,14 +27,14 @@ public class OAuthService {
 			githubUser.getImageUrl()
 		);
 
-		User findUser = findByUserSecret((user.getUserSecret()))
+		User findUser = findByNodeId((user.getNodeId()))
 			.orElse(user);
 		findUser.update(user);
 		userRepository.save(findUser);
 		return user;
 	}
 
-	public Optional<User> findByUserSecret(String userSecret) {
-		return userRepository.findByUserSecret((userSecret));
+	public Optional<User> findByNodeId(String nodeId) {
+		return userRepository.findByNodeId((nodeId));
 	}
 }

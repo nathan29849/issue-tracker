@@ -38,8 +38,8 @@ public abstract class CommonInterceptor implements HandlerInterceptor {
 	}
 
 	protected User userValidationCheck(Claims claims) {
-		String userSecret = (String) claims.get("userSecret");
-		return oAuthService.findByUserSecret(userSecret)
+		String userSecret = (String) claims.get("nodeId");
+		return oAuthService.findByNodeId(userSecret)
 			.orElseThrow(() -> new AuthException(ErrorCode.UNAUTHORIZED_USER));
 	}
 
