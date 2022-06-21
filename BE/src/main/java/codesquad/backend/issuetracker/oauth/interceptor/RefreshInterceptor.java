@@ -17,12 +17,10 @@ public class RefreshInterceptor extends CommonInterceptor {
 
 	@Override
 	protected Claims getClaims(String authorizationHeader) {
-		Claims claims;
 		try {
-			claims = JwtFactory.parseClaims(authorizationHeader.substring("Bearer " .length()));
+			return JwtFactory.parseClaims(authorizationHeader.substring("Bearer " .length()));
 		} catch (ExpiredJwtException e) {
 			throw new AuthException(ErrorCode.REFRESH_TOKEN_EXPIRED);
 		}
-		return claims;
 	}
 }
