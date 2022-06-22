@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'ad';
+  src:
+    url('fonts/ad.ttf?pk4jxi') format('truetype'),
+    url('fonts/ad.woff?pk4jxi') format('woff'),
+    url('fonts/ad.svg?pk4jxi#ad') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.ic-arrow-down {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'ad' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-arrow-down:before {
+  content: "\e900";
+}

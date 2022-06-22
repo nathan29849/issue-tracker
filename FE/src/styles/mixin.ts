@@ -1,13 +1,13 @@
 import theme from './theme';
 
 interface Flexbox {
-  dir: 'row' | 'column';
-  jc: string;
-  ai: string;
+  dir?: 'row' | 'column';
+  jc?: string;
+  ai?: string;
 }
 
 interface AlignPos {
-  pos: 'absolute' | 'fixed';
+  (pos?: 'absolute' | 'fixed'): string;
 }
 
 /* flexbox */
@@ -26,19 +26,19 @@ export const inlineFlexbox = ({ dir = 'row', jc, ai }: Flexbox) => `
 `;
 
 /* align position */
-export const alignPosX = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosX: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   left: 50%;
   transform: translateX(-50%);
 `;
 
-export const alignPosY = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosY: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   top: 50%;
   transform: translateY(-50%);
 `;
 
-export const alignPosXY = ({ pos = 'absolute' }: AlignPos) => `
+export const alignPosXY: AlignPos = (pos = 'absolute') => `
   position: ${pos};
   left: 50%;
   top: 50%;
@@ -49,30 +49,47 @@ export const alignPosXY = ({ pos = 'absolute' }: AlignPos) => `
 type FontWeight = 400 | 700;
 export const typoDisplay = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.display};
-  line-height: ${theme.lineHeight.display};
   font-weight: ${fontWeight};
 `;
 
 export const typoLarge = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.lg};
-  line-height: ${theme.lineHeight.lg};
   font-weight: ${fontWeight};
 `;
 
 export const typoMedium = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.md};
-  line-height: ${theme.lineHeight.md};
   font-weight: ${fontWeight};
 `;
 
 export const typoSmall = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.sm};
-  line-height: ${theme.lineHeight.sm};
   font-weight: ${fontWeight};
 `;
 
 export const typoXSmall = (fontWeight: FontWeight) => `
   font-size: ${theme.fontSize.xs};
-  line-height: ${theme.lineHeight.xs};
   font-weight: ${fontWeight};
+`;
+
+interface SimpleOpacityTransition {
+  delay?: number;
+  hoverOpacity: number;
+  activeOpacity: number;
+}
+
+export const simpleOpacityTransition = ({
+  delay = 0,
+  hoverOpacity,
+  activeOpacity,
+}: SimpleOpacityTransition) => `
+  transition: opacity ${delay}ms;
+   &:hover {
+    opacity: ${hoverOpacity};
+  }
+
+  &:active {
+    opacity: ${activeOpacity};
+  }
+
 `;
