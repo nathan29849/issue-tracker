@@ -7,7 +7,7 @@ export interface IAuthorTypes {
 }
 
 export const authorState = atom<{ info: IAuthorTypes[] }>({
-  key: 'userState',
+  key: 'authorState',
   default: {
     info: [
       {
