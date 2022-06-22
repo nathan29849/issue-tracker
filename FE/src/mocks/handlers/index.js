@@ -32,7 +32,7 @@ const getIssue = rest.get('/issue', (req, res, ctx) =>
       {
         id: 2,
         number: 5, // 이슈 고유값
-        status: 'open',
+        status: 'close',
         title: '이슈 페이지 기능 작업',
         manager: ['muffin', 'cola'],
         labels: ['feat', 'sub', 'bug'],
