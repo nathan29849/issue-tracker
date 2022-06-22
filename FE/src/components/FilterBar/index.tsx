@@ -13,9 +13,9 @@ export default function FilterBar() {
   const issueFilterData = {
     info: [
       { id: 1, status: 'is:open', name: '열린이슈' },
-      { id: 2, status: 'mine:@me', name: '내가작성한이슈' },
-      { id: 3, status: 'assignedToMe:@me', name: '나에게할당된이슈' },
-      { id: 4, status: 'comment:@me', name: '내가댓글을남긴이슈' },
+      { id: 2, status: 'mine@me', name: '내가작성한이슈' },
+      { id: 3, status: 'assignedToMe@me', name: '나에게할당된이슈' },
+      { id: 4, status: 'comment@me', name: '내가댓글을남긴이슈' },
       { id: 5, status: 'is:close', name: '닫힌이슈' },
     ],
   };
@@ -23,8 +23,7 @@ export default function FilterBar() {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  // TODO 차후에 수정필요 replace 함수 대신 다른 함수로 작업
-  const { replace } = useSearch('q', 'is:open');
+  const { init } = useSearch('q', 'is:open');
 
   const handleOnFilterPopup = () => {
     setIsComponentVisible(true);
@@ -35,7 +34,7 @@ export default function FilterBar() {
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    replace(popupData.status, popupData.name);
+    init({ paramValue: popupData.status });
     setIsComponentVisible(false);
   };
 

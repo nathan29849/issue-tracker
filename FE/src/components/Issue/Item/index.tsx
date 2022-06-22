@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import React from 'react';
 
 import { ItemLayer, ContentLayer, Title, Description } from './style';
 
@@ -27,7 +28,7 @@ export default function Item({ issue }: { issue: IIssueItem }) {
         </div>
         <div>
           <Description>#{issue.number}</Description>
-          <Description>{issue.author[0].name}</Description>
+          {/* <Description>{issue.author[0].name}</Description> */}
           <I.MileStone /> <Description>{issue.milestone}</Description>
         </div>
         <div

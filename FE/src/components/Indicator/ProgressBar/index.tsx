@@ -17,7 +17,7 @@ type ProgressBarProps<T extends React.ElementType> = OverridableProps<
   }
 >;
 
-const ProgressBar = <T extends React.ElementType = 'div'>({
+export const ProgressBar = <T extends React.ElementType = 'div'>({
   width,
   detail = false,
   bgColor = theme.color.inputBackground,
@@ -46,5 +46,3 @@ const ProgressBar = <T extends React.ElementType = 'div'>({
     )}
   </S.ProgressBarLayout>
 );
-
-export default ProgressBar;

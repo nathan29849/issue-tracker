@@ -8,7 +8,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 dotenv.config({ path: path.join(__dirname, '../env', '.env') });
-const WebpackEnvironmentPlugin = new webpack.EnvironmentPlugin(['API_KEY']);
+const WebpackEnvironmentPlugin = new webpack.EnvironmentPlugin(['TEAM30_BASE_URL', 'TEAM30_GITHUB_OAUTH_URL']);
 
 module.exports = {
   context: __dirname,
