@@ -7,7 +7,9 @@ interface User {
 export const githubLogin = async (searchParams: string): Promise<User> => {
   const response = await fetch(
     `${process.env.TEAM30_GITHUB_OAUTH_URL}/callback${searchParams}`,
-    // { credentials: 'include' },
+    {
+      credentials: 'include',
+    },
   );
   const data = await response.json();
 
