@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
 import ButtonPage from '@pages/ButtonPage';
+import Callback from '@pages/Callback';
 import IconPage from '@pages/IconPage';
 import IssuePage from '@pages/IssuePage';
 import LabelPage from '@pages/LabelPage';
@@ -21,6 +22,7 @@ export default function Router() {
         </Route>
         <Route path="/icons" element={<IconPage />} />
         <Route path="/buttons" element={<ButtonPage />} />
+        <Route path="/callback" element={<Callback />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
