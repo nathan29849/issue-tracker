@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom';
-
 import { matchers } from '@emotion/jest';
 import React from 'react';
 import renderer from 'react-test-renderer';
