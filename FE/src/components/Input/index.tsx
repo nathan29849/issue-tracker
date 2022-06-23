@@ -10,8 +10,8 @@ type InputProps<T extends React.ElementType> = OverridableProps<
   {
     width: number;
     placeholder: string;
+    value: string;
     size?: 'sm' | 'md';
-    value?: string;
     disabled?: boolean;
     error?: boolean;
     success?: boolean;
