@@ -34,15 +34,20 @@ export const FormTitle = styled.div`
 
 export const RefreshButton = styled.button`
   position: absolute;
-  left: 0;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
   background-color: transparent;
   outline: none;
   border: none;
 `;
 
-export const FormInnerWrapper = styled.div`
+export const ColorWrapper = styled.div`
   position: relative;
+`;
+
+export const FormInnerWrapper = styled.div`
   ${flexbox({ ai: 'center' })};
   gap: 1rem;
 `;
