@@ -17,8 +17,12 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/issue" element={<Layout />}>
-          <Route index element={<IssuePage />} />
+          <Route path=":issueId" element={<IssuePage />} />
+          <Route path=":issueId/edit" element={<IssuePage />} />
           <Route path="new" element={<NewIssue />} />
+          <Route index element={<IssuePage />} />
+
+          {/* 아래 두개는 구조를 바꿔야 할 수도. */}
           <Route path="label" element={<LabelPage />} />
           <Route path="milestone" element={<Milestone />} />
         </Route>
