@@ -64,7 +64,7 @@ export const Input = styled.input`
 `;
 
 export const InputLayer = styled.div<{
-  width: number;
+  width: number | string;
   size?: string;
   disabled?: boolean;
   error?: boolean;
@@ -74,7 +74,7 @@ export const InputLayer = styled.div<{
   ${typoSmall(400)};
   position: relative;
   display: inline-flex;
-  width: ${({ width }) => width}px;
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   background-color: ${({ theme }) => theme.color.inputBackground};
   border: 1px solid transparent;
   border-radius: 14px;
@@ -158,7 +158,7 @@ export const InputLayer = styled.div<{
   `};
 `;
 
-export const Textarea = styled(Input)<{ width: number }>`
+export const Textarea = styled(Input)`
   transition: all 100ms;
   resize: vertical;
 `;

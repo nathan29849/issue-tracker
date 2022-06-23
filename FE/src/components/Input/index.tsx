@@ -8,7 +8,7 @@ import { OverridableProps } from '@utils/types';
 type InputProps<T extends React.ElementType> = OverridableProps<
   T,
   {
-    width: number;
+    width: number | string;
     placeholder: string;
     value: string;
     size?: 'sm' | 'md';
@@ -21,7 +21,7 @@ type InputProps<T extends React.ElementType> = OverridableProps<
 type TextareaProps<T extends React.ElementType> = OverridableProps<
   T,
   {
-    width: number;
+    width: number | string;
     placeholder?: string;
     value: string;
   }
