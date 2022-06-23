@@ -18,6 +18,15 @@ type InputProps<T extends React.ElementType> = OverridableProps<
   }
 >;
 
+type TextareaProps<T extends React.ElementType> = OverridableProps<
+  T,
+  {
+    width: number;
+    placeholder?: string;
+    value: string;
+  }
+>;
+
 export const Input = <T extends React.ElementType = 'input'>({
   width,
   placeholder,
@@ -45,25 +54,13 @@ export const Textarea = <T extends React.ElementType = 'input'>({
   width,
   placeholder,
   value = '',
-  disabled = false,
   ...restProps
-}: InputProps<T>) => {
+}: TextareaProps<T>) => {
   const id = useId();
 
   return (
-    <S.TextareaLayer
-      width={width}
-      size="md"
-      disabled={disabled}
-      active={!!value.length}
-    >
-      <S.Textarea
-        width={width}
-        as="textarea"
-        value={value}
-        disabled={disabled}
-        {...restProps}
-      />
+    <S.TextareaLayer width={width} size="md" active={!!value.length}>
+      <S.Textarea as="textarea" value={value} {...restProps} />
 
       {/* TODO: 파일 첨부하기 부분을 Props로 */}
       {/* TODO: 이미지만 업로드받기 */}
