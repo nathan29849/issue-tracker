@@ -2,6 +2,38 @@ import styled from '@emotion/styled';
 
 import { typoSmall, inlineFlexbox, typoXSmall } from '@styles/mixin';
 
+export const WordCount = styled.div`
+  ${typoXSmall(400)};
+  color: ${({ theme }) => theme.color.label};
+  position: absolute;
+  bottom: 4.5rem;
+  right: 1.59375rem;
+  pointer-events: none;
+`;
+
+export const Label = styled.label`
+  ${typoXSmall(700)};
+  color: ${({ theme }) => theme.color.label};
+  cursor: pointer;
+  i {
+    margin-right: 0.5rem;
+  }
+`;
+
+export const Footer = styled.footer`
+  height: 3.25rem;
+  background-image: linear-gradient(
+    to right,
+    black 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: top;
+  background-size: 0.5rem 0.8px;
+  background-repeat: repeat-x;
+  padding: 1rem 1.5rem;
+  transition: all 100ms;
+`;
+
 export const PlaceHolder = styled.div`
   ${typoSmall(400)};
   ${inlineFlexbox({ ai: 'center' })};
@@ -13,7 +45,7 @@ export const PlaceHolder = styled.div`
   height: 100%;
   pointer-events: none;
   white-space: nowrap;
-  transition: font-size 100ms, transform 100ms;
+  transition: font-size 150ms, transform 150ms;
 `;
 
 export const Input = styled.input`
@@ -124,4 +156,43 @@ export const InputLayer = styled.div<{
         color: ${theme.color.darkRed};
       };
   `};
+`;
+
+export const Textarea = styled(Input)<{ width: number }>`
+  transition: all 100ms;
+  resize: vertical;
+`;
+
+export const TextareaLayer = styled(InputLayer)`
+  position: relative;
+  flex-direction: column;
+  height: auto;
+  transition: all 100ms;
+
+  ${PlaceHolder} {
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  ${Textarea} {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.7rem;
+    transform: translate3d(-0.2rem, -0.2rem, 0);
+    min-height: 12.5rem;
+    line-height: 1.75;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+      padding-top: 1.5rem;
+      ${PlaceHolder} {
+        transform: translate3d(0, -1rem, 0);
+      }
+      
+      ${Textarea} {
+        margin-top: 1rem;
+      }
+    `};
 `;

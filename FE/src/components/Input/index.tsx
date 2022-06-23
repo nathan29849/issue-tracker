@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 import * as S from './style';
 
-import { CombineElementProps } from '@utils/types';
+import I from '@components/Icons';
+import { OverridableProps } from '@utils/types';
 
-type InputProps<T extends React.ElementType> = CombineElementProps<
+type InputProps<T extends React.ElementType> = OverridableProps<
   T,
   {
     width: number;
@@ -39,3 +40,48 @@ export const Input = <T extends React.ElementType = 'input'>({
     <S.PlaceHolder>{placeholder}</S.PlaceHolder>
   </S.InputLayer>
 );
+
+export const Textarea = <T extends React.ElementType = 'input'>({
+  width,
+  placeholder,
+  value = '',
+  disabled = false,
+  ...restProps
+}: InputProps<T>) => {
+  const id = useId();
+
+  return (
+    <S.TextareaLayer
+      width={width}
+      size="md"
+      disabled={disabled}
+      active={!!value.length}
+    >
+      <S.Textarea
+        width={width}
+        as="textarea"
+        value={value}
+        disabled={disabled}
+        {...restProps}
+      />
+
+      {/* TODO: 파일 첨부하기 부분을 Props로 */}
+      {/* TODO: 이미지만 업로드받기 */}
+      {/* TODO: 2초간 보여줄 문자열 */}
+
+      <S.PlaceHolder>{placeholder || '코멘트를 입력하세요'}</S.PlaceHolder>
+      <S.WordCount>띄어쓰기 </S.WordCount>
+      <S.Footer>
+        <S.Label htmlFor={id}>
+          {undefined || (
+            <>
+              <I.Clip />
+              <span>파일 첨부하기</span>
+            </>
+          )}
+        </S.Label>
+        <input id={id} type="file" accept="image/*" hidden />
+      </S.Footer>
+    </S.TextareaLayer>
+  );
+};
