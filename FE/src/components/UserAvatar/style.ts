@@ -10,8 +10,9 @@ export const UserAvatar = styled.button<{ size: 'sm' | 'lg' }>`
   height: ${({ size }) => (size === 'lg' ? 2.75 : 1.25)}rem;
   transition: all 500ms;
 
-  ${({ size, theme }) =>
+  ${({ size, theme, as }) =>
     size === 'lg' &&
+    as === 'button' &&
     `
       &:hover {
         border-color: ${theme.color.blue};
