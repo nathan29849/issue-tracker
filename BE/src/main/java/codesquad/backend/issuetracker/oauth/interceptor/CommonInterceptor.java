@@ -34,7 +34,6 @@ public abstract class CommonInterceptor implements HandlerInterceptor {
 		Claims claims = getClaims(authorizationHeader);
 		User user = userValidationCheck(claims);
 		request.setAttribute("nodeId", user.getNodeId());
-
 		return true;
 	}
 

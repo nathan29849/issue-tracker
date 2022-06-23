@@ -23,7 +23,7 @@ public class OAuthService {
 		User user = new User(
 			githubUser.getGithubId(),
 			githubUser.getUsername(),
-			githubUser.getUserSecret(),
+			githubUser.getNodeId(),
 			githubUser.getImageUrl()
 		);
 

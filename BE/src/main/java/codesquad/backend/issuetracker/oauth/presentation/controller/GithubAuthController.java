@@ -12,9 +12,12 @@ import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
 import java.util.Optional;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -80,15 +83,24 @@ public class GithubAuthController {
 		return ResponseEntity.status(HttpStatus.OK)
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
-			.header(HttpHeaders.LOCATION, "/")
-			.body(new GithubLoginUserDto(user.getAuthId(), user.getUsername(), user.getImageUrl()));
+			.body(new GithubLoginUserDto(
+				user.getAuthId(), user.getUsername(), user.getImageUrl(),
+				getToken(user, TokenType.ACCESS), getToken(user, TokenType.REFRESH)
+			));
+	}
+
+	private String getToken(User user, TokenType type){
+		return JwtFactory.create(user, type);
 	}
 
 	private String getCookie(User user, TokenType type) {
-		String token = JwtFactory.create(user, type);
+		String token = getToken(user, type);
 		return ResponseCookie
 			.from(type.getType(), token)
 			.maxAge(type.getTime())
+			.domain("localhost")
+			.sameSite(SameSite.NONE.toString())
+			.secure(true)
 			.path("/")
 			.build()
 			.toString();
