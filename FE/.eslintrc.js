@@ -31,6 +31,7 @@ module.exports = {
     'react/prop-types': 'off',
     'no-nested-ternary': 'off',
     'react/function-component-definition': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
     'import/order': [
       'error',
       {
