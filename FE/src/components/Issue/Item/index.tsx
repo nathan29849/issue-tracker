@@ -17,9 +17,15 @@ interface IIssueItem {
   title: string;
 }
 
-export default function Item({ issue }: { issue: IIssueItem }) {
+export default function Item({
+  issue,
+  lastIdx,
+}: {
+  issue: IIssueItem;
+  lastIdx?: boolean;
+}) {
   return (
-    <ItemLayer>
+    <ItemLayer lastIdx={lastIdx}>
       <I.CheckBox.Initial color="#D9DBE9" />
       <ContentLayer>
         <div>
@@ -28,7 +34,7 @@ export default function Item({ issue }: { issue: IIssueItem }) {
         </div>
         <div>
           <Description>#{issue.number}</Description>
-          {/* <Description>{issue.author[0].name}</Description> */}
+          <Description>{issue.author[0].name}</Description>
           <I.MileStone /> <Description>{issue.milestone}</Description>
         </div>
         <div

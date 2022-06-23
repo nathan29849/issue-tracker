@@ -28,14 +28,14 @@ export default function Filter({
     handleFilterClick(label, true);
     setIsComponentVisible(!isComponentVisible);
   };
-  const { replace } = useSearch('q', 'is:open');
+  const { replace } = useSearch('q', '');
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    replace(popupData.status, popupData.name);
+    replace(label, popupData.name);
     setIsComponentVisible(false);
   };
 

@@ -13,9 +13,9 @@ export default function FilterBar() {
   const issueFilterData = {
     info: [
       { id: 1, status: 'is:open', name: '열린이슈' },
-      { id: 2, status: 'mine@me', name: '내가작성한이슈' },
-      { id: 3, status: 'assignedToMe@me', name: '나에게할당된이슈' },
-      { id: 4, status: 'comment@me', name: '내가댓글을남긴이슈' },
+      { id: 2, status: 'mine:me', name: '내가작성한이슈' },
+      { id: 3, status: 'assignedToMe:me', name: '나에게할당된이슈' },
+      { id: 4, status: 'comment:me', name: '내가댓글을남긴이슈' },
       { id: 5, status: 'is:close', name: '닫힌이슈' },
     ],
   };
