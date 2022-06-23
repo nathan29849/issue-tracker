@@ -11,14 +11,14 @@ import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
 import { mileStoneState } from '@recoil/atoms/milestone';
 
-export type FilterLabelTypes = '담당자' | '레이블' | '마일스톤' | '작성자';
+export type FilterLabelTypes = 'assignee' | 'label' | 'mileStone' | 'author';
 
 export default function Navigation() {
   const filterLabels: FilterLabelTypes[] = [
-    '담당자',
-    '레이블',
-    '마일스톤',
-    '작성자',
+    'assignee',
+    'label',
+    'mileStone',
+    'author',
   ];
 
   const assigneeData = useRecoilValue(assigneeState);
@@ -29,17 +29,17 @@ export default function Navigation() {
   const [issues, setIssues] = useRecoilState(issueState);
 
   const [popupState, setPopupState] = useState({
-    담당자: false,
-    레이블: false,
-    마일스톤: false,
-    작성자: false,
+    assignee: false,
+    label: false,
+    mileStone: false,
+    author: false,
   });
 
   const [filterPopupData, setFilterPoupData] = useState({
-    담당자: assigneeData,
-    레이블: labelData,
-    마일스톤: milestoneData,
-    작성자: authorData,
+    assignee: assigneeData,
+    label: labelData,
+    mileStone: milestoneData,
+    author: authorData,
   });
 
   const [labelIssueStatus, setLabelIssueStatus] = useState({
