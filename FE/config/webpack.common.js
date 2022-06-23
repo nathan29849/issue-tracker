@@ -18,6 +18,7 @@ module.exports = {
     path: path.resolve(__dirname, '../build'),
     clean: true,
     assetModuleFilename: 'assets/[hash][ext][query]',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
