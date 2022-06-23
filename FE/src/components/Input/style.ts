@@ -166,7 +166,7 @@ export const TextareaLayer = styled(InputLayer)`
   position: relative;
   flex-direction: column;
   height: auto;
-  transition: all 100ms;
+  transition: all 200ms;
 
   ${PlaceHolder} {
     align-items: flex-start;
