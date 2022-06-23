@@ -159,7 +159,6 @@ export const InputLayer = styled.div<{
 `;
 
 export const Textarea = styled(Input)`
-  transition: all 100ms;
   resize: vertical;
 `;
 
