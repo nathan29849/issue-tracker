@@ -5,6 +5,7 @@ import ButtonPage from '@pages/ButtonPage';
 import Callback from '@pages/Callback';
 import IconPage from '@pages/IconPage';
 import IssuePage from '@pages/IssuePage';
+import NewIssue from '@pages/IssuePage/NewIssue';
 import LabelPage from '@pages/LabelPage';
 import Login from '@pages/Login';
 import Milestone from '@pages/Milestone';
@@ -17,6 +18,7 @@ export default function Router() {
         <Route path="/" element={<Login />} />
         <Route path="/issue" element={<Layout />}>
           <Route index element={<IssuePage />} />
+          <Route path="new" element={<NewIssue />} />
           <Route path="label" element={<LabelPage />} />
           <Route path="milestone" element={<Milestone />} />
         </Route>
