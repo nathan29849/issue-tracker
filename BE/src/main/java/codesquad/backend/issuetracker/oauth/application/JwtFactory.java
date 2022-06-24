@@ -18,10 +18,6 @@ public class JwtFactory {
 
 	private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-	public static Key getKey() {
-		return KEY;
-	}
-
 	public static String create(User user, TokenType type) {
 
 		Date expired = Date.from(Instant.now().plusSeconds(type.getTime()));
