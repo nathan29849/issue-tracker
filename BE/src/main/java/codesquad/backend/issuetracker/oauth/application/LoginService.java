@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OAuthService {
+public class LoginService {
 
 	private final UserRepository userRepository;
 

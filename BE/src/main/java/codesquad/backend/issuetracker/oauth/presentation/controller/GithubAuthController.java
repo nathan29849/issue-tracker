@@ -2,10 +2,9 @@ package codesquad.backend.issuetracker.oauth.presentation.controller;
 
 import codesquad.backend.issuetracker.exception.AuthException;
 import codesquad.backend.issuetracker.exception.ErrorCode;
-import codesquad.backend.issuetracker.oauth.application.OAuthService;
+import codesquad.backend.issuetracker.oauth.application.LoginService;
 import codesquad.backend.issuetracker.oauth.application.JwtFactory;
-import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
-import codesquad.backend.issuetracker.oauth.config.OAuthProperties;
+import codesquad.backend.issuetracker.oauth.application.GithubAuthService;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
@@ -23,37 +22,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @RestController
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private final GithubOAuthClient authClient;
-	private final OAuthService oAuthService;
-	private final OAuthProperties oAuthProperties;
+	private final GithubAuthService authService;
+	private final LoginService loginService;
 
 	public GithubAuthController(
-		GithubOAuthClient authClient,
-		OAuthService oAuthService,
-		OAuthProperties oAuthProperties
+		GithubAuthService authService, LoginService loginService
 	) {
-		this.authClient = authClient;
-		this.oAuthService = oAuthService;
-		this.oAuthProperties = oAuthProperties;
+		this.authService = authService;
+		this.loginService = loginService;
 	}
 
 	@GetMapping
 	public ResponseEntity<Void> login() {
-		log.debug("AuthPath = {}", oAuthProperties.getAuthorizePath());
-		URI location = UriComponentsBuilder
-			.fromPath(oAuthProperties.getAuthorizePath())
-			.queryParam("client_id", oAuthProperties.getClientId())
-			.build()
-			.toUri();
 
+		URI location = authService.getLocation();
 		log.debug("Location = {}", location);
+
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
 			.header(HttpHeaders.LOCATION, location.toString())
 			.build();
@@ -61,15 +51,14 @@ public class GithubAuthController {
 
 	@GetMapping("/callback")
 	public ResponseEntity<GithubLoginUserDto> callback(
-		@RequestParam(value = "code") String code
+		@RequestParam String code
 	) {
 		log.debug("Auth Code = {}", code);
-		GithubToken githubToken = authClient.getToken(
-			code, oAuthProperties.getAccessTokenPath(), oAuthProperties.getClientId(), oAuthProperties.getClientSecret());
-		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken(), oAuthProperties.getResourcePath());
+		GithubToken githubToken = authService.getToken(code);
+		GithubUser githubUser = authService.getUser(code, githubToken.getAccessToken());
 
 		log.debug("Node Id = {}", githubUser.getNodeId());
-		User user = oAuthService.upsertUser(githubUser);
+		User user = loginService.upsertUser(githubUser);
 
 		return tokenResponse(user);
 	}
@@ -106,7 +95,7 @@ public class GithubAuthController {
 		HttpServletRequest request
 	) {
 		String nodeId = (String) request.getAttribute("nodeId");
-		User user = oAuthService.findByNodeId(nodeId)
+		User user = loginService.findByNodeId(nodeId)
 			.orElseThrow(() -> new AuthException(ErrorCode.UNAUTHORIZED_USER));
 		log.debug("user: {}", user);
 		return tokenResponse(user);
