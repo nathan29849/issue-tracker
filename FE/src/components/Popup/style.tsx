@@ -1,18 +1,7 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { flexbox, typoMedium, typoSmall } from '@styles/mixin';
-
-const moveDownAnimation = keyframes`
-  from {
-    opacity: 0;
-    transform: translate3d(0, -1rem, 0);
-  } 
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0 , 0);
-  }
-`;
+import { moveDownAnimation } from '@utils/animation';
 
 export const FilterPopup = styled.div`
   width: 15rem;
