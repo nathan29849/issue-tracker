@@ -5,7 +5,7 @@ import ButtonPage from '@pages/ButtonPage';
 import Callback from '@pages/Callback';
 import IconPage from '@pages/IconPage';
 import IssuePage from '@pages/IssuePage';
-import IssueDetailPage from '@pages/IssuePage/Deatil';
+import IssueDetailPage from '@pages/IssuePage/Detail';
 import LabelPage from '@pages/LabelPage';
 import Login from '@pages/Login';
 import Milestone from '@pages/Milestone';

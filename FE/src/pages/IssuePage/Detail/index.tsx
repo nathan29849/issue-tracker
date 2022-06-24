@@ -2,8 +2,8 @@ import React from 'react';
 
 import * as S from './style';
 
-import { DetailHeader, NewHeader } from '@pages/IssuePage/Deatil/Header';
-import { NewMain } from '@pages/IssuePage/Deatil/Main';
+import { DetailHeader, NewHeader } from '@pages/IssuePage/Detail/Header';
+import { NewMain } from '@pages/IssuePage/Detail/Main';
 
 export default function IssueDetailPage({ newIssue = false }) {
   return (
