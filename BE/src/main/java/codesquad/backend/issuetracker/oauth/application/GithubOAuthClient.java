@@ -3,7 +3,6 @@ package codesquad.backend.issuetracker.oauth.application;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import java.net.URI;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,38 +13,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 
-	private final String accessTokenPath;
-	private final String resourcePath;
-	private final String clientId;
-	private final String clientSecret;
-
-	public GithubOAuthClient(
-		@Value("${oauth.github.access-token-path}") String accessTokenPath,
-		@Value("${oauth.github.resource-path}") String resourcePath,
-		@Value("${oauth.github.client-id}") String clientId,
-		@Value("${oauth.github.client-secret}") String clientSecret
-	) {
-		this.accessTokenPath = accessTokenPath;
-		this.resourcePath = resourcePath;
-		this.clientId = clientId;
-		this.clientSecret = clientSecret;
-	}
-
 	@Override
-	public GithubToken getToken(String code) {
+	public GithubToken getToken(String code, String accessTokenPath, String clientId, String clientSecret) {
 		return WebClient.create()
 			.post()
 			.uri(URI.create(accessTokenPath))
 			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 			.accept(MediaType.APPLICATION_JSON)
-			.bodyValue(createTokenBody(code))
+			.bodyValue(createTokenBody(code, clientId, clientSecret))
 			.retrieve()
 			.bodyToMono(GithubToken.class)
 			.block();
 	}
 
 	@Override
-	public GithubUser getUser(String accessToken) {
+	public GithubUser getUser(String accessToken, String resourcePath) {
 		return WebClient.create()
 			.get()
 			.uri(URI.create(resourcePath))
@@ -56,7 +38,7 @@ public class GithubOAuthClient implements OAuthClient<GithubToken, GithubUser> {
 			.block();
 	}
 
-	private MultiValueMap<String, Object> createTokenBody(String code) {
+	private MultiValueMap<String, Object> createTokenBody(String code, String clientId, String clientSecret) {
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 		body.add("client_id", clientId);
 		body.add("client_secret", clientSecret);

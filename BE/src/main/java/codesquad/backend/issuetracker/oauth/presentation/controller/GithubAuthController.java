@@ -5,18 +5,15 @@ import codesquad.backend.issuetracker.exception.ErrorCode;
 import codesquad.backend.issuetracker.oauth.application.OAuthService;
 import codesquad.backend.issuetracker.oauth.application.JwtFactory;
 import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
+import codesquad.backend.issuetracker.oauth.config.OAuthProperties;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
 import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
-import java.util.Optional;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,29 +30,26 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private final String clientId;
-	private final String githubAuthPath;
 	private final GithubOAuthClient authClient;
 	private final OAuthService oAuthService;
+	private final OAuthProperties oAuthProperties;
 
 	public GithubAuthController(
-		@Value("${oauth.github.client-id}") String clientId,
-		@Value("${oauth.github.authorize-path}") String githubAuthPath,
 		GithubOAuthClient authClient,
-		OAuthService oAuthService
+		OAuthService oAuthService,
+		OAuthProperties oAuthProperties
 	) {
-		this.clientId = clientId;
-		this.githubAuthPath = githubAuthPath;
 		this.authClient = authClient;
 		this.oAuthService = oAuthService;
+		this.oAuthProperties = oAuthProperties;
 	}
 
 	@GetMapping
 	public ResponseEntity<Void> login() {
-		log.debug("AuthPath = {}", githubAuthPath);
+		log.debug("AuthPath = {}", oAuthProperties.getAuthorizePath());
 		URI location = UriComponentsBuilder
-			.fromPath(githubAuthPath)
-			.queryParam("client_id", clientId)
+			.fromPath(oAuthProperties.getAuthorizePath())
+			.queryParam("client_id", oAuthProperties.getClientId())
 			.build()
 			.toUri();
 
@@ -67,11 +61,12 @@ public class GithubAuthController {
 
 	@GetMapping("/callback")
 	public ResponseEntity<GithubLoginUserDto> callback(
-		@RequestParam(value = "code", required = false) String code
+		@RequestParam(value = "code") String code
 	) {
 		log.debug("Auth Code = {}", code);
-		GithubToken githubToken = authClient.getToken(code);
-		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
+		GithubToken githubToken = authClient.getToken(
+			code, oAuthProperties.getAccessTokenPath(), oAuthProperties.getClientId(), oAuthProperties.getClientSecret());
+		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken(), oAuthProperties.getResourcePath());
 
 		log.debug("Node Id = {}", githubUser.getNodeId());
 		User user = oAuthService.upsertUser(githubUser);
