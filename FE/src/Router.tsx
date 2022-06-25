@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
+import AccessDeniedPage from '@pages/AccessDeniedPage';
 import ButtonPage from '@pages/ButtonPage';
 import Callback from '@pages/Callback';
 import IconPage from '@pages/IconPage';
@@ -28,6 +29,7 @@ export default function Router() {
         <Route path="/icons" element={<IconPage />} />
         <Route path="/buttons" element={<ButtonPage />} />
         <Route path="/callback" element={<Callback />} />
+        <Route path="/error" element={<AccessDeniedPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
