@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
 
 import I from '@components/Icons';
 import Filter from '@components/Issue/Filter';
+import { useSearch } from '@hooks/useSearch';
 import { assigneeState } from '@recoil/atoms/assignee';
 import { authorState } from '@recoil/atoms/author';
 import { issueState } from '@recoil/atoms/issue';
@@ -14,6 +16,8 @@ import { mileStoneState } from '@recoil/atoms/milestone';
 export type FilterLabelTypes = 'assignee' | 'label' | 'mileStone' | 'author';
 
 export default function Navigation() {
+  const { init } = useSearch('q', 'is:open');
+  const location = useLocation();
   const filterLabels: FilterLabelTypes[] = [
     'assignee',
     'label',
@@ -54,15 +58,11 @@ export default function Navigation() {
 
   const handleLabelClick = (status: string) => {
     if (status === 'open') {
-      setLabelIssueStatus({
-        open: true,
-        close: false,
-      });
+      setLabelIssueStatus({ open: true, close: false });
+      init({ paramValue: 'is:open' });
     } else if (status === 'close') {
-      setLabelIssueStatus({
-        open: false,
-        close: true,
-      });
+      setLabelIssueStatus({ open: false, close: true });
+      init({ paramValue: 'is:close' });
     }
   };
 
@@ -71,6 +71,20 @@ export default function Navigation() {
   };
 
   const onPopup = (label: FilterLabelTypes) => !!popupState[label];
+
+  useEffect(() => {
+    const urlSearch = decodeURI(decodeURIComponent(location.search));
+    const params = new URLSearchParams(urlSearch);
+    const urlValues = params.get('q');
+
+    if (urlValues === null) return;
+
+    if (urlValues === 'is:open') {
+      setLabelIssueStatus({ open: true, close: false });
+    } else if (urlValues === 'is:close') {
+      setLabelIssueStatus({ open: false, close: true });
+    }
+  }, [location]);
 
   return (
     <NavigationLayer>
