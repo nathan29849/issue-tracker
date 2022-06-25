@@ -6,7 +6,7 @@ import { FilterLabelTypes } from '@components/Issue/Navigation';
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
 import { IPopupData } from '@components/Popup/type';
-import useComponentVisible from '@hooks/useComponentVisible.jsx';
+import useComponentVisible from '@hooks/useComponentVisible';
 import { useSearch } from '@hooks/useSearch';
 
 interface IFilterProps {
