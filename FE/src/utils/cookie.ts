@@ -49,6 +49,26 @@ export const getCookie = (key: string): string | undefined => {
   return result;
 };
 
-export const deleteCookie = (key: string) => {
-  setCookie(key, '', { 'max-age': '-1' });
+interface DeleteCookieFn {
+  (key: string): void;
+  (keyArray: string[]): void;
+}
+
+const deleteCookieFnsMap = {
+  deleteCookieByKey: (key: string) => {
+    setCookie(key, '', { 'max-age': '-1' });
+  },
+
+  deleteCookieByKeyArray: (keyArray: string[]) => {
+    keyArray.forEach((key: string) => setCookie(key, '', { 'max-age': '-1' }));
+  },
+};
+
+export const deleteCookie: DeleteCookieFn = param => {
+  const { deleteCookieByKey, deleteCookieByKeyArray } = deleteCookieFnsMap;
+  if (typeof param === 'string') {
+    deleteCookieByKey(param);
+    return;
+  }
+  deleteCookieByKeyArray(param);
 };
