@@ -20,7 +20,8 @@
       "@styles/*": ["src/styles/*"],
       "@constants/*": ["src/constants/*"],
       "@recoil/*": ["src/recoil/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@type/*": ["src/type/*"]
     }
   },
   "include": ["src"],
