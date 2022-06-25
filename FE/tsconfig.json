@@ -21,7 +21,8 @@
       "@constants/*": ["src/constants/*"],
       "@recoil/*": ["src/recoil/*"],
       "@utils/*": ["src/utils/*"],
-      "@type/*": ["src/type/*"]
+      "@type/*": ["src/type/*"],
+      "@constants": ["src/constants/*"]
     }
   },
   "include": ["src"],
