@@ -32,7 +32,7 @@ export const getCookie = (key: string): string | undefined => {
   const cookieArr = cookie.split(';');
 
   cookieArr.some(cookieStr => {
-    const cookieStrArr = cookieStr.split('=');
+    const cookieStrArr = cookieStr.trim().split('=');
     const [cookieKey, cookieValue] = [
       cookieStrArr[0],
       cookieStrArr.slice(1).join(''),
@@ -47,4 +47,8 @@ export const getCookie = (key: string): string | undefined => {
   });
 
   return result;
+};
+
+export const deleteCookie = (key: string) => {
+  setCookie(key, '', { 'max-age': '-1' });
 };
