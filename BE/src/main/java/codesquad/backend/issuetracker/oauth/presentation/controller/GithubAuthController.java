@@ -2,19 +2,18 @@ package codesquad.backend.issuetracker.oauth.presentation.controller;
 
 import codesquad.backend.issuetracker.exception.AuthException;
 import codesquad.backend.issuetracker.exception.ErrorCode;
-import codesquad.backend.issuetracker.oauth.application.OAuthService;
+import codesquad.backend.issuetracker.oauth.application.LoginService;
 import codesquad.backend.issuetracker.oauth.application.JwtFactory;
-import codesquad.backend.issuetracker.oauth.application.GithubOAuthClient;
+import codesquad.backend.issuetracker.oauth.application.GithubAuthService;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
 import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -23,40 +22,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @RestController
 @RequestMapping("/oauth/github")
 public class GithubAuthController {
 
-	private final String clientId;
-	private final String githubAuthPath;
-	private final GithubOAuthClient authClient;
-	private final OAuthService oAuthService;
+	private final GithubAuthService authService;
+	private final LoginService loginService;
 
 	public GithubAuthController(
-		@Value("${oauth.github.client-id}") String clientId,
-		@Value("${oauth.github.authorize-path}") String githubAuthPath,
-		GithubOAuthClient authClient,
-		OAuthService oAuthService
+		GithubAuthService authService, LoginService loginService
 	) {
-		this.clientId = clientId;
-		this.githubAuthPath = githubAuthPath;
-		this.authClient = authClient;
-		this.oAuthService = oAuthService;
+		this.authService = authService;
+		this.loginService = loginService;
 	}
 
 	@GetMapping
 	public ResponseEntity<Void> login() {
-		log.debug("AuthPath = {}", githubAuthPath);
-		URI location = UriComponentsBuilder
-			.fromPath(githubAuthPath)
-			.queryParam("client_id", clientId)
-			.build()
-			.toUri();
 
+		URI location = authService.getLocation();
 		log.debug("Location = {}", location);
+
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
 			.header(HttpHeaders.LOCATION, location.toString())
 			.build();
@@ -64,14 +51,14 @@ public class GithubAuthController {
 
 	@GetMapping("/callback")
 	public ResponseEntity<GithubLoginUserDto> callback(
-		@RequestParam(value = "code", required = false) String code
+		@RequestParam String code
 	) {
 		log.debug("Auth Code = {}", code);
-		GithubToken githubToken = authClient.getToken(code);
-		GithubUser githubUser = authClient.getUser(githubToken.getAccessToken());
+		GithubToken githubToken = authService.getToken(code);
+		GithubUser githubUser = authService.getUser(code, githubToken.getAccessToken());
 
 		log.debug("Node Id = {}", githubUser.getNodeId());
-		User user = oAuthService.upsertUser(githubUser);
+		User user = loginService.upsertUser(githubUser);
 
 		return tokenResponse(user);
 	}
@@ -80,15 +67,24 @@ public class GithubAuthController {
 		return ResponseEntity.status(HttpStatus.OK)
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
-			.header(HttpHeaders.LOCATION, "/")
-			.body(new GithubLoginUserDto(user.getAuthId(), user.getUsername(), user.getImageUrl()));
+			.body(new GithubLoginUserDto(
+				user.getAuthId(), user.getUsername(), user.getImageUrl(),
+				getToken(user, TokenType.ACCESS), getToken(user, TokenType.REFRESH)
+			));
+	}
+
+	private String getToken(User user, TokenType type){
+		return JwtFactory.create(user, type);
 	}
 
 	private String getCookie(User user, TokenType type) {
-		String token = JwtFactory.create(user, type);
+		String token = getToken(user, type);
 		return ResponseCookie
 			.from(type.getType(), token)
 			.maxAge(type.getTime())
+			.domain("localhost")
+			.sameSite(SameSite.NONE.toString())
+			.secure(true)
 			.path("/")
 			.build()
 			.toString();
@@ -99,7 +95,7 @@ public class GithubAuthController {
 		HttpServletRequest request
 	) {
 		String nodeId = (String) request.getAttribute("nodeId");
-		User user = oAuthService.findByNodeId(nodeId)
+		User user = loginService.findByNodeId(nodeId)
 			.orElseThrow(() -> new AuthException(ErrorCode.UNAUTHORIZED_USER));
 		log.debug("user: {}", user);
 		return tokenResponse(user);

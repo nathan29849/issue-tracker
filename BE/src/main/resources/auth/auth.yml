@@ -1,0 +1,8 @@
+oauth:
+  github:
+    client-id: ${CLIENT_ID}
+    client-secret: ${CLIENT_SECRET}
+    redirect-uri: http://localhost:8080/api/oauth/github/callback
+    authorize-path: https://github.com/login/oauth/authorize
+    access-token-path: https://github.com/login/oauth/access_token
+    resource-path: https://api.github.com/user

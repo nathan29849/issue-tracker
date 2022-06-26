@@ -2,7 +2,7 @@ package codesquad.backend.issuetracker.oauth.interceptor;
 
 import codesquad.backend.issuetracker.exception.AuthException;
 import codesquad.backend.issuetracker.exception.ErrorCode;
-import codesquad.backend.issuetracker.oauth.application.OAuthService;
+import codesquad.backend.issuetracker.oauth.application.LoginService;
 import codesquad.backend.issuetracker.user.domain.User;
 import io.jsonwebtoken.Claims;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @RequiredArgsConstructor
 public abstract class CommonInterceptor implements HandlerInterceptor {
 
-	private final OAuthService oAuthService;
+	private final LoginService loginService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -34,7 +34,6 @@ public abstract class CommonInterceptor implements HandlerInterceptor {
 		Claims claims = getClaims(authorizationHeader);
 		User user = userValidationCheck(claims);
 		request.setAttribute("nodeId", user.getNodeId());
-
 		return true;
 	}
 
@@ -46,7 +45,7 @@ public abstract class CommonInterceptor implements HandlerInterceptor {
 
 	protected User userValidationCheck(Claims claims) {
 		String userSecret = (String) claims.get("nodeId");
-		return oAuthService.findByNodeId(userSecret)
+		return loginService.findByNodeId(userSecret)
 			.orElseThrow(() -> new AuthException(ErrorCode.UNAUTHORIZED_USER));
 	}
 

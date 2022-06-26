@@ -23,7 +23,12 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(authInterceptor)
 			.order(1)
 			.addPathPatterns("/**")
-			.excludePathPatterns("/oauth/**", "/error/**");
+			.excludePathPatterns(
+				"/oauth/**",
+				"/error/**",
+				"/v3/api-docs/**",
+				"/swagger-ui/**"
+			);
 
 		registry.addInterceptor(refreshInterceptor)
 			.order(2)
@@ -35,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 		registry.addMapping("/**")
 			.allowedOrigins("http://localhost:3000")
-			.allowedMethods("*");
+			.allowCredentials(true)
+			.allowedMethods("GET", "POST", "PUT", "PATCH");
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OAuthService {
+public class LoginService {
 
 	private final UserRepository userRepository;
 
@@ -23,7 +23,7 @@ public class OAuthService {
 		User user = new User(
 			githubUser.getGithubId(),
 			githubUser.getUsername(),
-			githubUser.getUserSecret(),
+			githubUser.getNodeId(),
 			githubUser.getImageUrl()
 		);
 
