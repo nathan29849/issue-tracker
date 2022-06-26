@@ -19,7 +19,7 @@ public class CommentController {
 
 	@Operation(summary = "코멘트 생성")
 	@PostMapping("/{id}/comments")
-	public ResponseEntity<Void> create(
+	public CommentDto create(
 		@PathVariable Long id,
 		@RequestBody CommentCreateRequest commentCreateRequest
 	) {
@@ -45,6 +45,6 @@ public class CommentController {
 		return null;
 	}
 
-	// Reaction 생성, 조회 추가 예정
+	// TODO Reaction 생성, 조회 추가 예정
 
 }
