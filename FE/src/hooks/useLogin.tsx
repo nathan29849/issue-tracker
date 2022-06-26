@@ -45,7 +45,7 @@ export const useSilentRefresh = () => {
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userState);
 
-  const silentRefresh = async () => {
+  const silentRefresh = async (fallbackURL: string = loginPagePath) => {
     try {
       const { accessToken, refreshToken, userId, userName, profileImageUrl } =
         await githubSilentRefresh();
@@ -55,7 +55,7 @@ export const useSilentRefresh = () => {
     } catch (error) {
       console.error('Silent Refresh Error: ', error);
       deleteCookie([ACCESS_TOKEN, REFRESH_TOKEN]);
-      navigate(loginPagePath);
+      navigate(fallbackURL);
     }
   };
 
