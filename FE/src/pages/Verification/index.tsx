@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
+import { useIsLoggedIn } from '@hooks/useIsLoggedIn';
 import { useSilentRefresh } from '@hooks/useLogin';
-import { userState } from '@recoil/atoms/user';
 
 function Verification() {
-  const user = useRecoilValue(userState);
+  const isLoggedIn = useIsLoggedIn();
   const silentRefresh = useSilentRefresh();
 
   useEffect(() => {
-    if (user !== null) {
+    if (isLoggedIn) {
       return;
     }
 
     silentRefresh('/error');
-  }, [user]);
+  }, [isLoggedIn]);
   return <Outlet />;
 }
 
