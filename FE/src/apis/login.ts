@@ -20,7 +20,7 @@ export const githubLogin = async (searchParams: string): Promise<UserData> => {
   return data;
 };
 
-export const silentRefresh = async (): Promise<UserData> => {
+export const githubSilentRefresh = async (): Promise<UserData> => {
   const refreshToken = getCookie('refreshToken');
   const response = await fetch(
     `${process.env.TEAM30_GITHUB_OAUTH_URL}/refresh`,
