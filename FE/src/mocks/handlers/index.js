@@ -1,6 +1,8 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
+import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
+
 const getUser = rest.get('/user', (req, res, ctx) =>
   res(
     ctx.status(200),
@@ -82,4 +84,10 @@ const getLable = rest.get('/issue/label', (req, res, ctx) =>
   ),
 );
 
-export const handlers = [getUser, getIssue, getLable];
+export const handlers = [
+  getUser,
+  getIssue,
+  getLable,
+  GitHubLogin,
+  RefreshGitHubLogin,
+];
