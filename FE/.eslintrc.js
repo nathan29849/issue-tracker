@@ -33,6 +33,7 @@ module.exports = {
     'react/function-component-definition': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'no-use-before-define': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
     'import/order': [
       'error',
       {
