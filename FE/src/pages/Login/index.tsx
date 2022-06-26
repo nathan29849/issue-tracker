@@ -6,20 +6,27 @@ import * as S from './style';
 
 import { LoginButton, TextButton } from '@components/Button';
 import I from '@components/Icons';
+import { useSilentRefresh } from '@hooks/useLogin';
 import { userState } from '@recoil/atoms/user';
 import theme from '@styles/theme';
 
 export default function Login() {
   const user = useRecoilValue(userState);
+
   const navigate = useNavigate();
+  const silentRefresh = useSilentRefresh();
 
   useEffect(() => {
     // 유저 정보가 있으면 로그인
+    // 로그인 되어있는 유저가 로그인 페이지로 이동하는 경우.
     if (user !== null) {
       navigate('/issue');
+      return;
     }
 
-    // 유저 정보가 없는 경우, 액세스 토큰을 한번 보내보고 만료가 되지 않은 경우에 로그인 및 유저 정보 세팅
+    // 유저 정보가 없으면 Silent Refresh
+    // 성공시 user 세팅 -> 다시한번 Effect가 실행되면서 issue페이지로 이동
+    silentRefresh();
   }, [user]);
 
   return (
