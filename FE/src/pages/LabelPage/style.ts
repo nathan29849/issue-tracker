@@ -65,4 +65,6 @@ export const Main = styled.div`
   overflow: hidden;
 `;
 
-export const LabelPageLayer = styled.div``;
+export const LabelPageLayer = styled.div`
+  margin-bottom: 6rem;
+`;
