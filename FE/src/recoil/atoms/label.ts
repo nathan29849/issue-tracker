@@ -4,6 +4,7 @@ export interface ILabelTypes {
   id: number;
   backgroundColor: string;
   title: string;
+  description?: string;
   textColor: string;
 }
 
