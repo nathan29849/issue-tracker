@@ -1,11 +1,14 @@
 package codesquad.backend.issuetracker.milestone.presentation.controller;
 
+import codesquad.backend.issuetracker.milestone.application.MilestoneService;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import java.time.LocalDate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/milestones")
 @RestController
+@RequiredArgsConstructor
 public class MilestoneController {
+
+	private final MilestoneService milestoneService;
 
 	@Operation(summary = "마일스톤 전체 조회")
 	@GetMapping
 	public MilestonesResponseDto retrieveMilestones() {
-		return null;
+		return milestoneService.findAllByDueDate(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 개수 조회")
