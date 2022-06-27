@@ -35,7 +35,9 @@ export default function LabelPage() {
           </Button>
         )}
       </S.Header>
-      {openForm && <Form title="새로운 레이블 추가" />}
+      {openForm && (
+        <Form title="새로운 레이블 추가" setOpenForm={setOpenForm} />
+      )}
       <S.Main>
         <S.LabelCount>
           {status === 'success' ? data.length : 0}개의 레이블
@@ -44,8 +46,11 @@ export default function LabelPage() {
           data.map((label: ILabelTypes) => (
             <S.LabelItemWrapper key={label.id}>
               <S.LabelLeft>
-                <Label bgColor={label.color} darkText={label.darkText}>
-                  {label.name}
+                <Label
+                  bgColor={label.backgroundColor}
+                  darkText={label.textColor === 'BLACK'}
+                >
+                  {label.title}
                 </Label>
                 <S.LabelTitle>Label Title</S.LabelTitle>
               </S.LabelLeft>
