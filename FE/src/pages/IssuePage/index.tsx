@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import * as S from './style';
 
 import { Button } from '@components/Button';
@@ -5,6 +7,15 @@ import FilterBar from '@components/FilterBar';
 import I from '@components/Icons';
 import Issue from '@components/Issue';
 import TabList from '@components/TabList';
+
+const NewIssueButton = () => (
+  <Link to="new">
+    <Button>
+      <I.Plus />
+      이슈 추가
+    </Button>
+  </Link>
+);
 
 export default function IssuePage() {
   return (
@@ -15,10 +26,7 @@ export default function IssuePage() {
         </S.HeaderLeft>
         <S.HeaderRight>
           <TabList />
-          <Button>
-            <I.Plus />
-            이슈 추가
-          </Button>
+          <NewIssueButton />
         </S.HeaderRight>
       </S.Header>
       <S.Main>

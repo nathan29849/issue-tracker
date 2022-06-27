@@ -6,8 +6,8 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
   switch (label) {
     case '이슈':
       return <div id={popupData.status}>{popupData.name}</div>;
-    case '담당자':
-    case '작성자':
+    case 'author':
+    case 'assignee':
       return (
         <>
           <div
@@ -22,7 +22,7 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
           <div className="filter__name">{popupData.name}</div>
         </>
       );
-    case '레이블':
+    case 'label':
       return (
         <>
           <div
@@ -37,7 +37,7 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
           <div className="filter__name">{popupData.name}</div>
         </>
       );
-    case '마일스톤':
+    case 'mileStone':
       return <div className="filter__name">{popupData.name}</div>;
     default:
       throw Error('label type not found');

@@ -6,7 +6,7 @@ import { FilterLabelTypes } from '@components/Issue/Navigation';
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
 import { IPopupData } from '@components/Popup/type';
-import useComponentVisible from '@hooks/useComponentVisible.jsx';
+import useComponentVisible from '@hooks/useComponentVisible';
 import { useSearch } from '@hooks/useSearch';
 
 interface IFilterProps {
@@ -28,14 +28,14 @@ export default function Filter({
     handleFilterClick(label, true);
     setIsComponentVisible(!isComponentVisible);
   };
-  const { replace } = useSearch('q', 'is:open');
+  const { replace } = useSearch('q', '');
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    replace(popupData.status, popupData.name);
+    replace(label, popupData.name);
     setIsComponentVisible(false);
   };
 

@@ -1,6 +1,8 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
+import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
+
 const getUser = rest.get('/user', (req, res, ctx) =>
   res(
     ctx.status(200),
@@ -33,10 +35,21 @@ const getIssue = rest.get('/issue', (req, res, ctx) =>
         id: 2,
         number: 5, // 이슈 고유값
         status: 'close',
-        title: '이슈 페이지 기능 작업',
+        title: '로그인 기능 작업',
         manager: ['muffin', 'cola'],
         labels: ['feat', 'sub', 'bug'],
-        milestone: '1주차 이슈트래커',
+        milestone: '2주차 이슈트래커',
+        author: [{ name: 'cola', iamgeUrl: 'http://xxx' }],
+        date: '2022-12-17T03:24:00',
+      },
+      {
+        id: 3,
+        number: 2, // 이슈 고유값
+        status: 'close',
+        title: '리팩토링 작업',
+        manager: ['muffin', 'cola'],
+        labels: ['feat', 'sub', 'bug'],
+        milestone: '3주차 이슈트래커',
         author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
         date: '2022-12-17T03:24:00',
       },
@@ -71,4 +84,10 @@ const getLable = rest.get('/issue/label', (req, res, ctx) =>
   ),
 );
 
-export const handlers = [getUser, getIssue, getLable];
+export const handlers = [
+  getUser,
+  getIssue,
+  getLable,
+  GitHubLogin,
+  RefreshGitHubLogin,
+];

@@ -37,9 +37,9 @@ export const useSearch = (
     const targetString = [key, value].join(sep);
 
     // 예시) sep 가 :라면
-    // key:word 인 모든 값들에 매칭됨. (띄어쓰기는 포함하지 않음)
+    // 정규식: (key) + (sep) + (한글,영어 n글자, 띄어쓰기 미포함)으로 매칭됩니다.
     // "?q=key1:value1 key2:value2"인 경우 "key1:value1"와 "key2:value2"에 매칭됨.
-    const regex = new RegExp(`${key}${sep}\\w*`, 'g');
+    const regex = new RegExp(`${key}${sep}[ㄱ-ㅎㅏ-ㅣ가-힣\\w]*`, 'g');
 
     if (paramValue.includes(targetString)) {
       return;

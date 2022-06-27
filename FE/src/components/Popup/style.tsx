@@ -1,25 +1,14 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { flexbox, typoMedium, typoSmall } from '@styles/mixin';
-
-const moveDownAnimation = keyframes`
-  from {
-    opacity: 0;
-    transform: translate3d(0, -1rem, 0);
-  } 
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0 , 0);
-  }
-`;
+import { moveDownAnimation } from '@utils/animation';
 
 export const FilterPopup = styled.div`
   width: 15rem;
   min-height: 2.75rem;
   border-radius: 1rem;
   border: 1px solid ${({ theme }) => theme.color.line};
-  z-index: 10;
+  z-index: ${({ theme }) => theme.zIndex.header};
   overflow: hidden;
   box-shadow: 0 0.5rem 1.5rem ${({ theme }) => theme.color.line};
   animation: ${moveDownAnimation} 300ms ease;

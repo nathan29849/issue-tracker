@@ -4,6 +4,7 @@ export interface ILabelTypes {
   id: number;
   color: string;
   name: string;
+  darkText?: boolean;
 }
 
 export const labelState = atom<{ info: ILabelTypes[] }>({
@@ -13,12 +14,12 @@ export const labelState = atom<{ info: ILabelTypes[] }>({
       {
         id: 1,
         color: '#000000',
-        name: 'cola',
+        name: 'colaLabel',
       },
       {
         id: 2,
         color: '#0025E7',
-        name: 'muffin',
+        name: 'muffinLabel',
       },
     ],
   },

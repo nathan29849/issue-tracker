@@ -11,11 +11,11 @@ export const mileStoneState = atom<{ info: IMileStoneTypes[] }>({
     info: [
       {
         id: 1,
-        name: '1주차 마일스톤',
+        name: 'muffinMileStone',
       },
       {
         id: 2,
-        name: '2주차 마일스톤',
+        name: 'colaMileStone',
       },
     ],
   },

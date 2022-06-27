@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import * as S from './style';
@@ -7,6 +8,7 @@ import I from '@components/Icons';
 import { Label } from '@components/Label';
 import Form from '@components/Label/Form';
 import TabList from '@components/TabList';
+import { ILabelTypes } from '@recoil/atoms/label';
 
 const getLabels = async () => {
   const res = await fetch('/issue/label');
@@ -15,23 +17,31 @@ const getLabels = async () => {
 
 export default function LabelPage() {
   const { data, status } = useQuery('labelData', getLabels);
+  const [openForm, setOpenForm] = useState(false);
 
   return (
     <S.LabelPageLayer>
       <S.Header>
         <TabList />
-        <Button>
-          <I.Plus />
-          추가
-        </Button>
+        {openForm ? (
+          <Button onClick={() => setOpenForm(!openForm)} outlined>
+            <I.XMark color="#007AFF" />
+            닫기
+          </Button>
+        ) : (
+          <Button onClick={() => setOpenForm(!openForm)}>
+            <I.Plus />
+            추가
+          </Button>
+        )}
       </S.Header>
-      <Form title="새로운 레이블 추가" />
+      {openForm && <Form title="새로운 레이블 추가" />}
       <S.Main>
         <S.LabelCount>
           {status === 'success' ? data.length : 0}개의 레이블
         </S.LabelCount>
         {status === 'success' &&
-          data.map((label: any) => (
+          data.map((label: ILabelTypes) => (
             <S.LabelItemWrapper key={label.id}>
               <S.LabelLeft>
                 <Label bgColor={label.color} darkText={label.darkText}>

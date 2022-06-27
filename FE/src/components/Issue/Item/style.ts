@@ -8,6 +8,8 @@ export const ItemLayer = styled.div`
   background-color: ${({ theme }) => theme.color.offWhite};
   border-top: 1px solid;
   border-color: ${({ theme }) => theme.color.line};
+  border-radius: ${(props: { lastIdx: any }) =>
+    props.lastIdx ? '0 0 1rem 1rem' : ''};
   ${flexbox({ dir: 'row', jc: 'flex-start', ai: 'flex-start' })};
 `;
 
