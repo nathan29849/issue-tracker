@@ -35,7 +35,11 @@ public class MilestoneService {
 			.filter(m -> m.getDueDate().isAfter(now))
 			.collect(Collectors.toList());
 
-		return MilestonesResponseDto.of(currentMilestones, expiredMilestones);
+		List<MilestoneDto> nullDueDateMilestones = milestones.stream()
+			.filter(m -> m.getDueDate() == null)
+			.collect(Collectors.toList());
+
+		return MilestonesResponseDto.of(currentMilestones, expiredMilestones, nullDueDateMilestones);
 	}
 
 	@Transactional(readOnly = true)
