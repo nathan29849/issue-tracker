@@ -1,11 +1,13 @@
 package codesquad.backend.issuetracker.milestone.application;
 
+import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneRepository;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +43,16 @@ public class MilestoneService {
 		return MilestoneCountDto.of(
 			milestoneRepository.countMilestoneByDueDateBefore(now)
 		);
+	}
+
+	@Transactional
+	public Long addMilestone(MilestoneCreateRequest milestoneCreateRequest) {
+		Milestone milestone = Milestone.createBy(
+			milestoneCreateRequest.getTitle(),
+			milestoneCreateRequest.getDescription(),
+			milestoneCreateRequest.getDueDate());
+
+		Milestone savedMilestone = milestoneRepository.save(milestone);
+		return savedMilestone.getId();
 	}
 }

@@ -40,10 +40,11 @@ public class MilestoneController {
 
 	@Operation(summary = "마일스톤 생성")
 	@PostMapping
-	public ResponseEntity<Void> create(
+	public ResponseEntity<Long> create(
 		@RequestBody MilestoneCreateRequest milestoneCreateRequest
 	) {
-		return null;
+		Long milestoneId = milestoneService.addMilestone(milestoneCreateRequest);
+		return ResponseEntity.ok().body(milestoneId);
 	}
 
 	@Operation(summary = "마일스톤 수정", description = "일부만 수정이 가능합니다.")
