@@ -2,9 +2,9 @@ import { atom } from 'recoil';
 
 export interface ILabelTypes {
   id: number;
-  color: string;
-  name: string;
-  darkText?: boolean;
+  backgroundColor: string;
+  title: string;
+  textColor: string;
 }
 
 export const labelState = atom<{ info: ILabelTypes[] }>({
@@ -13,13 +13,15 @@ export const labelState = atom<{ info: ILabelTypes[] }>({
     info: [
       {
         id: 1,
-        color: '#000000',
-        name: 'colaLabel',
+        backgroundColor: '#000000',
+        title: 'colaLabel',
+        textColor: 'BLACK',
       },
       {
         id: 2,
-        color: '#0025E7',
-        name: 'muffinLabel',
+        backgroundColor: '#0025E7',
+        title: 'muffinLabel',
+        textColor: 'BLACK',
       },
     ],
   },

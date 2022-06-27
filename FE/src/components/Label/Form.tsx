@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useMutation } from 'react-query';
 
 import * as S from './formStyle';
 
@@ -9,37 +10,29 @@ import { Input } from '@components/Input';
 import { Label } from '@components/Label';
 import Popup from '@components/Popup';
 import RadioSelection from '@components/RadioSelection';
-import useComponentVisible from '@hooks/useComponentVisible.jsx';
+import {
+  radioColorText,
+  initBgColor,
+  defaultBgColors,
+} from '@constants/default';
+import useComponentVisible from '@hooks/useComponentVisible';
 import { typoXSmall, flexbox } from '@styles/mixin';
 import theme from '@styles/theme';
 
-export default function Form({ title }: { title: string }) {
-  const radioColorText = ['어두운색', '밝은색'];
-  const defaultColors = [
-    '#B60205',
-    '#D93F0B',
-    '#FBCA04',
-    '#0E8A16',
-    '#006B75',
-    '#1D76DB',
-    '#0052CC',
-    '#5319E7',
-    '#E99695',
-    '#F9D0C4',
-    '#FEF2C0',
-    '#C2E0C6',
-    '#BFDADC',
-    '#C5DEF5',
-    '#BFD4F2',
-    '#D4C5F9',
-  ];
+export default function Form({
+  title,
+  setOpenForm,
+}: {
+  title: string;
+  setOpenForm: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
   const [labelText, setLabelText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
-  const [bgColor, setBgColor] = useState('#EFF0F6');
-  const [radioState, setRadioState] = useState('어두운색');
+  const [bgColor, setBgColor] = useState(initBgColor);
+  const [radioState, setRadioState] = useState(radioColorText[0]);
 
   const handleLabelText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabelText(e.target.value);
@@ -49,7 +42,7 @@ export default function Form({ title }: { title: string }) {
     setDescriptionText(e.target.value);
   };
 
-  const handleBgColor = (e: React.MouseEvent<HTMLElement>) => {
+  const handleBgColor = () => {
     // 랜덤 컬러 색상 만드는 함수
     const randomColor = `#${Math.round(Math.random() * 0xffffff)
       .toString(16)
@@ -77,8 +70,37 @@ export default function Form({ title }: { title: string }) {
     setIsComponentVisible(false);
   };
 
+  const createLabelPost = useMutation((newLabel: any) =>
+    fetch('/issue/label', {
+      method: 'POST',
+      body: JSON.stringify(newLabel),
+    }),
+  );
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // api 요청
+
+    const newLabel = {
+      title: labelText,
+      description: descriptionText,
+      backgroundColor: bgColor,
+      textColor: radioState === '어두운색' ? 'BLACK' : 'WHITE',
+    };
+
+    createLabelPost.mutate(newLabel);
+  };
+
+  useEffect(() => {
+    // 임시로 응답이 정상적으로 왔을때 처리 차후는 Persist mutation 적용필요
+    if (createLabelPost.isSuccess) {
+      alert('label add success');
+      setOpenForm(false);
+    }
+  }, [createLabelPost, setOpenForm]);
+
   return (
-    <S.FormWrapper title={title}>
+    <S.FormWrapper title={title} onSubmit={handleSubmit}>
       <S.FormLeftInner>
         <S.FormTitle>{title}</S.FormTitle>
         <Label bgColor="#EFF0F6" darkText>
@@ -90,7 +112,6 @@ export default function Form({ title }: { title: string }) {
         <S.FormRightInner>
           <Input
             type="text"
-            id="label"
             width={904}
             value={labelText || ''}
             placeholder="레이블 이름"
@@ -98,7 +119,6 @@ export default function Form({ title }: { title: string }) {
           />
           <Input
             type="text"
-            id="description"
             width={904}
             value={descriptionText || ''}
             placeholder="설명(선택)"
@@ -108,7 +128,6 @@ export default function Form({ title }: { title: string }) {
             <S.ColorWrapper>
               <Input
                 type="text"
-                id="color"
                 value={bgColor || ''}
                 width={240}
                 placeholder="배경 색상"
@@ -149,7 +168,7 @@ export default function Form({ title }: { title: string }) {
                         flex-wrap: wrap;
                       `}
                     >
-                      {defaultColors.map(color => (
+                      {defaultBgColors.map(color => (
                         <button
                           type="button"
                           key={color}
@@ -184,7 +203,7 @@ export default function Form({ title }: { title: string }) {
         </S.FormRightInner>
         <S.FormButtonWrapper>
           <Button
-            type="button"
+            type="submit"
             disabled={labelText === '' || bgColor === '' || radioState === ''}
           >
             <I.Plus />
