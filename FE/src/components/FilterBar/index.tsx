@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import React, { useState, useEffect } from 'react';
 
 import * as S from './style';
 
@@ -6,7 +7,12 @@ import I from '@components/Icons';
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
 import { IPopupData } from '@components/Popup/type';
+import {
+  searchDebounceDelay,
+  limitedLengthSearchValue,
+} from '@constants/default';
 import useComponentVisible from '@hooks/useComponentVisible';
+import useDebounce from '@hooks/useDebouce';
 import { useSearch } from '@hooks/useSearch';
 
 export default function FilterBar() {
@@ -19,6 +25,10 @@ export default function FilterBar() {
       { id: 5, status: 'is:close', name: '닫힌이슈' },
     ],
   };
+
+  const [searchValue, setSearchValue] = useState('');
+  const [isValidSearch, setIsValidSearch] = useState(true);
+  const debouncedValue = useDebounce(searchValue, searchDebounceDelay);
 
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
@@ -38,8 +48,26 @@ export default function FilterBar() {
     setIsComponentVisible(false);
   };
 
+  const handleChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isValidSearch) alert('문자수 길이를 체크해주세요!');
+    // debouncedValue 파싱 함수 호출 이후 파싱된 데이터로 api 요청하기
+  };
+
+  useEffect(() => {
+    if (debouncedValue) {
+      if (debouncedValue.length > limitedLengthSearchValue)
+        setIsValidSearch(false);
+      else setIsValidSearch(true);
+    }
+  }, [debouncedValue]);
+
   return (
-    <S.FilterBarLayer>
+    <S.FilterBarLayer onSubmit={handleSubmit}>
       <S.FilterButton onClick={handleOnFilterPopup}>
         <span>필터</span>
         <div
@@ -70,8 +98,17 @@ export default function FilterBar() {
         <S.Icon>
           <I.Search />
         </S.Icon>
-        <S.Input type="text" placeholder="Search All Issues" />
+        <S.Input
+          type="text"
+          placeholder="Search All Issues"
+          onChange={handleChangeSearchInput}
+        />
       </S.SearchBar>
+      <S.FilterErrorText>
+        {!isValidSearch && (
+          <span>검색 문자가 {limitedLengthSearchValue}자 초과하였습니다.</span>
+        )}
+      </S.FilterErrorText>
     </S.FilterBarLayer>
   );
 }
