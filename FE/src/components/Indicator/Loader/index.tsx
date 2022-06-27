@@ -3,25 +3,32 @@ import React from 'react';
 
 import * as S from './style';
 
-import { alignPosXY, flexbox } from '@styles/mixin';
+import { alignPosXY } from '@styles/mixin';
 import theme from '@styles/theme';
 
-export const Loader: React.FC<{ text?: string; size?: number }> = ({
+export const Loader: React.FC<{
+  text?: string;
+  size?: number;
+  loaderColor?: string;
+  textColor?: string;
+}> = ({
   text,
   size = 1,
+  loaderColor = theme.color.titleActive,
+  textColor = theme.color.titleActive,
 }) => (
   <div
     css={css`
+      display: inline-block;
       position: relative;
     `}
   >
     <div
       css={css`
-        ${alignPosXY('fixed')};
-        ${flexbox({ jc: 'center', ai: 'center' })}
+        ${alignPosXY()};
         width: ${size}rem;
         height: ${size}rem;
-        border: 0.5rem solid ${theme.color.titleActive};
+        border: 0.5rem solid ${loaderColor};
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-radius: 50%;
@@ -31,10 +38,11 @@ export const Loader: React.FC<{ text?: string; size?: number }> = ({
     {text && (
       <div
         css={css`
-          ${alignPosXY('fixed')};
+          ${alignPosXY()};
+          white-space: nowrap;
           font-size: 1.3rem;
           animation: ${S.shakeAnimation} 100ms infinite;
-          color: ${theme.color.titleActive};
+          color: ${textColor};
         `}
       >
         {text}
