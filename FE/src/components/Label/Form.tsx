@@ -16,6 +16,7 @@ import {
   defaultBgColors,
 } from '@constants/default';
 import useComponentVisible from '@hooks/useComponentVisible';
+import { ILabelTypes } from '@recoil/atoms/label';
 import { typoXSmall, flexbox } from '@styles/mixin';
 import theme from '@styles/theme';
 
@@ -44,9 +45,13 @@ export default function Form({
 
   const handleBgColor = () => {
     // 랜덤 컬러 색상 만드는 함수
-    const randomColor = `#${Math.round(Math.random() * 0xffffff)
-      .toString(16)
-      .toUpperCase()}`;
+    const randomColor = new Array(3).fill(0).reduce((prev: string) => {
+      prev += Math.floor(Math.random() * 127 + 128)
+        .toString(16)
+        .toUpperCase();
+      return prev;
+    }, '#');
+
     setBgColor(randomColor);
   };
 
@@ -70,7 +75,7 @@ export default function Form({
     setIsComponentVisible(false);
   };
 
-  const createLabelPost = useMutation((newLabel: any) =>
+  const createLabelPost = useMutation((newLabel: ILabelTypes) =>
     fetch('/issue/label', {
       method: 'POST',
       body: JSON.stringify(newLabel),
@@ -79,9 +84,9 @@ export default function Form({
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // api 요청
 
     const newLabel = {
+      id: 3,
       title: labelText,
       description: descriptionText,
       backgroundColor: bgColor,
