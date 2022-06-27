@@ -5,6 +5,14 @@ import lombok.Getter;
 @Getter
 public class MilestoneCountDto {
 
-	private Long milestoneCount;
+	private Integer milestoneCount;
+
+	public MilestoneCountDto(Integer milestoneCount) {
+		this.milestoneCount = milestoneCount;
+	}
+
+	public static MilestoneCountDto of(Integer milestoneCount) {
+		return new MilestoneCountDto(milestoneCount);
+	}
 
 }

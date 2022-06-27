@@ -35,7 +35,7 @@ public class MilestoneController {
 	@Operation(summary = "마일스톤 개수 조회")
 	@GetMapping("/count")
 	public MilestoneCountDto retrieveCount(){
-		return null;
+		return milestoneService.findCount(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 생성")

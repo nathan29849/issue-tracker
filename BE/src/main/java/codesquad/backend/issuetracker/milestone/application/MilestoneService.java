@@ -1,6 +1,7 @@
 package codesquad.backend.issuetracker.milestone.application;
 
 import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneRepository;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import java.time.LocalDate;
@@ -33,5 +34,12 @@ public class MilestoneService {
 			.collect(Collectors.toList());
 
 		return MilestonesResponseDto.of(currentMilestones, expiredMilestones);
+	}
+
+	@Transactional(readOnly = true)
+	public MilestoneCountDto findCount(LocalDate now) {
+		return MilestoneCountDto.of(
+			milestoneRepository.countMilestoneByDueDateBefore(now)
+		);
 	}
 }
