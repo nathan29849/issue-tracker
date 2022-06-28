@@ -1,6 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
+import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
 import { PostIssue } from './PostIssue';
 
@@ -100,4 +101,5 @@ export const handlers = [
   GitHubLogin,
   RefreshGitHubLogin,
   PostIssue,
+  GetUsers,
 ];
