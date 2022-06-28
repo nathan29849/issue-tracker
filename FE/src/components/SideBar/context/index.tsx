@@ -4,3 +4,10 @@ export {
   useSetAssigneePanelState,
   AssigneePanelProvider,
 } from './AssigneePanel';
+
+export {
+  useLabelPanel,
+  useLabelPanelState,
+  useSetLabelPanelState,
+  LabelPanelProvider,
+} from './LabelPanel';
