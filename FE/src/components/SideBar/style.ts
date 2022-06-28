@@ -11,6 +11,10 @@ export const Container = styled.div`
 export const PanelContainer = styled.div`
   padding: 2rem;
   width: 19.25rem;
+
+  & + & {
+    border-top: 1px solid ${({ theme }) => theme.color.line};
+  }
 `;
 
 export const Header = styled.header`
@@ -40,13 +44,12 @@ export const Title = styled.h2`
 export const List = styled.ul``;
 
 export const ItemCommon = styled.li`
+  ${flexbox({ ai: 'center' })};
+  word-break: break-all;
   margin-top: 1rem;
 `;
 
-export const AssigneeItem = styled(ItemCommon)`
-  ${flexbox({ ai: 'center' })};
-  word-break: break-all;
-`;
+export const AssigneeItem = styled(ItemCommon)``;
 
 export const AvatarWrapper = styled.div`
   flex-shrink: 0;
@@ -59,6 +62,8 @@ export const AssigneeName = styled.p`
   margin-left: 0.25rem;
 `;
 
-export const LabelItem = styled(ItemCommon)``;
+export const LabelItem = styled(ItemCommon)`
+  height: 1.75rem;
+`;
 
 export const MileStoneItem = styled(ItemCommon)``;
