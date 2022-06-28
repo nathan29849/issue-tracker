@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -42,6 +43,8 @@ public class Milestone {
 	private LocalDateTime updatedAt;
 
 	private LocalDate dueDate;
+
+	@Transient
 	private Integer progressRate;
 
 	@OneToMany(mappedBy = "milestone")

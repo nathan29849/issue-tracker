@@ -7,7 +7,6 @@ import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreate
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +44,12 @@ public class MilestoneService {
 	@Transactional(readOnly = true)
 	public MilestoneCountDto findCount(LocalDate now) {
 		return MilestoneCountDto.of(
-			milestoneRepository.countMilestoneByDueDateBefore(now)
+			milestoneRepository.countMilestoneByDueDateBeforeAndDueDateIsNull(now)
 		);
 	}
 
 	@Transactional
-	public Long addMilestone(MilestoneCreateRequest milestoneCreateRequest) {
+	public Long add(MilestoneCreateRequest milestoneCreateRequest) {
 		Milestone milestone = Milestone.createBy(
 			milestoneCreateRequest.getTitle(),
 			milestoneCreateRequest.getDescription(),

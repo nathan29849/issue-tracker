@@ -43,7 +43,7 @@ public class MilestoneController {
 	public ResponseEntity<Long> create(
 		@RequestBody MilestoneCreateRequest milestoneCreateRequest
 	) {
-		Long milestoneId = milestoneService.addMilestone(milestoneCreateRequest);
+		Long milestoneId = milestoneService.add(milestoneCreateRequest);
 		return ResponseEntity.ok().body(milestoneId);
 	}
 
