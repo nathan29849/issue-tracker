@@ -34,7 +34,7 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
               margin-right: 0.5rem;
             `}
           />
-          <div className="filter__name">{popupData.name}</div>
+          <div className="filter__name">{popupData.title}</div>
         </>
       );
     case 'mileStone':
