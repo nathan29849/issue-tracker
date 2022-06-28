@@ -53,7 +53,7 @@ public class MilestoneController {
 		@PathVariable Long id,
 		@RequestBody MilestoneEditRequest mileStoneEditRequest
 	){
-		return null;
+		return milestoneService.edit(id, mileStoneEditRequest);
 	}
 
 	@Operation(summary = "마일스톤 삭제")

@@ -5,9 +5,11 @@ import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneReposito
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class MilestoneService {
 			.stream()
 			.map(MilestoneDto::createBy)
 			.collect(Collectors.toList());
+
+		// TODO issue open, close 상태에 따라 진행률 계산 로직 필요
 
 		List<MilestoneDto> currentMilestones = milestones.stream()
 			.filter(m -> m.getDueDate().isBefore(now))
@@ -57,5 +61,17 @@ public class MilestoneService {
 
 		Milestone savedMilestone = milestoneRepository.save(milestone);
 		return savedMilestone.getId();
+	}
+
+	@Transactional
+	public MilestoneDto edit(Long id, MilestoneEditRequest mileStoneEditRequest){
+		Milestone milestone = milestoneRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+
+		milestone.edit(mileStoneEditRequest.getTitle(),
+			mileStoneEditRequest.getDescription(),
+			mileStoneEditRequest.getDueDate());
+
+		return MilestoneDto.createBy(milestone);
 	}
 }

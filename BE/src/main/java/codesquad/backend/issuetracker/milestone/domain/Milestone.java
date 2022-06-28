@@ -60,4 +60,18 @@ public class Milestone {
 	public static Milestone createBy(String title, String description, LocalDate dueDate){
 		return new Milestone(title, description, dueDate, 0);
 	}
+
+	public void edit(String title, String description, LocalDate dueDate) {
+		if (title != null){
+			this.title = title;
+		}
+
+		if (description != null) {
+			this.description = description;
+		}
+
+		if (dueDate != null) {
+			this.dueDate = dueDate;
+		}
+	}
 }
