@@ -11,8 +11,8 @@ import { useAssigneePanel } from '@components/SideBar/context';
 import UserAvatar from '@components/UserAvatar';
 import useComponentVisible from '@hooks/useComponentVisible';
 
-const AssigneePanel: React.FC<{ allowDuplicated?: boolean }> = ({
-  allowDuplicated = false,
+const AssigneePanel: React.FC<{ allowDuplicates?: boolean }> = ({
+  allowDuplicates = false,
 }) => {
   const { state } = useAssigneePanel();
   const { isComponentVisible, setIsComponentVisible, ref } =
@@ -28,7 +28,7 @@ const AssigneePanel: React.FC<{ allowDuplicated?: boolean }> = ({
       >
         <Header title="담당자" onClick={() => setIsComponentVisible(p => !p)} />
         {isComponentVisible && (
-          <AssigneePopup allowDuplicated={allowDuplicated} />
+          <AssigneePopup allowDuplicates={allowDuplicates} />
         )}
       </div>
 
@@ -48,13 +48,13 @@ const AssigneePanel: React.FC<{ allowDuplicated?: boolean }> = ({
   );
 };
 
-const AssigneePopup: React.FC<{ allowDuplicated?: boolean }> = ({
-  allowDuplicated = false,
+const AssigneePopup: React.FC<{ allowDuplicates?: boolean }> = ({
+  allowDuplicates = false,
 }) => {
   const { state: users, replaceAssignee, selectAssignee } = useAssigneePanel();
 
   const handleClickListItem = (userId: string) => () => {
-    if (allowDuplicated) {
+    if (allowDuplicates) {
       selectAssignee(userId);
       return;
     }
@@ -64,24 +64,26 @@ const AssigneePopup: React.FC<{ allowDuplicated?: boolean }> = ({
   return (
     <PopupS.PopupContainer>
       <Popup>
-        <PopupS.Header>
-          <h2>담당자 선택</h2>
-        </PopupS.Header>
-        <PopupS.List>
-          {users.map(({ user: { userId, profileImageUrl }, selected }) => (
-            <PopupS.AssigneeItem
-              selected={selected}
-              onClick={handleClickListItem(userId)}
-              key={userId}
-            >
-              <PopupS.AvatarWrapper>
-                <UserAvatar src={profileImageUrl} alt={userId} />
-              </PopupS.AvatarWrapper>
-              <PopupS.AssigneeName>{userId}</PopupS.AssigneeName>
-              {selected ? <I.Circle.Check /> : <I.Circle.Plain />}
-            </PopupS.AssigneeItem>
-          ))}
-        </PopupS.List>
+        <PopupS.InnerContainer>
+          <PopupS.Header>
+            <h2>담당자 선택</h2>
+          </PopupS.Header>
+          <PopupS.List>
+            {users.map(({ user: { userId, profileImageUrl }, selected }) => (
+              <PopupS.AssigneeItem
+                selected={selected}
+                onClick={handleClickListItem(userId)}
+                key={userId}
+              >
+                <PopupS.AvatarWrapper>
+                  <UserAvatar src={profileImageUrl} alt={userId} />
+                </PopupS.AvatarWrapper>
+                <PopupS.AssigneeName>{userId}</PopupS.AssigneeName>
+                {selected ? <I.Circle.Check /> : <I.Circle.Plain />}
+              </PopupS.AssigneeItem>
+            ))}
+          </PopupS.List>
+        </PopupS.InnerContainer>
       </Popup>
     </PopupS.PopupContainer>
   );
