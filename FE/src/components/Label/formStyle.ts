@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { typoLarge, flexbox } from '@styles/mixin';
 import { moveDownAnimation, moveUpAnimation } from '@utils/animation';
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
   padding: 2rem;
   margin-bottom: 1.5rem;
   border: 1px solid;

@@ -52,30 +52,51 @@ const getLable = rest.get('/issue/label', (req, res, ctx) =>
     ctx.delay(1000),
     ctx.json([
       {
-        id: 1,
-        color: '#F7F7FC',
-        name: 'duplicate',
-        darkText: true,
+        id: 81,
+        backgroundColor: '#F7F7FC',
+        title: 'duplicate',
+        description: 'duplicate Des',
+        textColor: 'BLACK',
       },
       {
-        id: 2,
-        color: '#004DE3',
-        name: 'documentation',
-        darkText: false,
+        id: 82,
+        backgroundColor: '#004DE3',
+        title: 'documentation',
+        description: 'documentation Des',
+        textColor: 'WHITE',
       },
       {
-        id: 3,
-        color: '#C60B00',
-        name: 'bug',
-        darkText: false,
+        id: 83,
+        backgroundColor: '#C60B00',
+        title: 'bug',
+        description: 'bug Des',
+        textColor: 'WHITE',
       },
     ]),
   ),
 );
 
+const postLabel = rest.post('/issue/label', (req, res, ctx) => {
+  const { title, backgroundColor, description, textColor } = JSON.parse(
+    req.body,
+  );
+
+  return res(
+    ctx.status(200),
+    ctx.delay(1000),
+    ctx.json({
+      title,
+      backgroundColor,
+      description,
+      textColor,
+    }),
+  );
+});
+
 export const handlers = [
   getIssue,
   getLable,
+  postLabel,
   GitHubLogin,
   RefreshGitHubLogin,
   PostIssue,
