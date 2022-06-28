@@ -1,6 +1,7 @@
 package codesquad.backend.issuetracker.milestone.presentation.dto;
 
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -11,9 +12,16 @@ public class MilestoneDto {
 	private final Long id;
 	private final String title;
 	private final String description;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private final LocalDateTime createdAt;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private final LocalDateTime updatedAt;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
 	private final LocalDate dueDate;
+
 	private final Integer progressRate;
 
 	public MilestoneDto(Long id, String title, String description, LocalDateTime createdAt,
