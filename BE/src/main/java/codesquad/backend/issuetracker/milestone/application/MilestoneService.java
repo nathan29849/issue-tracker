@@ -51,7 +51,7 @@ public class MilestoneService {
 	@Transactional(readOnly = true)
 	public MilestoneCountDto findCount(LocalDate now) {
 		return MilestoneCountDto.of(
-			milestoneRepository.countMilestoneByDueDateBeforeAndDueDateIsNull(now)
+			milestoneRepository.countMilestoneByDueDateAfterOrDueDateIsNull(now)
 		);
 	}
 

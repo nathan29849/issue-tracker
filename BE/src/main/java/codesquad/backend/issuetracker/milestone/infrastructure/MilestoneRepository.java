@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
 
-	Integer countMilestoneByDueDateBeforeAndDueDateIsNull(LocalDate now);
+	Integer countMilestoneByDueDateAfterOrDueDateIsNull(LocalDate now);
 }
