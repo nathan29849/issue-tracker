@@ -29,14 +29,14 @@ public class MilestoneService {
 			.map(MilestoneDto::createBy)
 			.collect(Collectors.toList());
 
-		// TODO issue open, close 상태에 따라 진행률 계산 로직 필요
-
 		List<MilestoneDto> currentMilestones = milestones.stream()
-			.filter(m -> m.getDueDate().isBefore(now))
+			.filter(m -> m.getDueDate() != null)
+			.filter(m -> m.getDueDate().isAfter(now))
 			.collect(Collectors.toList());
 
 		List<MilestoneDto> expiredMilestones = milestones.stream()
-			.filter(m -> m.getDueDate().isAfter(now))
+			.filter(m -> m.getDueDate() != null)
+			.filter(m -> m.getDueDate().isBefore(now))
 			.collect(Collectors.toList());
 
 		List<MilestoneDto> nullDueDateMilestones = milestones.stream()
@@ -49,7 +49,7 @@ public class MilestoneService {
 	@Transactional(readOnly = true)
 	public MilestoneCountDto findCount(LocalDate now) {
 		return MilestoneCountDto.of(
-			milestoneRepository.countMilestoneByDueDateBeforeAndDueDateIsNull(now)
+			milestoneRepository.countMilestoneByDueDateAfterOrDueDateIsNull(now)
 		);
 	}
 
