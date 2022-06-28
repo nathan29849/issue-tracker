@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import * as S from './style';
 
+import { Loader } from '@components/Indicator';
 import { OverridableProps } from '@utils/types';
 
 type ButtonProps<T extends React.ElementType> = OverridableProps<
@@ -30,25 +31,31 @@ type LoginButtonProps<T extends React.ElementType> = OverridableProps<
   }
 >;
 
-export const Button = <T extends React.ElementType = 'button'>({
+const TButton = <T extends React.ElementType = 'button'>({
   children,
   outlined = false,
   size = 'sm',
+  loading,
   as,
   ...restProps
-}: ButtonProps<T>) => (
-  <S.Button
-    as={as ?? 'button'}
-    type="button"
-    outlined={outlined}
-    size={size}
-    {...restProps}
-  >
-    <span>{children}</span>
-  </S.Button>
-);
+}: ButtonProps<T>) =>
+  loading ? (
+    <S.LoaderWrapper size={size}>
+      <Loader size={3} />
+    </S.LoaderWrapper>
+  ) : (
+    <S.Button
+      as={as ?? 'button'}
+      type="button"
+      outlined={outlined}
+      size={size}
+      {...restProps}
+    >
+      <span>{children}</span>
+    </S.Button>
+  );
 
-export const TextButton = <T extends React.ElementType = 'button'>({
+const TTextButton = <T extends React.ElementType = 'button'>({
   children,
   size = 'sm',
   as,
@@ -75,3 +82,6 @@ export const LoginButton = <T extends React.ElementType = 'button'>({
     {children}
   </S.LoginButton>
 );
+
+export const Button = memo(TButton);
+export const TextButton = memo(TTextButton);

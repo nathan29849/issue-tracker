@@ -2,18 +2,7 @@
 import { rest } from 'msw';
 
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
-
-const getUser = rest.get('/user', (req, res, ctx) =>
-  res(
-    ctx.status(200),
-    ctx.delay(2000),
-    ctx.json({
-      id: 120123123,
-      username: 'sadjfaioij',
-      password: 'dpofoqpwjer',
-    }),
-  ),
-);
+import { PostIssue } from './PostIssue';
 
 const getIssue = rest.get('/issue', (req, res, ctx) =>
   res(
@@ -85,9 +74,9 @@ const getLable = rest.get('/issue/label', (req, res, ctx) =>
 );
 
 export const handlers = [
-  getUser,
   getIssue,
   getLable,
   GitHubLogin,
   RefreshGitHubLogin,
+  PostIssue,
 ];

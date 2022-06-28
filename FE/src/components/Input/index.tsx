@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { memo, useId } from 'react';
 
 import * as S from './style';
 
@@ -27,7 +27,7 @@ type TextareaProps<T extends React.ElementType> = OverridableProps<
   }
 >;
 
-export const Input = <T extends React.ElementType = 'input'>({
+export const TInput = <T extends React.ElementType = 'input'>({
   width,
   placeholder,
   size = 'sm',
@@ -50,7 +50,7 @@ export const Input = <T extends React.ElementType = 'input'>({
   </S.InputLayer>
 );
 
-export const Textarea = <T extends React.ElementType = 'input'>({
+export const TTextarea = <T extends React.ElementType = 'input'>({
   width,
   placeholder,
   value = '',
@@ -82,3 +82,6 @@ export const Textarea = <T extends React.ElementType = 'input'>({
     </S.TextareaLayer>
   );
 };
+
+export const Textarea = memo(TTextarea);
+export const Input = memo(TInput);
