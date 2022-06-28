@@ -4,8 +4,10 @@ import codesquad.backend.issuetracker.issue.presentation.dto.IssueAssigneeEditRe
 import codesquad.backend.issuetracker.issue.presentation.dto.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
 import codesquad.backend.issuetracker.issue.presentation.dto.IssueDetailDto;
+import codesquad.backend.issuetracker.issue.presentation.dto.IssueIdDto;
 import codesquad.backend.issuetracker.issue.presentation.dto.IssueLabelEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.IssuesResponseDto;
+import codesquad.backend.issuetracker.issue.presentation.dto.SingleIssueDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,7 +41,7 @@ public class IssueController {
 
 	@Operation(summary = "이슈 작성")
 	@PostMapping
-	public ResponseEntity<Void> create(
+	public ResponseEntity<IssueIdDto> create(
 		@RequestBody IssueCreateRequest issueCreateRequest
 	){
 		return null;
