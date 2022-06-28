@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import * as S from './style';
 
@@ -25,4 +25,4 @@ const UserAvatar = <T extends React.ElementType = 'div'>({
   </S.UserAvatar>
 );
 
-export default UserAvatar;
+export default memo(UserAvatar);
