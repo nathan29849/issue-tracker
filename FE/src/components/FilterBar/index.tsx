@@ -18,11 +18,11 @@ import { useSearch } from '@hooks/useSearch';
 export default function FilterBar() {
   const issueFilterData = {
     info: [
-      { id: 1, status: 'is:open', name: '열린이슈' },
-      { id: 2, status: 'mine:me', name: '내가작성한이슈' },
-      { id: 3, status: 'assignedToMe:me', name: '나에게할당된이슈' },
-      { id: 4, status: 'comment:me', name: '내가댓글을남긴이슈' },
-      { id: 5, status: 'is:close', name: '닫힌이슈' },
+      { status: 'is:open', name: '열린이슈' },
+      { status: 'mine:me', name: '내가작성한이슈' },
+      { status: 'assignedToMe:me', name: '나에게할당된이슈' },
+      { status: 'comment:me', name: '내가댓글을남긴이슈' },
+      { status: 'is:close', name: '닫힌이슈' },
     ],
   };
 
@@ -44,7 +44,7 @@ export default function FilterBar() {
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    init({ paramValue: popupData.status });
+    init({ paramValue: popupData.status! });
     setIsComponentVisible(false);
   };
 
@@ -83,7 +83,7 @@ export default function FilterBar() {
               <header>이슈 필터</header>
               {issueFilterData.info.map((popupData: IPopupData) => (
                 <Contents
-                  key={`popup-${popupData.id}`}
+                  key={`popup-${popupData.name}`}
                   label="이슈"
                   popupData={popupData}
                   handleItemClick={handleItemClick}

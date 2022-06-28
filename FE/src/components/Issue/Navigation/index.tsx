@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { NavigationLayer, LeftLayer, RightLayer, IssueLabel } from './style';
+import * as S from './style';
 
 import I from '@components/Icons';
 import Filter from '@components/Issue/Filter';
@@ -46,10 +46,7 @@ export default function Navigation() {
     author: authorData,
   });
 
-  const [labelIssueStatus, setLabelIssueStatus] = useState({
-    open: true,
-    close: false,
-  });
+  const [labelIssueStatus, setLabelIssueStatus] = useState(true);
 
   const openIssueCount = issues.filter(issue => issue.status === 'open').length;
   const closeIssueCount = issues.filter(
@@ -58,10 +55,10 @@ export default function Navigation() {
 
   const handleLabelClick = (status: string) => {
     if (status === 'open') {
-      setLabelIssueStatus({ open: true, close: false });
+      setLabelIssueStatus(true);
       init({ paramValue: 'is:open' });
     } else if (status === 'close') {
-      setLabelIssueStatus({ open: false, close: true });
+      setLabelIssueStatus(false);
       init({ paramValue: 'is:close' });
     }
   };
@@ -73,40 +70,39 @@ export default function Navigation() {
   const onPopup = (label: FilterLabelTypes) => !!popupState[label];
 
   useEffect(() => {
-    const urlSearch = decodeURI(decodeURIComponent(location.search));
-    const params = new URLSearchParams(urlSearch);
+    const params = new URLSearchParams(location.search);
     const urlValues = params.get('q');
 
     if (urlValues === null) return;
 
     if (urlValues === 'is:open') {
-      setLabelIssueStatus({ open: true, close: false });
+      setLabelIssueStatus(true);
     } else if (urlValues === 'is:close') {
-      setLabelIssueStatus({ open: false, close: true });
+      setLabelIssueStatus(false);
     }
   }, [location]);
 
   return (
-    <NavigationLayer>
-      <LeftLayer>
+    <S.NavigationLayer>
+      <S.LeftLayer>
         <I.CheckBox.Initial color="#D9DBE9" />
-        <IssueLabel
-          labelIssueStatus={labelIssueStatus.open}
+        <S.IssueLabel
+          labelIssueStatus={labelIssueStatus}
           onClick={() => handleLabelClick('open')}
         >
           <I.Circle.Alert />
           <span>열린 이슈({openIssueCount})</span>
-        </IssueLabel>
+        </S.IssueLabel>
 
-        <IssueLabel
-          labelIssueStatus={labelIssueStatus.close}
+        <S.IssueLabel
+          labelIssueStatus={!labelIssueStatus}
           onClick={() => handleLabelClick('close')}
         >
           <I.Bucket />
           <span>닫힌 이슈({closeIssueCount})</span>
-        </IssueLabel>
-      </LeftLayer>
-      <RightLayer>
+        </S.IssueLabel>
+      </S.LeftLayer>
+      <S.RightLayer>
         {filterLabels.map((label: FilterLabelTypes) => (
           <Filter
             key={label}
@@ -116,7 +112,7 @@ export default function Navigation() {
             handleFilterClick={handleFilterClick}
           />
         ))}
-      </RightLayer>
-    </NavigationLayer>
+      </S.RightLayer>
+    </S.NavigationLayer>
   );
 }

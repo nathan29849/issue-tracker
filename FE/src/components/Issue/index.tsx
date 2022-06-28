@@ -18,20 +18,16 @@ export default function Issue() {
   const [renderIssue, setRenderIssue] = useState<IIssueTypes[]>([]);
   const location = useLocation();
 
-  useQuery('issueData', () => {
-    fetch('issue').then(res => {
-      res.json().then(result => {
-        setInitIssue(result);
-        setRenderIssue(
-          result.filter((issue: IIssueTypes) => issue.status === 'open'),
-        );
-      });
-    });
+  useQuery('issueData', async () => {
+    const response = await (await fetch('issue')).json();
+    setInitIssue(response);
+    setRenderIssue(
+      response.filter((issue: IIssueTypes) => issue.status === 'open'),
+    );
   });
 
   useEffect(() => {
-    const urlSearch = decodeURI(decodeURIComponent(location.search));
-    const params = new URLSearchParams(urlSearch);
+    const params = new URLSearchParams(location.search);
     const urlValues = params.get('q');
 
     if (urlValues === null) return;

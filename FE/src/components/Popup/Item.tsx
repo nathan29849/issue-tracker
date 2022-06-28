@@ -27,7 +27,7 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
         <>
           <div
             css={css`
-              background: ${popupData.color};
+              background: ${popupData.backgroundColor};
               border-radius: 50%;
               width: 1.25rem;
               height: 1.25rem;

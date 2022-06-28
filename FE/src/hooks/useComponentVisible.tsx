@@ -3,11 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function useComponentVisible(initialIsVisible: boolean) {
   const [isComponentVisible, setIsComponentVisible] =
     useState(initialIsVisible);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (e: React.MouseEvent): void => {
+  const handleClickOutside = (
+    e: React.BaseSyntheticEvent | MouseEvent,
+  ): void => {
     if (ref.current) {
-      if (!ref.current.contains(e.target as HTMLElement)) {
+      if (!ref.current.contains(e.target)) {
         setIsComponentVisible(false);
       }
     }
