@@ -29,8 +29,6 @@ public class MilestoneService {
 			.map(MilestoneDto::createBy)
 			.collect(Collectors.toList());
 
-		// TODO issue open, close 상태에 따라 진행률 계산 로직 필요
-
 		List<MilestoneDto> currentMilestones = milestones.stream()
 			.filter(m -> m.getDueDate() != null)
 			.filter(m -> m.getDueDate().isAfter(now))
