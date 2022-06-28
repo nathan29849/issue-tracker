@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -7,6 +8,7 @@ import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Label } from '@components/Label';
 import Form from '@components/Label/Form';
+import Modal from '@components/Modal';
 import TabList from '@components/TabList';
 import { ILabelTypes } from '@recoil/atoms/label';
 
@@ -22,6 +24,9 @@ export default function LabelPage() {
     {},
   );
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+
   const handleLabelEditClick = (id: number) => {
     setEditOpenForm(prevEditFormState => ({
       ...prevEditFormState,
@@ -30,7 +35,18 @@ export default function LabelPage() {
   };
 
   const handleLabelDeleteClick = (id: number) => {
+    setModalVisible(true);
+    setDeleteId(id);
+  };
+
+  const handleLabelDeleteCancel = () => {
+    setModalVisible(false);
+  };
+
+  const handleLabelDeleteSubmit = () => {
     // TODO delete api request
+    console.log(deleteId);
+    setModalVisible(false);
   };
 
   const handleCloseForm = (id?: number) => {
@@ -115,6 +131,32 @@ export default function LabelPage() {
               </S.LabelItemWrapper>
             ),
           )}
+        {modalVisible && (
+          <Modal>
+            <header
+              css={css`
+                margin-bottom: 2rem;
+              `}
+            >
+              해당 레이블을 정말 삭제하시겠습니까?
+            </header>
+            <div>
+              <Button
+                outlined
+                type="button"
+                onClick={handleLabelDeleteCancel}
+                css={css`
+                  margin-right: 1rem;
+                `}
+              >
+                닫기
+              </Button>
+              <Button type="button" onClick={handleLabelDeleteSubmit}>
+                확인
+              </Button>
+            </div>
+          </Modal>
+        )}
       </S.Main>
     </S.LabelPageLayer>
   );

@@ -36,41 +36,58 @@ export default function Form({
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  const [labelText, setLabelText] = useState(labelData?.title || '');
-  const [descriptionText, setDescriptionText] = useState(
-    labelData?.description || '',
-  );
-  const [bgColor, setBgColor] = useState(
-    labelData?.backgroundColor || initBgColor,
-  );
-  const [radioState, setRadioState] = useState(
-    labelData?.textColor === 'BLACK'
-      ? '어두운색'
-      : '밝은색' || radioColorText[0],
-  );
+  const [openFormValue, setOpenFormValue] = useState({
+    labelText: labelData?.title || '',
+    descriptionText: labelData?.description || '',
+    bgColor: labelData?.backgroundColor || initBgColor,
+    radioState:
+      labelData?.textColor === 'BLACK'
+        ? '어두운색'
+        : '밝은색' || radioColorText[0],
+  });
+
+  const [initFormValue, setInitFormValue] = useState({
+    labelText: openFormValue.labelText,
+    descriptionText: openFormValue.descriptionText,
+    bgColor: openFormValue.bgColor,
+    radioState: openFormValue.radioState,
+  });
 
   const handleLabelText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLabelText(e.target.value);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      labelText: e.target.value,
+    }));
   };
 
   const handleDescriptionText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescriptionText(e.target.value);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      descriptionText: e.target.value,
+    }));
   };
 
   const handleBgColor = () => {
     // 랜덤 컬러 색상 만드는 함수
     const randomColor = new Array(3).fill(0).reduce((prev: string) => {
+      // eslint-disable-next-line no-param-reassign
       prev += Math.floor(Math.random() * 127 + 128)
         .toString(16)
         .toUpperCase();
       return prev;
     }, '#');
 
-    setBgColor(randomColor);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      bgColor: randomColor,
+    }));
   };
 
   const handleColorText = (color: string) => {
-    setRadioState(color);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      radioState: color,
+    }));
   };
 
   const onColorPopup = () => {
@@ -79,13 +96,19 @@ export default function Form({
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '') e.target.value = '#';
-    setBgColor(e.target.value);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      bgColor: e.target.value,
+    }));
   };
 
   const handleColorClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
     e.stopPropagation();
-    setBgColor(button.value);
+    setOpenFormValue(prevState => ({
+      ...prevState,
+      bgColor: button.value,
+    }));
     setIsComponentVisible(false);
   };
 
@@ -101,10 +124,10 @@ export default function Form({
 
     const newLabel = {
       id: 3,
-      title: labelText,
-      description: descriptionText,
-      backgroundColor: bgColor,
-      textColor: radioState === '어두운색' ? 'BLACK' : 'WHITE',
+      title: openFormValue.labelText,
+      description: openFormValue.descriptionText,
+      backgroundColor: openFormValue.bgColor,
+      textColor: openFormValue.radioState === '어두운색' ? 'BLACK' : 'WHITE',
     };
 
     createLabelPost.mutate(newLabel);
@@ -132,14 +155,14 @@ export default function Form({
           <Input
             type="text"
             width={904}
-            value={labelText || ''}
+            value={openFormValue.labelText || ''}
             placeholder="레이블 이름"
             onChange={handleLabelText}
           />
           <Input
             type="text"
             width={904}
-            value={descriptionText || ''}
+            value={openFormValue.descriptionText || ''}
             placeholder="설명(선택)"
             onChange={handleDescriptionText}
           />
@@ -147,7 +170,7 @@ export default function Form({
             <S.ColorWrapper>
               <Input
                 type="text"
-                value={bgColor || ''}
+                value={openFormValue.bgColor || ''}
                 width={240}
                 placeholder="배경 색상"
                 onClick={onColorPopup}
@@ -155,7 +178,7 @@ export default function Form({
                 maxLength={7}
               />
               <S.RefreshButton type="button" onClick={handleBgColor}>
-                <I.Refresh color={bgColor} />
+                <I.Refresh color={openFormValue.bgColor} />
               </S.RefreshButton>
               <div
                 ref={ref}
@@ -211,7 +234,7 @@ export default function Form({
               {radioColorText.map((radioColor: string) => (
                 <RadioSelection.Option
                   key={radioColor}
-                  checked={radioState === radioColor}
+                  checked={openFormValue.radioState === radioColor}
                   onClick={() => handleColorText(radioColor)}
                 >
                   {radioColor}
@@ -235,7 +258,11 @@ export default function Form({
               <Button
                 type="submit"
                 disabled={
-                  labelText === '' || bgColor === '' || radioState === ''
+                  initFormValue.labelText === openFormValue.labelText &&
+                  initFormValue.bgColor === openFormValue.bgColor &&
+                  initFormValue.descriptionText ===
+                    openFormValue.descriptionText &&
+                  initFormValue.radioState === openFormValue.radioState
                 }
               >
                 <I.Edit />
@@ -245,7 +272,11 @@ export default function Form({
           ) : (
             <Button
               type="submit"
-              disabled={labelText === '' || bgColor === '' || radioState === ''}
+              disabled={
+                openFormValue.labelText === '' ||
+                openFormValue.bgColor === '' ||
+                openFormValue.radioState === ''
+              }
             >
               <I.Plus />
               완료
