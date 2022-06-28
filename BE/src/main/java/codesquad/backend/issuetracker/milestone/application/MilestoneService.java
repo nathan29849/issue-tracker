@@ -6,6 +6,7 @@ import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountD
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneIdDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import java.time.LocalDate;
 import java.util.List;
@@ -53,14 +54,14 @@ public class MilestoneService {
 	}
 
 	@Transactional
-	public Long add(MilestoneCreateRequest milestoneCreateRequest) {
+	public MilestoneIdDto add(MilestoneCreateRequest milestoneCreateRequest) {
 		Milestone milestone = Milestone.createBy(
 			milestoneCreateRequest.getTitle(),
 			milestoneCreateRequest.getDescription(),
 			milestoneCreateRequest.getDueDate());
 
 		Milestone savedMilestone = milestoneRepository.save(milestone);
-		return savedMilestone.getId();
+		return new MilestoneIdDto(savedMilestone.getId());
 	}
 
 	@Transactional
@@ -73,5 +74,12 @@ public class MilestoneService {
 			mileStoneEditRequest.getDueDate());
 
 		return MilestoneDto.createBy(milestone);
+	}
+
+	@Transactional
+	public void remove(Long id) {
+		Milestone milestone = milestoneRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+		milestoneRepository.delete(milestone);
 	}
 }
