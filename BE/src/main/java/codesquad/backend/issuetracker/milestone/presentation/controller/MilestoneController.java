@@ -5,6 +5,7 @@ import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRe
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneIdDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDate;
@@ -40,10 +41,10 @@ public class MilestoneController {
 
 	@Operation(summary = "마일스톤 생성")
 	@PostMapping
-	public ResponseEntity<Long> create(
+	public ResponseEntity<MilestoneIdDto> create(
 		@RequestBody MilestoneCreateRequest milestoneCreateRequest
 	) {
-		Long milestoneId = milestoneService.add(milestoneCreateRequest);
+		MilestoneIdDto milestoneId = milestoneService.add(milestoneCreateRequest);
 		return ResponseEntity.ok().body(milestoneId);
 	}
 
@@ -61,7 +62,8 @@ public class MilestoneController {
 	public ResponseEntity<Void> remove(
 		@PathVariable Long id
 	){
-		return null;
+		milestoneService.remove(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
