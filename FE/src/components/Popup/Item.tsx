@@ -27,14 +27,14 @@ export const getModalItem = (label: string, popupData: IPopupData) => {
         <>
           <div
             css={css`
-              background: ${popupData.color};
+              background: ${popupData.backgroundColor};
               border-radius: 50%;
               width: 1.25rem;
               height: 1.25rem;
               margin-right: 0.5rem;
             `}
           />
-          <div className="filter__name">{popupData.name}</div>
+          <div className="filter__name">{popupData.title}</div>
         </>
       );
     case 'mileStone':
