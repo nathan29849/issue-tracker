@@ -20,20 +20,34 @@ import { ILabelTypes } from '@recoil/atoms/label';
 import { typoXSmall, flexbox } from '@styles/mixin';
 import theme from '@styles/theme';
 
+interface FormProps {
+  title: string;
+  labelData?: ILabelTypes;
+  onEdit: boolean;
+  handleCloseForm: (id?: number) => void;
+}
+
 export default function Form({
   title,
-  setOpenForm,
-}: {
-  title: string;
-  setOpenForm: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+  labelData,
+  onEdit,
+  handleCloseForm,
+}: FormProps) {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  const [labelText, setLabelText] = useState('');
-  const [descriptionText, setDescriptionText] = useState('');
-  const [bgColor, setBgColor] = useState(initBgColor);
-  const [radioState, setRadioState] = useState(radioColorText[0]);
+  const [labelText, setLabelText] = useState(labelData?.title || '');
+  const [descriptionText, setDescriptionText] = useState(
+    labelData?.description || '',
+  );
+  const [bgColor, setBgColor] = useState(
+    labelData?.backgroundColor || initBgColor,
+  );
+  const [radioState, setRadioState] = useState(
+    labelData?.textColor === 'BLACK'
+      ? '어두운색'
+      : '밝은색' || radioColorText[0],
+  );
 
   const handleLabelText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabelText(e.target.value);
@@ -100,9 +114,9 @@ export default function Form({
     // 임시로 응답이 정상적으로 왔을때 처리 차후는 Persist mutation 적용필요
     if (createLabelPost.isSuccess) {
       alert('label add success');
-      setOpenForm(false);
+      handleCloseForm();
     }
-  }, [createLabelPost, setOpenForm]);
+  }, [createLabelPost, handleCloseForm]);
 
   return (
     <S.FormWrapper title={title} onSubmit={handleSubmit}>
@@ -207,13 +221,36 @@ export default function Form({
           </S.FormInnerWrapper>
         </S.FormRightInner>
         <S.FormButtonWrapper>
-          <Button
-            type="submit"
-            disabled={labelText === '' || bgColor === '' || radioState === ''}
-          >
-            <I.Plus />
-            완료
-          </Button>
+          {onEdit ? (
+            <>
+              <Button
+                outlined
+                css={css`
+                  margin-right: 1rem;
+                `}
+                onClick={() => handleCloseForm(labelData?.id)}
+              >
+                취소
+              </Button>
+              <Button
+                type="submit"
+                disabled={
+                  labelText === '' || bgColor === '' || radioState === ''
+                }
+              >
+                <I.Edit />
+                완료
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="submit"
+              disabled={labelText === '' || bgColor === '' || radioState === ''}
+            >
+              <I.Plus />
+              완료
+            </Button>
+          )}
         </S.FormButtonWrapper>
       </S.FormContents>
     </S.FormWrapper>
