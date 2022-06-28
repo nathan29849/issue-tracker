@@ -47,6 +47,9 @@ export const LabelLeft = styled.div`
 export const LabelRight = styled.div`
   ${flexbox};
   gap: 1.7rem;
+  button {
+    background-color: transparent;
+  }
 `;
 
 export const LabelItemWrapper = styled.div`
