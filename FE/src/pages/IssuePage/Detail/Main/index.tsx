@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import * as S from './style';
 
@@ -6,44 +8,68 @@ import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
 import { Textarea, Input } from '@components/Input';
 import UserAvatar from '@components/UserAvatar';
+import { useInput } from '@hooks/useInput';
+import { usePostIssue } from '@hooks/usePostIssue';
+import { userState } from '@recoil/atoms/user';
+
+const issuePagePath = '/issue';
 
 // ADD ISSUE
 export const NewMain = () => {
-  // TODO: 커스텀 훅으로 바꾸기
-  const [value, setValue] = useState('');
-  const [value2, setValue2] = useState('');
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setValue(e.target.value);
-  const onChange2 = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setValue2(e.target.value);
+  const navigate = useNavigate();
+  const { mutate, isLoading } = usePostIssue();
+  const user = useRecoilValue(userState);
+
+  const title = useInput();
+  const comment = useInput();
+
+  const handleClickCancelButton = () => {
+    navigate(issuePagePath);
+  };
+
+  const handleClickSubmitButton = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (title.value.trim().length === 0) {
+      return;
+    }
+
+    mutate({
+      title: title.value,
+      content: comment.value,
+    });
+  };
+
   return (
-    <S.DetailMainLayer as="form">
+    <S.DetailMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.Inputs>
         <S.UserAvatar>
-          <UserAvatar
-            src="https://www.stignatius.co.uk/wp-content/uploads/2020/10/default-user-icon.jpg"
-            size="lg"
-          />
+          <UserAvatar src={user!.profileImageUrl} size="lg" />
         </S.UserAvatar>
-        <Input
-          width="100%"
-          placeholder="제목"
-          size="md"
-          value={value2}
-          onChange={onChange2}
-        />
-        <Textarea width="100%" value={value} onChange={onChange} />
+        <Input width="100%" placeholder="제목" size="md" {...title} />
+        <Textarea width="100%" {...comment} />
       </S.Inputs>
-      <S.SideBar>사이드바</S.SideBar>
       <S.Buttons>
-        <TextButton size="md" type="button">
+        <TextButton
+          size="md"
+          type="button"
+          onClick={handleClickCancelButton}
+          disabled={isLoading}
+        >
           <I.XMark />
           작성 취소
         </TextButton>
-        <Button size="md" type="button">
+
+        <Button
+          size="md"
+          type="button"
+          onClick={handleClickSubmitButton}
+          disabled={!title.value.trim().length}
+          loading={isLoading}
+        >
           완료
         </Button>
       </S.Buttons>
+      <S.SideBar>사이드바</S.SideBar>
     </S.DetailMainLayer>
   );
 };
