@@ -103,12 +103,12 @@ export default function Navigation() {
         </S.IssueLabel>
       </S.LeftLayer>
       <S.RightLayer>
-        {filterLabels.map((label: FilterLabelTypes) => (
+        {filterLabels.map((item: FilterLabelTypes) => (
           <Filter
-            key={label}
-            onPopup={onPopup(label)}
-            label={label}
-            filterPopupData={filterPopupData[label].info}
+            key={item}
+            onPopup={onPopup(item)}
+            item={item}
+            filterPopupData={filterPopupData[item].info}
             handleFilterClick={handleFilterClick}
           />
         ))}

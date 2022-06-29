@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import * as S from './style';
 
@@ -16,24 +17,25 @@ import useDebounce from '@hooks/useDebouce';
 import { useSearch } from '@hooks/useSearch';
 
 export default function FilterBar() {
+  const location = useLocation();
   const issueFilterData = {
     info: [
       { status: 'is:open', name: '열린이슈' },
-      { status: 'mine:me', name: '내가작성한이슈' },
-      { status: 'assignedToMe:me', name: '나에게할당된이슈' },
-      { status: 'comment:me', name: '내가댓글을남긴이슈' },
+      { status: 'mine', name: '내가작성한이슈' },
+      { status: 'assignedToMe', name: '나에게할당된이슈' },
+      { status: 'comment', name: '내가댓글을남긴이슈' },
       { status: 'is:close', name: '닫힌이슈' },
     ],
   };
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('is:open');
   const [isValidSearch, setIsValidSearch] = useState(true);
   const debouncedValue = useDebounce(searchValue, searchDebounceDelay);
 
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  const { init } = useSearch('q', 'is:open');
+  const { init, replace } = useSearch('q', 'is:open');
 
   const handleOnFilterPopup = () => {
     setIsComponentVisible(true);
@@ -44,7 +46,11 @@ export default function FilterBar() {
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    init({ paramValue: popupData.status! });
+    if (popupData.status === 'is:open' || popupData.status === 'is:close') {
+      init({ paramValue: popupData.status });
+    } else {
+      replace('me', popupData.status);
+    }
     setIsComponentVisible(false);
   };
 
@@ -66,6 +72,15 @@ export default function FilterBar() {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const urlValues = params.get('q');
+
+    if (urlValues === null) return;
+
+    setSearchValue(urlValues);
+  }, [location]);
+
   return (
     <S.FilterBarLayer onSubmit={handleSubmit}>
       <S.FilterButton onClick={handleOnFilterPopup}>
@@ -84,7 +99,7 @@ export default function FilterBar() {
               {issueFilterData.info.map((popupData: IPopupData) => (
                 <Contents
                   key={`popup-${popupData.name}`}
-                  label="이슈"
+                  item="이슈"
                   popupData={popupData}
                   handleItemClick={handleItemClick}
                 />
@@ -100,6 +115,7 @@ export default function FilterBar() {
         </S.Icon>
         <S.Input
           type="text"
+          value={searchValue}
           placeholder="Search All Issues"
           onChange={handleChangeSearchInput}
         />
