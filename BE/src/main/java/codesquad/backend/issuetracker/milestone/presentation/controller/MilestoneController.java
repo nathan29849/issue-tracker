@@ -1,12 +1,12 @@
 package codesquad.backend.issuetracker.milestone.presentation.controller;
 
 import codesquad.backend.issuetracker.milestone.application.MilestoneService;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneEditRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneCountResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneIdDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneIdResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestonesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
@@ -29,22 +29,22 @@ public class MilestoneController {
 
 	@Operation(summary = "마일스톤 전체 조회")
 	@GetMapping
-	public MilestonesResponseDto retrieveMilestones() {
+	public MilestonesResponse retrieveMilestones() {
 		return milestoneService.findAllByDueDate(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 개수 조회")
 	@GetMapping("/count")
-	public MilestoneCountDto retrieveCount(){
+	public MilestoneCountResponse retrieveCount(){
 		return milestoneService.findCount(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 생성")
 	@PostMapping
-	public ResponseEntity<MilestoneIdDto> create(
+	public ResponseEntity<MilestoneIdResponse> create(
 		@RequestBody MilestoneCreateRequest milestoneCreateRequest
 	) {
-		MilestoneIdDto milestoneId = milestoneService.add(milestoneCreateRequest);
+		MilestoneIdResponse milestoneId = milestoneService.add(milestoneCreateRequest);
 		return ResponseEntity.ok().body(milestoneId);
 	}
 
