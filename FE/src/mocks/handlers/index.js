@@ -2,6 +2,7 @@
 import { rest } from 'msw';
 
 import { GetLabels } from './GetLabels';
+import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
 import { PostIssue } from './PostIssue';
@@ -104,4 +105,5 @@ export const handlers = [
   RefreshGitHubLogin,
   PostIssue,
   GetUsers,
+  GetMileStones,
 ];
