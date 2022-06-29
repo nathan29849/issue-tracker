@@ -58,3 +58,5 @@ export const AvatarWrapper = styled.div`
 export const AssigneeName = styled(TitleCommon)``;
 
 export const LabelTitle = styled(TitleCommon)``;
+
+export const MileStoneTitle = styled(TitleCommon)``;

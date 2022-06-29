@@ -6,6 +6,7 @@ export const Container = styled.div`
   display: inline-block;
   border-radius: 1rem;
   border: 1px solid ${({ theme }) => theme.color.line};
+  background-color: ${({ theme }) => theme.color.offWhite};
 `;
 
 export const PanelContainer = styled.div`
@@ -49,16 +50,18 @@ export const ItemCommon = styled.li`
   margin-top: 1rem;
 `;
 
+export const TitleCommon = styled.p`
+  ${typoSmall(400)};
+  color: ${({ theme }) => theme.color.label};
+`;
+
 export const AssigneeItem = styled(ItemCommon)``;
 
 export const AvatarWrapper = styled.div`
   flex-shrink: 0;
 `;
 
-export const AssigneeName = styled.p`
-  ${typoSmall(400)};
-
-  color: ${({ theme }) => theme.color.label};
+export const AssigneeName = styled(TitleCommon)`
   margin-left: 0.25rem;
 `;
 
@@ -66,4 +69,11 @@ export const LabelItem = styled(ItemCommon)`
   height: 1.75rem;
 `;
 
-export const MileStoneItem = styled(ItemCommon)``;
+export const MileStoneItem = styled(ItemCommon)`
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const MileStoneTitle = styled(TitleCommon)`
+  margin-top: 0.25rem;
+`;
