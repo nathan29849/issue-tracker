@@ -11,3 +11,10 @@ export {
   useSetLabelPanelState,
   LabelPanelProvider,
 } from './LabelPanel';
+
+export {
+  useMileStonePanel,
+  useMileStonePanelState,
+  useSetMileStonePanelState,
+  MileStonePanelProvider,
+} from './MileStonePanel';
