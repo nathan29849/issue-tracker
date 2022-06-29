@@ -13,9 +13,25 @@ import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
 import { mileStoneState } from '@recoil/atoms/milestone';
 
-export type FilterLabelTypes = 'assignee' | 'label' | 'mileStone' | 'author';
+export type FilterLabelTypes =
+  | 'assignee'
+  | 'label'
+  | 'mileStone'
+  | 'author'
+  | 'checkStatus';
 
-export default function Navigation() {
+interface NavigationProps {
+  allCheck: boolean;
+  calculateCheckCount: () => number;
+  handleIssueAllCheck: (status: boolean) => void;
+}
+
+export default function Navigation({
+  allCheck,
+  calculateCheckCount,
+  handleIssueAllCheck,
+}: NavigationProps) {
+  // console.log(calculateCheckCount);
   const { init } = useSearch('q', 'is:open');
   const location = useLocation();
   const filterLabels: FilterLabelTypes[] = [
@@ -29,6 +45,12 @@ export default function Navigation() {
   const labelData = useRecoilValue(labelState);
   const milestoneData = useRecoilValue(mileStoneState);
   const authorData = useRecoilValue(authorState);
+  const checkStatusData = {
+    info: [
+      { id: 'open-statusPopup', name: '선택한 이슈 열기' },
+      { id: 'close-statusPopup', name: '선택한 이슈 닫기' },
+    ],
+  };
 
   const [issues, setIssues] = useRecoilState(issueState);
 
@@ -37,6 +59,7 @@ export default function Navigation() {
     label: false,
     mileStone: false,
     author: false,
+    checkStatus: false,
   });
 
   const [filterPopupData, setFilterPoupData] = useState({
@@ -44,6 +67,7 @@ export default function Navigation() {
     label: labelData,
     mileStone: milestoneData,
     author: authorData,
+    checkStatus: checkStatusData,
   });
 
   const [labelIssueStatus, setLabelIssueStatus] = useState(true);
@@ -85,33 +109,58 @@ export default function Navigation() {
   return (
     <S.NavigationLayer>
       <S.LeftLayer>
-        <I.CheckBox.Initial color="#D9DBE9" />
-        <S.IssueLabel
-          labelIssueStatus={labelIssueStatus}
-          onClick={() => handleLabelClick('open')}
-        >
-          <I.Circle.Alert />
-          <span>열린 이슈({openIssueCount})</span>
-        </S.IssueLabel>
+        {allCheck ? (
+          <button type="button" onClick={() => handleIssueAllCheck(false)}>
+            <I.CheckBox.Active color="#007AFF" />
+          </button>
+        ) : (
+          <button type="button" onClick={() => handleIssueAllCheck(true)}>
+            <I.CheckBox.Initial color="#D9DBE9" />
+          </button>
+        )}
+        {calculateCheckCount() !== 0 ? (
+          <div>{calculateCheckCount()}개 이슈 선택</div>
+        ) : (
+          <>
+            <S.IssueLabel
+              labelIssueStatus={labelIssueStatus}
+              onClick={() => handleLabelClick('open')}
+            >
+              <I.Circle.Alert />
+              <span>열린 이슈({openIssueCount})</span>
+            </S.IssueLabel>
 
-        <S.IssueLabel
-          labelIssueStatus={!labelIssueStatus}
-          onClick={() => handleLabelClick('close')}
-        >
-          <I.Bucket />
-          <span>닫힌 이슈({closeIssueCount})</span>
-        </S.IssueLabel>
+            <S.IssueLabel
+              labelIssueStatus={!labelIssueStatus}
+              onClick={() => handleLabelClick('close')}
+            >
+              <I.Bucket />
+              <span>닫힌 이슈({closeIssueCount})</span>
+            </S.IssueLabel>
+          </>
+        )}
       </S.LeftLayer>
       <S.RightLayer>
-        {filterLabels.map((item: FilterLabelTypes) => (
+        {calculateCheckCount() !== 0 ? (
           <Filter
-            key={item}
-            onPopup={onPopup(item)}
-            item={item}
-            filterPopupData={filterPopupData[item].info}
+            onPopup={onPopup('checkStatus')}
+            item="checkStatus"
+            filterPopupData={filterPopupData.checkStatus.info}
             handleFilterClick={handleFilterClick}
           />
-        ))}
+        ) : (
+          <>
+            {filterLabels.map((item: FilterLabelTypes) => (
+              <Filter
+                key={item}
+                onPopup={onPopup(item)}
+                item={item}
+                filterPopupData={filterPopupData[item].info}
+                handleFilterClick={handleFilterClick}
+              />
+            ))}
+          </>
+        )}
       </S.RightLayer>
     </S.NavigationLayer>
   );
