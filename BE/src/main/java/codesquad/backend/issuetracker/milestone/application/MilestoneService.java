@@ -2,10 +2,12 @@ package codesquad.backend.issuetracker.milestone.application;
 
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneRepository;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneCountResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneEditRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneIdResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestonesResponse;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,42 +22,63 @@ public class MilestoneService {
 	private final MilestoneRepository milestoneRepository;
 
 	@Transactional(readOnly = true)
-	public MilestonesResponseDto findAllByDueDate(LocalDate now) {
+	public MilestonesResponse findAllByDueDate(LocalDate now) {
 		List<MilestoneDto> milestones = milestoneRepository.findAll()
 			.stream()
 			.map(MilestoneDto::createBy)
 			.collect(Collectors.toList());
 
 		List<MilestoneDto> currentMilestones = milestones.stream()
-			.filter(m -> m.getDueDate().isBefore(now))
+			.filter(m -> m.getDueDate() != null)
+			.filter(m -> m.getDueDate().isAfter(now))
 			.collect(Collectors.toList());
 
 		List<MilestoneDto> expiredMilestones = milestones.stream()
-			.filter(m -> m.getDueDate().isAfter(now))
+			.filter(m -> m.getDueDate() != null)
+			.filter(m -> m.getDueDate().isBefore(now))
 			.collect(Collectors.toList());
 
 		List<MilestoneDto> nullDueDateMilestones = milestones.stream()
 			.filter(m -> m.getDueDate() == null)
 			.collect(Collectors.toList());
 
-		return MilestonesResponseDto.of(currentMilestones, expiredMilestones, nullDueDateMilestones);
+		return MilestonesResponse.of(currentMilestones, expiredMilestones, nullDueDateMilestones);
 	}
 
 	@Transactional(readOnly = true)
-	public MilestoneCountDto findCount(LocalDate now) {
-		return MilestoneCountDto.of(
-			milestoneRepository.countMilestoneByDueDateBeforeAndDueDateIsNull(now)
+	public MilestoneCountResponse findCount(LocalDate now) {
+		return MilestoneCountResponse.of(
+			milestoneRepository.countMilestoneByDueDateAfterOrDueDateIsNull(now)
 		);
 	}
 
 	@Transactional
-	public Long add(MilestoneCreateRequest milestoneCreateRequest) {
+	public MilestoneIdResponse add(MilestoneCreateRequest milestoneCreateRequest) {
 		Milestone milestone = Milestone.createBy(
 			milestoneCreateRequest.getTitle(),
 			milestoneCreateRequest.getDescription(),
 			milestoneCreateRequest.getDueDate());
 
 		Milestone savedMilestone = milestoneRepository.save(milestone);
-		return savedMilestone.getId();
+		return new MilestoneIdResponse(savedMilestone.getId());
+	}
+
+	@Transactional
+	public MilestoneDto edit(Long id, MilestoneEditRequest mileStoneEditRequest){
+		Milestone milestone = milestoneRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+
+		milestone.edit(mileStoneEditRequest.getTitle(),
+			mileStoneEditRequest.getDescription(),
+			mileStoneEditRequest.getDueDate());
+
+		return MilestoneDto.createBy(milestone);
+	}
+
+	@Transactional
+	public void remove(Long id) {
+		Milestone milestone = milestoneRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+		milestoneRepository.delete(milestone);
 	}
 }

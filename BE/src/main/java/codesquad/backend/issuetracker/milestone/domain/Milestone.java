@@ -14,11 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
@@ -59,5 +62,19 @@ public class Milestone {
 
 	public static Milestone createBy(String title, String description, LocalDate dueDate){
 		return new Milestone(title, description, dueDate, 0);
+	}
+
+	public void edit(String title, String description, LocalDate dueDate) {
+		if (title != null){
+			this.title = title;
+		}
+
+		if (description != null) {
+			this.description = description;
+		}
+
+		if (dueDate != null) {
+			this.dueDate = dueDate;
+		}
 	}
 }

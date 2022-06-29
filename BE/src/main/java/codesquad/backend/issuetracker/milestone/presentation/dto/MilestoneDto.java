@@ -1,6 +1,8 @@
 package codesquad.backend.issuetracker.milestone.presentation.dto;
 
+import codesquad.backend.issuetracker.issue.presentation.dto.IssueStatus;
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -11,9 +13,16 @@ public class MilestoneDto {
 	private final Long id;
 	private final String title;
 	private final String description;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private final LocalDateTime createdAt;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private final LocalDateTime updatedAt;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private final LocalDate dueDate;
+
 	private final Integer progressRate;
 
 	public MilestoneDto(Long id, String title, String description, LocalDateTime createdAt,
@@ -31,8 +40,15 @@ public class MilestoneDto {
 		return new MilestoneDto(
 			milestone.getId(), milestone.getTitle(), milestone.getDescription(),
 			milestone.getCreatedAt(), milestone.getUpdatedAt(), milestone.getDueDate(),
-			milestone.getProgressRate()
+			calcProgressRate(milestone)
 		);
+	}
+
+	private static Integer calcProgressRate(Milestone milestone) {
+		int issueSize = milestone.getIssues().size();
+		int openIssueSize = (int) milestone.getIssues()
+			.stream().filter(i -> i.getStatus() == IssueStatus.OPEN).count();
+		return (issueSize == 0) ? 0 : openIssueSize/issueSize;
 	}
 
 }

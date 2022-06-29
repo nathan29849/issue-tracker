@@ -1,11 +1,12 @@
 package codesquad.backend.issuetracker.milestone.presentation.controller;
 
 import codesquad.backend.issuetracker.milestone.application.MilestoneService;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneEditRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneCountResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneIdResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestonesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
@@ -28,22 +29,22 @@ public class MilestoneController {
 
 	@Operation(summary = "마일스톤 전체 조회")
 	@GetMapping
-	public MilestonesResponseDto retrieveMilestones() {
+	public MilestonesResponse retrieveMilestones() {
 		return milestoneService.findAllByDueDate(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 개수 조회")
 	@GetMapping("/count")
-	public MilestoneCountDto retrieveCount(){
+	public MilestoneCountResponse retrieveCount(){
 		return milestoneService.findCount(LocalDate.now());
 	}
 
 	@Operation(summary = "마일스톤 생성")
 	@PostMapping
-	public ResponseEntity<Long> create(
+	public ResponseEntity<MilestoneIdResponse> create(
 		@RequestBody MilestoneCreateRequest milestoneCreateRequest
 	) {
-		Long milestoneId = milestoneService.add(milestoneCreateRequest);
+		MilestoneIdResponse milestoneId = milestoneService.add(milestoneCreateRequest);
 		return ResponseEntity.ok().body(milestoneId);
 	}
 
@@ -53,7 +54,7 @@ public class MilestoneController {
 		@PathVariable Long id,
 		@RequestBody MilestoneEditRequest mileStoneEditRequest
 	){
-		return null;
+		return milestoneService.edit(id, mileStoneEditRequest);
 	}
 
 	@Operation(summary = "마일스톤 삭제")
@@ -61,7 +62,8 @@ public class MilestoneController {
 	public ResponseEntity<Void> remove(
 		@PathVariable Long id
 	){
-		return null;
+		milestoneService.remove(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
