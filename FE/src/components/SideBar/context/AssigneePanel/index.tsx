@@ -160,3 +160,15 @@ export const useSetAssigneeState = () => {
 
   return { initPanel, selectAssignee, replaceAssignee };
 };
+
+export const useSelectedAssignee = () => {
+  const state = useContext(AssigneePanelContext);
+
+  if (state === null) {
+    throw Error('Assignee Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected);
+};
+
+// Not Selected Assignee 도 필요하면 만들기.

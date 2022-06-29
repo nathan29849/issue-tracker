@@ -160,3 +160,13 @@ export const useSetMileStoneState = () => {
 
   return { initPanel, selectMileStone, replaceMileStone };
 };
+
+export const useSelectedMileStone = () => {
+  const state = useContext(MileStonePanelContext);
+
+  if (state === null) {
+    throw Error('MileStone Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected);
+};

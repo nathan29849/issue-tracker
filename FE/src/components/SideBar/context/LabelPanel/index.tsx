@@ -159,3 +159,13 @@ export const useSetLabelState = () => {
 
   return { initPanel, selectLabel, replaceLabel };
 };
+
+export const useSelectedLabel = () => {
+  const state = useContext(LabelPanelContext);
+
+  if (state === null) {
+    throw Error('Label Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected);
+};
