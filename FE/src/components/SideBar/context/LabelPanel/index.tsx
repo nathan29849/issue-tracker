@@ -106,7 +106,7 @@ export const LabelPanelProvider = ({
   );
 };
 
-export const useLabelPanel = () => {
+export const useLabel = () => {
   const state = useContext(LabelPanelContext);
   const dispatch = useContext(LabelPanelDispatchContext);
 
@@ -129,7 +129,7 @@ export const useLabelPanel = () => {
   return { state, initPanel, selectLabel, replaceLabel };
 };
 
-export const useLabelPanelState = () => {
+export const useLabelState = () => {
   const state = useContext(LabelPanelContext);
 
   if (state === null) {
@@ -139,7 +139,7 @@ export const useLabelPanelState = () => {
   return state;
 };
 
-export const useSetLabelPanelState = () => {
+export const useSetLabelState = () => {
   const dispatch = useContext(LabelPanelDispatchContext);
   if (dispatch === null) {
     throw Error('Label Panel Dispatch Provider Error');

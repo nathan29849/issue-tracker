@@ -7,21 +7,17 @@ import { MileStonePanelProvider } from './MileStonePanel';
 import Compose from '@utils/Compose';
 
 export {
-  useAssigneePanel,
-  useAssigneePanelState,
-  useSetAssigneePanelState,
+  useAssignee,
+  useAssigneeState,
+  useSetAssigneeState,
 } from './AssigneePanel';
 
-export {
-  useLabelPanel,
-  useLabelPanelState,
-  useSetLabelPanelState,
-} from './LabelPanel';
+export { useLabel, useLabelState, useSetLabelState } from './LabelPanel';
 
 export {
-  useMileStonePanel,
-  useMileStonePanelState,
-  useSetMileStonePanelState,
+  useMileStone,
+  useMileStoneState,
+  useSetMileStoneState,
 } from './MileStonePanel';
 
 export { AssigneePanelProvider, LabelPanelProvider, MileStonePanelProvider };

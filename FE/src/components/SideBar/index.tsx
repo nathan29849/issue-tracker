@@ -10,9 +10,9 @@ import { getLabels } from '@apis/label';
 import { getMileStones } from '@apis/milestone';
 import { getUsers } from '@apis/user';
 import {
-  useAssigneePanel,
-  useLabelPanel,
-  useMileStonePanel,
+  useAssignee,
+  useLabel,
+  useMileStone,
 } from '@components/SideBar/context';
 
 const Container: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -23,9 +23,9 @@ export const SideBar = () => {
   const { data: userData } = useQuery(['users'], getUsers);
   const { data: labelData } = useQuery(['labels'], getLabels);
   const { data: milestoneData } = useQuery(['milestones'], getMileStones);
-  const { initPanel: initAssigneePanel } = useAssigneePanel();
-  const { initPanel: initLabelPanel } = useLabelPanel();
-  const { initPanel: initMileStonePanel } = useMileStonePanel();
+  const { initPanel: initAssigneePanel } = useAssignee();
+  const { initPanel: initLabelPanel } = useLabel();
+  const { initPanel: initMileStonePanel } = useMileStone();
 
   useEffect(() => {
     initAssigneePanel(userData);

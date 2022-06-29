@@ -5,7 +5,7 @@ import I from '@components/Icons';
 import { Label } from '@components/Label';
 import Popup from '@components/Popup';
 import { Header } from '@components/SideBar/Common';
-import { useLabelPanel } from '@components/SideBar/context';
+import { useLabel } from '@components/SideBar/context';
 import * as PopupS from '@components/SideBar/popupStyle';
 import * as S from '@components/SideBar/style';
 import UserAvatar from '@components/UserAvatar';
@@ -18,7 +18,7 @@ const COLOR = {
 const LabelPanel: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
-  const { state } = useLabelPanel();
+  const { state } = useLabel();
   const { isComponentVisible, setIsComponentVisible, ref } =
     useComponentVisible(false);
 
@@ -55,7 +55,7 @@ const LabelPanel: React.FC<{ allowDuplicates?: boolean }> = ({
 const LabelPopup: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
-  const { state: labels, replaceLabel, selectLabel } = useLabelPanel();
+  const { state: labels, replaceLabel, selectLabel } = useLabel();
 
   const handleClickListItem = (labelId: number) => () => {
     if (allowDuplicates) {
