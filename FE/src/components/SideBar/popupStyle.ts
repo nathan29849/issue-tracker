@@ -37,7 +37,7 @@ export const ItemCommon = styled.li<{ selected: boolean }>`
     background-color: ${({ theme }) => theme.color.background};
   }
 
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     border-top: 1px solid ${({ theme }) => theme.color.line};
   }
 `;
