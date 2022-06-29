@@ -6,6 +6,7 @@ import codesquad.backend.issuetracker.oauth.application.JwtFactory;
 import codesquad.backend.issuetracker.oauth.application.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,8 @@ public class AuthInterceptor extends CommonInterceptor {
 			return JwtFactory.parseClaims(authorizationHeader.substring("Bearer " .length()));
 		} catch (ExpiredJwtException e) {
 			throw new AuthException(ErrorCode.ACCESS_TOKEN_EXPIRED);
+		} catch (SignatureException s) {
+			throw new AuthException(ErrorCode.UNAVAILABLE_TOKEN);
 		}
 	}
 

@@ -1,16 +1,17 @@
-package codesquad.backend.issuetracker.milestone.presentation.dto;
+package codesquad.backend.issuetracker.milestone.presentation.dto.response;
 
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class MilestonesResponseDto {
+public class MilestonesResponse {
 
 	private final List<MilestoneDto> currentMilestones;
 	private final List<MilestoneDto> expiredMilestones;
 	private final List<MilestoneDto> nullDueDateMilestones;
 
-	public MilestonesResponseDto(
+	public MilestonesResponse(
 		List<MilestoneDto> currentMilestones,
 		List<MilestoneDto> expiredMilestones,
 		List<MilestoneDto> nullDueDateMilestones) {
@@ -19,8 +20,8 @@ public class MilestonesResponseDto {
 		this.nullDueDateMilestones = nullDueDateMilestones;
 	}
 
-	public static MilestonesResponseDto of(List<MilestoneDto> currentMilestones,
+	public static MilestonesResponse of(List<MilestoneDto> currentMilestones,
 		List<MilestoneDto> expiredMilestones, List<MilestoneDto> nullDueDateMilestones) {
-		return new MilestonesResponseDto(currentMilestones, expiredMilestones, nullDueDateMilestones);
+		return new MilestonesResponse(currentMilestones, expiredMilestones, nullDueDateMilestones);
 	}
 }

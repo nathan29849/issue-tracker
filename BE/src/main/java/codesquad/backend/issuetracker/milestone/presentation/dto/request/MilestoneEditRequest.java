@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.milestone.presentation.dto;
+package codesquad.backend.issuetracker.milestone.presentation.dto.request;
 
 import java.time.LocalDate;
 import lombok.Getter;

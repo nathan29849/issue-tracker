@@ -2,15 +2,14 @@ package codesquad.backend.issuetracker.milestone.application;
 
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneRepository;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCountDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneCreateRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneCountResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneEditRequest;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneIdDto;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestonesResponseDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneEditRequest;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneIdResponse;
+import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestonesResponse;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class MilestoneService {
 	private final MilestoneRepository milestoneRepository;
 
 	@Transactional(readOnly = true)
-	public MilestonesResponseDto findAllByDueDate(LocalDate now) {
+	public MilestonesResponse findAllByDueDate(LocalDate now) {
 		List<MilestoneDto> milestones = milestoneRepository.findAll()
 			.stream()
 			.map(MilestoneDto::createBy)
@@ -43,25 +42,25 @@ public class MilestoneService {
 			.filter(m -> m.getDueDate() == null)
 			.collect(Collectors.toList());
 
-		return MilestonesResponseDto.of(currentMilestones, expiredMilestones, nullDueDateMilestones);
+		return MilestonesResponse.of(currentMilestones, expiredMilestones, nullDueDateMilestones);
 	}
 
 	@Transactional(readOnly = true)
-	public MilestoneCountDto findCount(LocalDate now) {
-		return MilestoneCountDto.of(
+	public MilestoneCountResponse findCount(LocalDate now) {
+		return MilestoneCountResponse.of(
 			milestoneRepository.countMilestoneByDueDateAfterOrDueDateIsNull(now)
 		);
 	}
 
 	@Transactional
-	public MilestoneIdDto add(MilestoneCreateRequest milestoneCreateRequest) {
+	public MilestoneIdResponse add(MilestoneCreateRequest milestoneCreateRequest) {
 		Milestone milestone = Milestone.createBy(
 			milestoneCreateRequest.getTitle(),
 			milestoneCreateRequest.getDescription(),
 			milestoneCreateRequest.getDueDate());
 
 		Milestone savedMilestone = milestoneRepository.save(milestone);
-		return new MilestoneIdDto(savedMilestone.getId());
+		return new MilestoneIdResponse(savedMilestone.getId());
 	}
 
 	@Transactional
