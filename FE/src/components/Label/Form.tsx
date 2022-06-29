@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import * as S from './formStyle';
 
@@ -33,6 +33,8 @@ export default function Form({
   onEdit,
   handleCloseForm,
 }: FormProps) {
+  const queryClient = useQueryClient();
+
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
@@ -40,7 +42,7 @@ export default function Form({
     labelText: labelData?.title || '',
     descriptionText: labelData?.description || '',
     bgColor: labelData?.backgroundColor || initBgColor,
-    radioState:
+    textColor:
       labelData?.textColor === 'BLACK'
         ? '어두운색'
         : '밝은색' || radioColorText[0],
@@ -50,7 +52,7 @@ export default function Form({
     labelText: openFormValue.labelText,
     descriptionText: openFormValue.descriptionText,
     bgColor: openFormValue.bgColor,
-    radioState: openFormValue.radioState,
+    textColor: openFormValue.textColor,
   });
 
   const handleLabelText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +88,7 @@ export default function Form({
   const handleColorText = (color: string) => {
     setOpenFormValue(prevState => ({
       ...prevState,
-      radioState: color,
+      textColor: color,
     }));
   };
 
@@ -112,37 +114,68 @@ export default function Form({
     setIsComponentVisible(false);
   };
 
-  const createLabelPost = useMutation((newLabel: ILabelTypes) =>
-    fetch('/issue/label', {
-      method: 'POST',
-      body: JSON.stringify(newLabel),
-    }),
+  const createLabel = useMutation(
+    (newLabel: ILabelTypes) =>
+      fetch('/issue/label', {
+        method: 'POST',
+        body: JSON.stringify(newLabel),
+      }),
+    {
+      onSuccess: () => {
+        // queryKey가 'labelData'로 시작하는 모든 쿼리 무효화
+        queryClient.invalidateQueries('labelData');
+      },
+    },
   );
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const patchLabel = useMutation(
+    (newLabel: ILabelTypes) =>
+      fetch('/issue/label', {
+        method: 'PATCH',
+        body: JSON.stringify(newLabel),
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('labelData');
+      },
+    },
+  );
+
+  const handleSubmit = (
+    e: React.SyntheticEvent<HTMLFormElement>,
+    id?: number,
+  ) => {
     e.preventDefault();
 
-    const newLabel = {
-      id: 3,
-      title: openFormValue.labelText,
-      description: openFormValue.descriptionText,
-      backgroundColor: openFormValue.bgColor,
-      textColor: openFormValue.radioState === '어두운색' ? 'BLACK' : 'WHITE',
-    };
-
-    createLabelPost.mutate(newLabel);
+    if (id) {
+      const newLabel = {
+        id,
+        title: openFormValue.labelText,
+        description: openFormValue.descriptionText,
+        backgroundColor: openFormValue.bgColor,
+        textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
+      };
+      patchLabel.mutate(newLabel);
+    } else {
+      const newLabel = {
+        title: openFormValue.labelText,
+        description: openFormValue.descriptionText,
+        backgroundColor: openFormValue.bgColor,
+        textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
+      };
+      createLabel.mutate(newLabel);
+    }
   };
 
   useEffect(() => {
-    // 임시로 응답이 정상적으로 왔을때 처리 차후는 Persist mutation 적용필요
-    if (createLabelPost.isSuccess) {
+    if (createLabel.isSuccess) {
       alert('label add success');
       handleCloseForm();
     }
-  }, [createLabelPost, handleCloseForm]);
+  }, [createLabel, handleCloseForm]);
 
   return (
-    <S.FormWrapper title={title} onSubmit={handleSubmit}>
+    <S.FormWrapper title={title}>
       <S.FormLeftInner>
         <S.FormTitle>{title}</S.FormTitle>
         <Label bgColor="#EFF0F6" darkText>
@@ -154,14 +187,14 @@ export default function Form({
         <S.FormRightInner>
           <Input
             type="text"
-            width={904}
+            width="56.25rem"
             value={openFormValue.labelText || ''}
             placeholder="레이블 이름"
             onChange={handleLabelText}
           />
           <Input
             type="text"
-            width={904}
+            width="56.25rem"
             value={openFormValue.descriptionText || ''}
             placeholder="설명(선택)"
             onChange={handleDescriptionText}
@@ -234,7 +267,7 @@ export default function Form({
               {radioColorText.map((radioColor: string) => (
                 <RadioSelection.Option
                   key={radioColor}
-                  checked={openFormValue.radioState === radioColor}
+                  checked={openFormValue.textColor === radioColor}
                   onClick={() => handleColorText(radioColor)}
                 >
                   {radioColor}
@@ -262,7 +295,10 @@ export default function Form({
                   initFormValue.bgColor === openFormValue.bgColor &&
                   initFormValue.descriptionText ===
                     openFormValue.descriptionText &&
-                  initFormValue.radioState === openFormValue.radioState
+                  initFormValue.textColor === openFormValue.textColor
+                }
+                onClick={(e: React.SyntheticEvent<HTMLFormElement>) =>
+                  handleSubmit(e, labelData?.id)
                 }
               >
                 <I.Edit />
@@ -275,7 +311,10 @@ export default function Form({
               disabled={
                 openFormValue.labelText === '' ||
                 openFormValue.bgColor === '' ||
-                openFormValue.radioState === ''
+                openFormValue.textColor === ''
+              }
+              onClick={(e: React.SyntheticEvent<HTMLFormElement>) =>
+                handleSubmit(e)
               }
             >
               <I.Plus />

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import * as S from './style';
 
@@ -18,6 +18,7 @@ const getLabels = async () => {
 };
 
 export default function LabelPage() {
+  const queryClient = useQueryClient();
   const { data, status } = useQuery('labelData', getLabels);
   const [openForm, setOpenForm] = useState(false);
   const [editOpenForm, setEditOpenForm] = useState<{ [id: number]: boolean }>(
@@ -43,9 +44,20 @@ export default function LabelPage() {
     setModalVisible(false);
   };
 
+  const deleteLabel = useMutation(
+    (id: number) =>
+      fetch(`/issue/label/${id}`, {
+        method: 'DELETE',
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('labelData');
+      },
+    },
+  );
+
   const handleLabelDeleteSubmit = () => {
-    // TODO delete api request
-    console.log(deleteId);
+    deleteLabel.mutate(deleteId);
     setModalVisible(false);
   };
 

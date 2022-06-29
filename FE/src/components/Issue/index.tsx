@@ -13,10 +13,61 @@ interface IKeyParams {
   [key: string]: string;
 }
 
+interface ICheckIssue {
+  id: number;
+  check: boolean;
+}
+
 export default function Issue() {
+  // TODO initIssue 와 renderIssue는 현재 필터된 결과를 화면에 뿌려보기 위해 사용한 상태며 차후엔 하나의 상태로 관리
   const [initIssue, setInitIssue] = useRecoilState(issueState);
   const [renderIssue, setRenderIssue] = useState<IIssueTypes[]>([]);
+  const [allCheck, setAllCheck] = useState(false);
+  const [checkIssue, setCheckIssue] = useState<ICheckIssue[]>([]);
   const location = useLocation();
+
+  const handleIssueCheck = (id: number) => {
+    setCheckIssue(
+      checkIssue.map(issue =>
+        issue.id === id ? { id, check: !issue.check } : issue,
+      ),
+    );
+  };
+
+  const handleIssueAllCheck = (status: boolean) => {
+    if (status) {
+      const newCheckIssue = checkIssue.map(issue => {
+        const obj = {} as ICheckIssue;
+        obj.id = issue.id;
+        obj.check = true;
+        return obj;
+      });
+
+      setAllCheck(true);
+      setCheckIssue(newCheckIssue);
+    } else {
+      const newCheckIssue = checkIssue.map(issue => {
+        const obj = {} as ICheckIssue;
+        obj.id = issue.id;
+        obj.check = false;
+        return obj;
+      });
+
+      setAllCheck(false);
+      setCheckIssue(newCheckIssue);
+    }
+  };
+
+  const isCheckIssue = (id: number) => {
+    const item = checkIssue.filter(issue => id === issue.id)[0];
+    if (item) return item.check;
+    return false;
+  };
+
+  const calculateCheckCount = () => {
+    const count = checkIssue.filter(issue => issue.check === true).length;
+    return count;
+  };
 
   useQuery('issueData', async () => {
     const response = await (await fetch('issue')).json();
@@ -74,15 +125,33 @@ export default function Issue() {
     });
   }, [initIssue, location]);
 
+  useEffect(() => {
+    // open & close 구별해서 데이터 파싱 필요..
+    const initIssueCheck = initIssue.map(issue => {
+      const obj = {} as ICheckIssue;
+      obj.id = issue.id;
+      obj.check = false;
+      return obj;
+    });
+
+    setCheckIssue(initIssueCheck);
+  }, [initIssue]);
+
   return (
     <IssueWrapperLayer>
-      <Navigation />
+      <Navigation
+        allCheck={allCheck}
+        calculateCheckCount={calculateCheckCount}
+        handleIssueAllCheck={handleIssueAllCheck}
+      />
       {renderIssue &&
         renderIssue.map((issueData: IIssueTypes, index: number) => (
           <Item
             issue={issueData}
             lastIdx={renderIssue.length === index + 1}
             key={`issue-${issueData.id}`}
+            isCheck={isCheckIssue(issueData.id)}
+            handleIssueCheck={handleIssueCheck}
           />
         ))}
     </IssueWrapperLayer>
