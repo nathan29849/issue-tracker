@@ -1,5 +1,6 @@
-package codesquad.backend.issuetracker.label.presentation.dto;
+package codesquad.backend.issuetracker.label.presentation.dto.request;
 
+import codesquad.backend.issuetracker.label.presentation.dto.TextColor;
 import lombok.Getter;
 
 @Getter
