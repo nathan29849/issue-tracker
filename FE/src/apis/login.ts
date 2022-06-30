@@ -10,14 +10,14 @@ export const githubLogin = async (searchParams: string): Promise<UserData> => {
   const response = await fetch(
     `${process.env.TEAM30_GITHUB_OAUTH_URL}/callback${searchParams}`,
   );
-  const data = await response.json();
+  const loginData = await response.json();
 
   // TODO: 명세 나오면 실패조건 다시 설정
-  if (!Object.hasOwn(data, 'userId')) {
+  if (!Object.hasOwn(loginData, 'userId')) {
     throw Error('로그인 실패');
   }
 
-  return data;
+  return loginData;
 };
 
 export const githubSilentRefresh = async (): Promise<UserData> => {
@@ -31,12 +31,12 @@ export const githubSilentRefresh = async (): Promise<UserData> => {
     },
   );
 
-  const data = await response.json();
+  const tokenData = await response.json();
 
   // TODO: 명세 나오면 실패조건 다시 설정
-  if (!Object.hasOwn(data, 'userId')) {
+  if (!Object.hasOwn(tokenData, 'userId')) {
     throw Error('로그인 실패');
   }
 
-  return data;
+  return tokenData;
 };

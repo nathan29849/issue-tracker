@@ -35,7 +35,7 @@ export default function FilterBar() {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  const { init, replace } = useSearch('q', 'is:open');
+  const { urlParamInit, urlParamReplace } = useSearch('q', 'is:open');
 
   const handleOnFilterPopup = () => {
     setIsComponentVisible(true);
@@ -47,9 +47,9 @@ export default function FilterBar() {
   ) => {
     e.stopPropagation();
     if (popupData.status === 'is:open' || popupData.status === 'is:close') {
-      init({ paramValue: popupData.status });
+      urlParamInit({ paramValue: popupData.status });
     } else {
-      replace('me', popupData.status);
+      urlParamReplace('me', popupData.status);
     }
     setIsComponentVisible(false);
   };
@@ -65,11 +65,9 @@ export default function FilterBar() {
   };
 
   useEffect(() => {
-    if (debouncedValue) {
-      if (debouncedValue.length > limitedLengthSearchValue)
-        setIsValidSearch(false);
-      else setIsValidSearch(true);
-    }
+    if (debouncedValue && debouncedValue.length > limitedLengthSearchValue)
+      setIsValidSearch(false);
+    else setIsValidSearch(true);
   }, [debouncedValue]);
 
   useEffect(() => {

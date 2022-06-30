@@ -28,15 +28,15 @@ export default function Filter({
     handleFilterClick(item, true);
     setIsComponentVisible(!isComponentVisible);
   };
-  const { replace } = useSearch('q', 'is:open');
+  const { urlParamReplace } = useSearch('q', 'is:open');
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    if (item === 'label') replace(item, popupData.title);
-    else replace(item, popupData.name);
+    if (item === 'label') urlParamReplace(item, popupData.title);
+    else urlParamReplace(item, popupData.name);
     setIsComponentVisible(false);
   };
 
