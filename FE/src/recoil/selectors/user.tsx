@@ -1,11 +1,17 @@
-import { selector } from 'recoil';
+import { selector, useRecoilValue } from 'recoil';
 
+import { defaultProfileImageUrl } from '@constants/default';
 import { userState } from '@recoil/atoms/user';
 
-export const userCountState = selector({
-  key: 'userCountState',
+export const userProfileImage = selector({
+  key: 'userProfileImage',
   get: ({ get }) => {
-    const { id, imageUrl, name } = get(userState);
-    return imageUrl.length;
+    const user = get(userState);
+    return user ? user.profileImageUrl : defaultProfileImageUrl;
   },
 });
+
+export const useProfileImage = () => {
+  const profileImage = useRecoilValue(userProfileImage);
+  return profileImage;
+};
