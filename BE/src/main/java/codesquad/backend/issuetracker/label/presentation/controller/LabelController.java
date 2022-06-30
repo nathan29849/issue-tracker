@@ -34,7 +34,7 @@ public class LabelController {
 	@Operation(summary = "라벨 개수 조회")
 	@GetMapping("/count")
 	public LabelCountResponse retrieveCount() {
-		return null;
+		return labelService.count();
 	}
 
 	@Operation(summary = "라벨 생성")

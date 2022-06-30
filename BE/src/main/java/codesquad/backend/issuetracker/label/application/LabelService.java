@@ -2,6 +2,7 @@ package codesquad.backend.issuetracker.label.application;
 
 import codesquad.backend.issuetracker.label.infrastructure.LabelRepository;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,5 +23,11 @@ public class LabelService {
 			.collect(Collectors.toList());
 
 		return LabelsResponse.of(labels);
+	}
+
+	@Transactional(readOnly = true)
+	public LabelCountResponse count() {
+		long count = labelRepository.count();
+		return LabelCountResponse.of(count);
 	}
 }
