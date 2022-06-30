@@ -67,4 +67,11 @@ public class MilestoneController {
 	}
 
 	// TODO 마일스톤 상세 조회
+	@Operation(summary = "마일스톤 개별 조회")
+	@GetMapping("/{id}")
+	public MilestoneDto retrieveMilestone(
+		@PathVariable Long id
+	) {
+		return milestoneService.find(id);
+	}
 }

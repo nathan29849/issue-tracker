@@ -65,8 +65,7 @@ public class MilestoneService {
 
 	@Transactional
 	public MilestoneDto edit(Long id, MilestoneEditRequest mileStoneEditRequest){
-		Milestone milestone = milestoneRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+		Milestone milestone = findById(id);
 
 		milestone.edit(mileStoneEditRequest.getTitle(),
 			mileStoneEditRequest.getDescription(),
@@ -77,8 +76,17 @@ public class MilestoneService {
 
 	@Transactional
 	public void remove(Long id) {
-		Milestone milestone = milestoneRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+		Milestone milestone = findById(id);
 		milestoneRepository.delete(milestone);
+	}
+
+	public MilestoneDto find(Long id) {
+		Milestone milestone = findById(id);
+		return MilestoneDto.createBy(milestone);
+	}
+
+	private Milestone findById(Long id) {
+		return milestoneRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
 	}
 }
