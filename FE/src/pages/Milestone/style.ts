@@ -40,15 +40,16 @@ export const MileStoneTitle = styled.div`
     color: #6e7191;
     ${typoSmall(400)}
   }
-  .milestone-des {
-    color: #6e7191;
-    ${typoSmall(400)};
-  }
 `;
 
 export const MileStoneLeft = styled.div`
   ${flexbox({ dir: 'column', jc: 'center' })};
   width: 50%;
+
+  .milestone-des {
+    color: #6e7191;
+    ${typoSmall(400)};
+  }
 `;
 
 export const MileStoneRight = styled.div`
