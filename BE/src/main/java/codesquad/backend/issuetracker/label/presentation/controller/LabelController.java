@@ -1,10 +1,10 @@
 package codesquad.backend.issuetracker.label.presentation.controller;
 
-import codesquad.backend.issuetracker.label.presentation.dto.LabelCountDto;
-import codesquad.backend.issuetracker.label.presentation.dto.LabelCreateRequest;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
+import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
-import codesquad.backend.issuetracker.label.presentation.dto.LabelEditRequest;
-import codesquad.backend.issuetracker.label.presentation.dto.LabelsResponseDto;
+import codesquad.backend.issuetracker.label.presentation.dto.request.LabelEditRequest;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,13 +22,13 @@ public class LabelController {
 
 	@Operation(summary = "라벨 전체 조회")
 	@GetMapping
-	public LabelsResponseDto retrieveLabels() {
+	public LabelsResponse retrieveLabels() {
 		return null;
 	}
 
 	@Operation(summary = "라벨 개수 조회")
 	@GetMapping("/count")
-	public LabelCountDto retrieveCount() {
+	public LabelCountResponse retrieveCount() {
 		return null;
 	}
 
