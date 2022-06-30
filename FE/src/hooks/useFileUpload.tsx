@@ -14,19 +14,16 @@ export const useFileUpload = (
     (formData: FormData) => postImage(formData),
   );
 
-  const uploadFromInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-    if (!target.files) {
+  const uploadFiles = async (files: FileList | null) => {
+    if (!files) {
       return undefined;
     }
 
     const filteredFiles = filterByTypeAndSize(
-      target.files,
+      files,
       allowedFileTypes,
       allowedFileSize,
     );
-
-    target.value = '';
 
     // 업로드
     const formData = toFormData(filteredFiles);
@@ -34,8 +31,8 @@ export const useFileUpload = (
     return imageInfoArr;
   };
 
-  // 로딩 상태와 uploadFromInput 반환
-  return { isLoading, uploadFromInput };
+  // 로딩 상태와 uploadFiles 반환
+  return { isLoading, uploadFiles };
 };
 
 const filterByTypeAndSize = (
