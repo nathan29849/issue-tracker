@@ -2,6 +2,8 @@ package codesquad.backend.issuetracker.label.domain;
 
 import codesquad.backend.issuetracker.label.presentation.dto.TextColor;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +24,8 @@ public class Label {
 	private String title;
 	private String description;
 	private String backgroundColor;
+
+	@Enumerated(value = EnumType.STRING)
 	private TextColor textColor;
 
 	public Label(String title, String description, String backgroundColor,
