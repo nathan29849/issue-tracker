@@ -1,4 +1,4 @@
-import React, { memo, SetStateAction, useEffect, useId, useRef } from 'react';
+import React, { memo, SetStateAction, useId, useRef, useState } from 'react';
 
 import * as S from './style';
 
@@ -68,17 +68,17 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
     'image/png',
     'image/gif',
   ];
-  const { isLoading, uploadFromInput } = useFileUpload(allowedFileTypes);
+  const { isLoading, uploadFiles } = useFileUpload(allowedFileTypes);
+  const [isDragEnter, setIsDragEnter] = useState(false);
 
-  const handleChangeFileInput = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const imageInfoArr = await uploadFromInput(e);
+  const handleUploadFiles = async (files: FileList | null) => {
+    const imageInfoArr = await uploadFiles(files);
 
     if (!imageInfoArr || !textareaRef.current) {
       return;
     }
 
+    // 업로드한 파일마다 ![이름](url)형태로 커서에 삽입하기.
     const cursorIndex = textareaRef.current.selectionStart || 0;
     const beforeCursorValue = value.slice(0, cursorIndex);
     const afterCursorValue = value.slice(cursorIndex);
@@ -90,12 +90,31 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
     setValue(`${beforeCursorValue}${targetString}${afterCursorValue}`);
   };
 
+  const handleDropFileInTextarea = (e: React.DragEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setIsDragEnter(false);
+    handleUploadFiles(e.dataTransfer.files);
+  };
+
+  const handleChangeFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleUploadFiles(e.target.files);
+    e.target.value = '';
+  };
+
   return (
-    <S.TextareaLayer width={width} size="md" active={!!value.length}>
+    <S.TextareaLayer
+      width={width}
+      size="md"
+      active={!!value.length}
+      dragEnter={isDragEnter}
+    >
       <S.Textarea
         as="textarea"
         ref={textareaRef}
         value={value}
+        onDrop={handleDropFileInTextarea}
+        onDragEnter={() => setIsDragEnter(true)}
+        onDragLeave={() => setIsDragEnter(false)}
         {...restProps}
       />
 
@@ -103,6 +122,7 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
 
       <S.PlaceHolder>{placeholder || '코멘트를 입력하세요'}</S.PlaceHolder>
       <S.WordCount>띄어쓰기 </S.WordCount>
+
       <S.Footer>
         {isLoading ? (
           <S.FileUploadLoader>
