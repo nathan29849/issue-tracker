@@ -5,6 +5,7 @@ import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCount
 import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
 import codesquad.backend.issuetracker.label.presentation.dto.request.LabelEditRequest;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelIdResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,11 @@ public class LabelController {
 
 	@Operation(summary = "라벨 생성")
 	@PostMapping
-	public ResponseEntity<Void> create(
+	public ResponseEntity<LabelIdResponse> create(
 		@RequestBody LabelCreateRequest labelCreateRequest
 		){
-		return null;
+		LabelIdResponse labelId = labelService.add(labelCreateRequest);
+		return ResponseEntity.ok().body(labelId);
 	}
 
 	@Operation(summary = "라벨 수정", description = "일부만 수정이 가능합니다.")

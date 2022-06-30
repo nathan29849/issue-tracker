@@ -1,8 +1,11 @@
 package codesquad.backend.issuetracker.label.application;
 
+import codesquad.backend.issuetracker.label.domain.Label;
 import codesquad.backend.issuetracker.label.infrastructure.LabelRepository;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
+import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelIdResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,5 +32,17 @@ public class LabelService {
 	public LabelCountResponse count() {
 		long count = labelRepository.count();
 		return LabelCountResponse.of(count);
+	}
+
+	public LabelIdResponse add(LabelCreateRequest labelCreateRequest) {
+		Label label = Label.createBy(
+			labelCreateRequest.getTitle(),
+			labelCreateRequest.getDescription(),
+			labelCreateRequest.getBackgroundColor(),
+			labelCreateRequest.getTextColor()
+		);
+
+		Label savedLabel = labelRepository.save(label);
+		return new LabelIdResponse(savedLabel.getId());
 	}
 }

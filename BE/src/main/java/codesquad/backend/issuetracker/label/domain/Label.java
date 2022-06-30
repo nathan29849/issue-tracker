@@ -24,4 +24,15 @@ public class Label {
 	private String backgroundColor;
 	private TextColor textColor;
 
+	public Label(String title, String description, String backgroundColor,
+		TextColor textColor) {
+		this.title = title;
+		this.description = description;
+		this.backgroundColor = backgroundColor;
+		this.textColor = textColor;
+	}
+
+	public static Label createBy(String title, String description, String backgroundColor, TextColor textColor) {
+		return new Label(title, description, backgroundColor, textColor);
+	}
 }
