@@ -35,4 +35,22 @@ public class Label {
 	public static Label createBy(String title, String description, String backgroundColor, TextColor textColor) {
 		return new Label(title, description, backgroundColor, textColor);
 	}
+
+	public void edit(String title, String description, String backgroundColor, TextColor textColor) {
+		if (title != null) {
+			this.title = title;
+		}
+
+		if (description != null) {
+			this.description = description;
+		}
+
+		if (backgroundColor != null) {
+			this.backgroundColor = backgroundColor;
+		}
+
+		if (textColor != null) {
+			this.textColor = textColor;
+		}
+	}
 }

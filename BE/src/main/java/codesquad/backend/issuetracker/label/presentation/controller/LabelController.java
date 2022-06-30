@@ -53,7 +53,7 @@ public class LabelController {
 		@PathVariable Long id,
 		@RequestBody LabelEditRequest labelEditRequest
 	) {
-		return null;
+		return labelService.edit(id, labelEditRequest);
 	}
 
 	@Operation(summary = "라벨 삭제")

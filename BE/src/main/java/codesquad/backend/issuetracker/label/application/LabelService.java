@@ -4,6 +4,7 @@ import codesquad.backend.issuetracker.label.domain.Label;
 import codesquad.backend.issuetracker.label.infrastructure.LabelRepository;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
 import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
+import codesquad.backend.issuetracker.label.presentation.dto.request.LabelEditRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelIdResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
@@ -44,5 +45,19 @@ public class LabelService {
 
 		Label savedLabel = labelRepository.save(label);
 		return new LabelIdResponse(savedLabel.getId());
+	}
+
+	public LabelDto edit(Long id, LabelEditRequest labelEditRequest) {
+		Label label = labelRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 라벨이 존재하지 않습니다."));
+
+		label.edit(
+			labelEditRequest.getTitle(),
+			labelEditRequest.getDescription(),
+			labelEditRequest.getBackgroundColor(),
+			labelEditRequest.getTextColor()
+		);
+
+		return LabelDto.createBy(label);
 	}
 }
