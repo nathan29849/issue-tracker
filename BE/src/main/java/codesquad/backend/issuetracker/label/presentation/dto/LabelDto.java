@@ -7,6 +7,7 @@ public class LabelDto {
 
 	private Long id;
 	private String title;
+	private String description;
 	private String backgroundColor;
 	private TextColor textColor;
 }

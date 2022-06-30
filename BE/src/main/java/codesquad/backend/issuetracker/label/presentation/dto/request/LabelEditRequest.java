@@ -7,6 +7,7 @@ import lombok.Getter;
 public class LabelEditRequest {
 
 	private String title;
+	private String description;
 	private String backgroundColor;
 	private TextColor textColor;
 }
