@@ -17,16 +17,20 @@ export const IssueComments = styled.main`
   grid-row-end: 2;
 `;
 
-export const Inputs = styled(IssueComments)`
+export const InputContainer = styled(IssueComments)`
   display: grid;
   grid-template-columns: 2.75rem 55rem;
-  grid-template-rows: repeat(2);
-  gap: 16px;
+  gap: 1rem;
+`;
+
+export const Inputs = styled.div`
+  ${flexbox({ dir: 'column' })};
+  gap: 1rem;
 `;
 
 export const UserAvatar = styled.div`
   grid-row-start: 1;
-  grid-row-end: 3;
+  grid-row-end: 2;
 `;
 
 export const SideBar = styled.aside`
@@ -45,6 +49,7 @@ export const Buttons = styled.footer`
   grid-row-start: 2;
   grid-row-end: 3;
   margin-top: 2rem;
+  margin-bottom: 10rem;
   padding-top: 2rem;
   border-top: 1px solid ${({ theme }) => theme.color.line};
 `;
