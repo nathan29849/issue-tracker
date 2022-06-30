@@ -105,7 +105,7 @@ export const AssigneePanelProvider = ({
   );
 };
 
-export const useAssigneePanel = () => {
+export const useAssignee = () => {
   const state = useContext(AssigneePanelContext);
   const dispatch = useContext(AssigneePanelDispatchContext);
 
@@ -130,7 +130,7 @@ export const useAssigneePanel = () => {
   return { state, initPanel, selectAssignee, replaceAssignee };
 };
 
-export const useAssigneePanelState = () => {
+export const useAssigneeState = () => {
   const state = useContext(AssigneePanelContext);
 
   if (state === null) {
@@ -140,7 +140,7 @@ export const useAssigneePanelState = () => {
   return state;
 };
 
-export const useSetAssigneePanelState = () => {
+export const useSetAssigneeState = () => {
   const dispatch = useContext(AssigneePanelDispatchContext);
   if (dispatch === null) {
     throw Error('Assignee Panel Dispatch Provider Error');
@@ -160,3 +160,15 @@ export const useSetAssigneePanelState = () => {
 
   return { initPanel, selectAssignee, replaceAssignee };
 };
+
+export const useSelectedAssignee = () => {
+  const state = useContext(AssigneePanelContext);
+
+  if (state === null) {
+    throw Error('Assignee Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected);
+};
+
+// Not Selected Assignee 도 필요하면 만들기.

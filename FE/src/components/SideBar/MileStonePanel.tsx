@@ -5,7 +5,7 @@ import I from '@components/Icons';
 import { ProgressBar } from '@components/Indicator/ProgressBar';
 import Popup from '@components/Popup';
 import { Header } from '@components/SideBar/Common';
-import { useMileStonePanel } from '@components/SideBar/context';
+import { useMileStone } from '@components/SideBar/context';
 import * as PopupS from '@components/SideBar/popupStyle';
 import * as S from '@components/SideBar/style';
 import useComponentVisible from '@hooks/useComponentVisible';
@@ -13,7 +13,7 @@ import useComponentVisible from '@hooks/useComponentVisible';
 const MileStonePanel: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
-  const { state } = useMileStonePanel();
+  const { state } = useMileStone();
   const { isComponentVisible, setIsComponentVisible, ref } =
     useComponentVisible(false);
 
@@ -55,7 +55,7 @@ const MileStonePopup: React.FC<{ allowDuplicates?: boolean }> = ({
     state: milestones,
     replaceMileStone,
     selectMileStone,
-  } = useMileStonePanel();
+  } = useMileStone();
 
   const handleClickListItem = (milestoneId: number) => () => {
     if (allowDuplicates) {

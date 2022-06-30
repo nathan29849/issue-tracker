@@ -7,14 +7,14 @@ import * as S from './style';
 
 import I from '@components/Icons';
 import Popup from '@components/Popup';
-import { useAssigneePanel } from '@components/SideBar/context';
+import { useAssignee } from '@components/SideBar/context';
 import UserAvatar from '@components/UserAvatar';
 import useComponentVisible from '@hooks/useComponentVisible';
 
 const AssigneePanel: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
-  const { state } = useAssigneePanel();
+  const { state } = useAssignee();
   const { isComponentVisible, setIsComponentVisible, ref } =
     useComponentVisible(false);
 
@@ -51,7 +51,7 @@ const AssigneePanel: React.FC<{ allowDuplicates?: boolean }> = ({
 const AssigneePopup: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
-  const { state: users, replaceAssignee, selectAssignee } = useAssigneePanel();
+  const { state: users, replaceAssignee, selectAssignee } = useAssignee();
 
   const handleClickListItem = (userId: string) => () => {
     if (allowDuplicates) {

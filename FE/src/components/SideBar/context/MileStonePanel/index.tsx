@@ -105,7 +105,7 @@ export const MileStonePanelProvider = ({
   );
 };
 
-export const useMileStonePanel = () => {
+export const useMileStone = () => {
   const state = useContext(MileStonePanelContext);
   const dispatch = useContext(MileStonePanelDispatchContext);
 
@@ -130,7 +130,7 @@ export const useMileStonePanel = () => {
   return { state, initPanel, selectMileStone, replaceMileStone };
 };
 
-export const useMileStonePanelState = () => {
+export const useMileStoneState = () => {
   const state = useContext(MileStonePanelContext);
 
   if (state === null) {
@@ -140,7 +140,7 @@ export const useMileStonePanelState = () => {
   return state;
 };
 
-export const useSetMileStonePanelState = () => {
+export const useSetMileStoneState = () => {
   const dispatch = useContext(MileStonePanelDispatchContext);
   if (dispatch === null) {
     throw Error('MileStone Panel Dispatch Provider Error');
@@ -159,4 +159,14 @@ export const useSetMileStonePanelState = () => {
   }, []);
 
   return { initPanel, selectMileStone, replaceMileStone };
+};
+
+export const useSelectedMileStone = () => {
+  const state = useContext(MileStonePanelContext);
+
+  if (state === null) {
+    throw Error('MileStone Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected);
 };
