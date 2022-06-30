@@ -171,4 +171,14 @@ export const useSelectedAssignee = () => {
   return state.filter(({ selected }) => selected);
 };
 
+export const useSelectedAssigneeId = () => {
+  const state = useContext(AssigneePanelContext);
+
+  if (state === null) {
+    throw Error('Assignee Panel Provider Error');
+  }
+
+  return state.filter(({ selected }) => selected).map(({ user: { id } }) => id);
+};
+
 // Not Selected Assignee 도 필요하면 만들기.
