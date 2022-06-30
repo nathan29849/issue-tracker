@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
@@ -9,7 +8,6 @@ import I from '@components/Icons';
 import { ProgressBar } from '@components/Indicator';
 import Form from '@components/Indicator/Form';
 import TabList from '@components/TabList';
-import { typoMedium, typoSmall, flexbox } from '@styles/mixin';
 
 export default function Milestone() {
   const [openForm, setOpenForm] = useState(false);
@@ -64,88 +62,36 @@ export default function Milestone() {
 
         <S.MileStoneItemWrapper>
           <S.MileStoneLeft>
-            <S.MileStoneTitle
-              css={css`
-                margin-bottom: 1rem;
-              `}
-            >
+            <S.MileStoneTitle>
               <div>
                 <I.MileStone color="#007AFF" />
-                <span
-                  css={css`
-                    margin-left: 0.5rem;
-                    ${typoMedium(700)}
-                  `}
-                >
-                  마일스톤 제목
-                </span>
+                <span className="milestone-mainTitle">마일스톤 제목</span>
               </div>
               <div>
                 <I.Calendar color="#6E7191" />
-                <span
-                  css={css`
-                    margin-left: 0.5rem;
-                    color: #6e7191;
-                    ${typoSmall(400)}
-                  `}
-                >
-                  2022-06-30
-                </span>
+                <span className="milestone-date">2022-06-30</span>
               </div>
             </S.MileStoneTitle>
-            <p
-              css={css`
-                color: #6e7191;
-                ${typoSmall(400)};
-              `}
-            >
-              레이블에 대한 설명
-            </p>
+            <p className="milestone-des">레이블에 대한 설명</p>
           </S.MileStoneLeft>
           <S.MileStoneRight>
-            <div
-              css={css`
-                gap: 2rem;
-                ${flexbox({})}
-              `}
-            >
+            <div className="milestone-buttons">
               <div>
                 <button type="button">
                   <I.Bucket color="#6E7191" />
-                  <span
-                    css={css`
-                      margin-left: 0.5rem;
-                      color: #6e7191;
-                    `}
-                  >
-                    닫기
-                  </span>
+                  <span className="button--text">닫기</span>
                 </button>
               </div>
               <div>
                 <button type="button">
                   <I.Edit color="#6E7191" />
-                  <span
-                    css={css`
-                      margin-left: 0.5rem;
-                      color: #6e7191;
-                    `}
-                  >
-                    편집
-                  </span>
+                  <span className="button--text">편집</span>
                 </button>
               </div>
               <div>
                 <button type="button">
                   <I.Trash color="#FF3B30" />
-                  <span
-                    css={css`
-                      margin-left: 0.5rem;
-                      color: #ff3b30;
-                    `}
-                  >
-                    삭제
-                  </span>
+                  <span className="button--delete">삭제</span>
                 </button>
               </div>
             </div>

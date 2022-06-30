@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { typoSmall, flexbox } from '@styles/mixin';
+import { typoSmall, typoMedium, flexbox } from '@styles/mixin';
 import theme from '@styles/theme';
 
 export const Header = styled.header`
@@ -27,8 +27,23 @@ export const MainHeaderLabel = styled.header`
 `;
 
 export const MileStoneTitle = styled.div`
+  margin-bottom: 1rem;
   gap: 0.5rem;
   ${flexbox({ ai: 'center' })};
+
+  .milestone-mainTitle {
+    margin-left: 0.5rem;
+    ${typoMedium(700)}
+  }
+  .milestone-date {
+    margin-left: 0.5rem;
+    color: #6e7191;
+    ${typoSmall(400)}
+  }
+  .milestone-des {
+    color: #6e7191;
+    ${typoSmall(400)};
+  }
 `;
 
 export const MileStoneLeft = styled.div`
@@ -41,6 +56,19 @@ export const MileStoneRight = styled.div`
   gap: 0.5rem;
   button {
     background-color: transparent;
+  }
+  .milestone-buttons {
+    gap: 2rem;
+    ${flexbox({})}
+  }
+  .button--text {
+    margin-left: 0.5rem;
+    color: #6e7191;
+  }
+
+  .button--delete {
+    margin-left: 0.5rem;
+    color: #ff3b30;
   }
 `;
 
