@@ -169,3 +169,15 @@ export const useSelectedLabel = () => {
 
   return state.filter(({ selected }) => selected);
 };
+
+export const useSelectedLabelId = () => {
+  const state = useContext(LabelPanelContext);
+
+  if (state === null) {
+    throw Error('Label Panel Provider Error');
+  }
+
+  return state
+    .filter(({ selected }) => selected)
+    .map(({ label: { id } }) => id);
+};

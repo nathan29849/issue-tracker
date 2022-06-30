@@ -1,6 +1,6 @@
 // 로그인 상태
 export interface User {
+  id: number;
   userId: string;
-  userName: string;
   profileImageUrl: string;
 }

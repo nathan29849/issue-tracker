@@ -8,20 +8,20 @@ export const GetUsers = rest.get(
       ctx.delay(0),
       ctx.json([
         {
+          id: 1,
           userId: 'mjsdo',
-          userName: 'abc',
           profileImageUrl:
             'https://avatars.githubusercontent.com/u/79135734?s=96&v=4',
         },
         {
+          id: 2,
           userId: 'muffin',
-          userName: 'def',
           profileImageUrl:
             'https://avatars.githubusercontent.com/u/45479309?v=4',
         },
         {
+          id: 3,
           userId: 'nathan29849',
-          userName: 'ghi',
           profileImageUrl:
             'https://avatars.githubusercontent.com/u/67811880?v=4',
         },
