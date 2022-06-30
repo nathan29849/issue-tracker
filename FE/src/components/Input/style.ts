@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { typoSmall, inlineFlexbox, typoXSmall } from '@styles/mixin';
+import { typoSmall, inlineFlexbox, typoXSmall, flexbox } from '@styles/mixin';
 
 export const WordCount = styled.div`
   ${typoXSmall(400)};
@@ -21,6 +21,7 @@ export const Label = styled.label`
 `;
 
 export const Footer = styled.footer`
+  ${flexbox({ ai: 'center' })};
   height: 3.25rem;
   background-image: linear-gradient(
     to right,
@@ -32,6 +33,17 @@ export const Footer = styled.footer`
   background-repeat: repeat-x;
   padding: 1rem 1.5rem;
   transition: all 100ms;
+`;
+
+export const FileUploadLoader = styled.div`
+  ${flexbox({ ai: 'center' })};
+  padding: 0 0.5rem;
+`;
+
+export const UploadMessage = styled.span`
+  ${typoXSmall(700)};
+  color: ${({ theme }) => theme.color.label};
+  padding: 0 1rem;
 `;
 
 export const PlaceHolder = styled.div`
@@ -70,6 +82,7 @@ export const InputLayer = styled.div<{
   error?: boolean;
   success?: boolean;
   active?: boolean;
+  dragEnter?: boolean;
 }>`
   ${typoSmall(400)};
   position: relative;
@@ -154,6 +167,17 @@ export const InputLayer = styled.div<{
       
       ${PlaceHolder} {
         color: ${theme.color.darkRed};
+      };
+  `};
+
+  ${({ dragEnter, theme }) =>
+    dragEnter &&
+    `
+      border-color: ${theme.color.blue} !important;
+      background-color: ${theme.color.lightBlue} !important;
+      
+      ${PlaceHolder} {
+        color: ${theme.color.darkBlue};
       };
   `};
 `;

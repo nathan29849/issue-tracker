@@ -5,6 +5,7 @@ import { GetLabels } from './GetLabels';
 import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
+import { PostImage } from './PostImage';
 import { PostIssue } from './PostIssue';
 
 const getIssue = rest.get('/issue', (req, res, ctx) =>
@@ -106,4 +107,5 @@ export const handlers = [
   PostIssue,
   GetUsers,
   GetMileStones,
+  PostImage,
 ];
