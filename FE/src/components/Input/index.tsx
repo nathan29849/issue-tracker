@@ -74,7 +74,7 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
   const handleUploadFiles = async (files: FileList | null) => {
     const imageInfoArr = await uploadFiles(files);
 
-    if (!imageInfoArr || !textareaRef.current) {
+    if (!imageInfoArr || !imageInfoArr.length || !textareaRef.current) {
       return;
     }
 
