@@ -6,12 +6,24 @@ import {
   typoMedium,
   typoSmall,
   simpleOpacityTransition,
+  flexbox,
 } from '@styles/mixin';
 
 // 버튼
 // 색상에 따라 Normal, Outlined
 // 크기에 따라 Large, Medium, Small
 // 종류에 따라 Button, TextButton
+const WIDTH = {
+  LG: 21.25,
+  MD: 15,
+  SM: 7.5,
+};
+
+const HEIGHT = {
+  LG: 4,
+  MD: 3.5,
+  SM: 2.5,
+};
 
 export const Button = styled.button<{
   outlined?: boolean;
@@ -23,9 +35,10 @@ export const Button = styled.button<{
   cursor: pointer;
 
   min-width: ${({ size }) =>
-    size === 'lg' ? 21.25 : size === 'md' ? 15 : 7.5}rem;
+    size === 'lg' ? WIDTH.LG : size === 'md' ? WIDTH.MD : WIDTH.SM}rem;
 
-  height: ${({ size }) => (size === 'lg' ? 4 : size === 'md' ? 3.5 : 2.5)}rem;
+  height: ${({ size }) =>
+    size === 'lg' ? HEIGHT.LG : size === 'md' ? HEIGHT.MD : HEIGHT.SM}rem;
   border-radius: ${({ size }) => (size === 'lg' || size === 'md' ? 20 : 11)}px;
 
   background-color: ${({ theme, outlined }) =>
@@ -67,6 +80,7 @@ export const Button = styled.button<{
 `;
 
 export const TextButton = styled.button<{ size: 'sm' | 'md' }>`
+  ${flexbox({ jc: 'center', ai: 'center' })}
   background-color: inherit;
   color: ${({ theme }) => theme.color.label};
   cursor: pointer;
@@ -117,4 +131,12 @@ export const LoginButton = styled.button<{
     cursor: not-allowed;
     pointer-events: none;
   }
+`;
+
+export const LoaderWrapper = styled.div<{ size?: 'sm' | 'md' | 'lg' }>`
+  ${flexbox({ jc: 'center', ai: 'center' })}
+  min-width: ${({ size }) =>
+    size === 'lg' ? WIDTH.LG : size === 'md' ? WIDTH.MD : WIDTH.SM}rem;
+  height: ${({ size }) =>
+    size === 'lg' ? HEIGHT.LG : size === 'md' ? HEIGHT.MD : HEIGHT.SM}rem;
 `;

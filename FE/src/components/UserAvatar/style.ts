@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-export const UserAvatar = styled.button<{ size: 'sm' | 'lg' }>`
+export const UserAvatar = styled.button<{ size: 'sm' | 'lg'; fill?: string }>`
   border-style: solid;
-  border-color: ${({ theme }) => theme.color.body};
+  border-color: ${({ theme, fill }) => fill || theme.color.body};
   border-width: ${({ size }) => (size === 'sm' ? 1 : 2)}px;
   border-radius: 50%;
   overflow: hidden;
@@ -24,4 +24,10 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+export const Fill = styled.div<{ fill?: string }>`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ fill }) => fill};
 `;

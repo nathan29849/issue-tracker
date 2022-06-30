@@ -11,11 +11,11 @@ export const mileStoneState = atom<{ info: IMileStoneTypes[] }>({
     info: [
       {
         id: 1,
-        name: 'muffinMileStone',
+        name: 'muffinMileStone한글네글',
       },
       {
         id: 2,
-        name: 'colaMileStone',
+        name: 'colaMileStone한글셋',
       },
     ],
   },

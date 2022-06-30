@@ -147,6 +147,7 @@ const style = css`
 
   button {
     cursor: pointer;
+    background-color: transparent;
   }
 `;
 

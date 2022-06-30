@@ -6,6 +6,7 @@ import ButtonPage from '@pages/ButtonPage';
 import Callback from '@pages/Callback';
 import IconPage from '@pages/IconPage';
 import IssuePage from '@pages/IssuePage';
+import IssueDetailPage from '@pages/IssuePage/Detail';
 import LabelPage from '@pages/LabelPage';
 import Login from '@pages/Login';
 import Milestone from '@pages/Milestone';
@@ -21,6 +22,9 @@ export default function Router() {
         <Route element={<Verification />}>
           <Route path="/issue" element={<Layout />}>
             <Route index element={<IssuePage />} />
+            <Route path="new" element={<IssueDetailPage newIssue />} />
+            <Route path=":id" element={<IssueDetailPage />} />
+            {/**/}
             <Route path="label" element={<LabelPage />} />
             <Route path="milestone" element={<Milestone />} />
           </Route>

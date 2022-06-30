@@ -19,8 +19,8 @@ export const IssueComments = styled.main`
 
 export const Inputs = styled(IssueComments)`
   display: grid;
-  grid-template-columns: 44px 55rem;
-  grid-template-rows: 2;
+  grid-template-columns: 2.75rem 55rem;
+  grid-template-rows: repeat(2);
   gap: 16px;
 `;
 
@@ -38,7 +38,7 @@ export const SideBar = styled.aside`
 `;
 
 export const Buttons = styled.footer`
-  ${flexbox({ jc: 'flex-end' })};
+  ${flexbox({ jc: 'flex-end', ai: 'center' })};
   gap: 2rem;
   grid-column-start: 1;
   grid-column-end: 3;

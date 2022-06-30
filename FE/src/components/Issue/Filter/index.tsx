@@ -11,44 +11,45 @@ import { useSearch } from '@hooks/useSearch';
 
 interface IFilterProps {
   onPopup: boolean;
-  label: FilterLabelTypes;
+  item: FilterLabelTypes;
   filterPopupData: IPopupData[];
-  handleFilterClick: (label: FilterLabelTypes, status: boolean) => void;
+  handleFilterClick: (item: FilterLabelTypes, status: boolean) => void;
 }
 
 export default function Filter({
   onPopup,
-  label,
+  item,
   filterPopupData,
   handleFilterClick,
 }: IFilterProps) {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const handleOnFilterPopup = () => {
-    handleFilterClick(label, true);
+    handleFilterClick(item, true);
     setIsComponentVisible(!isComponentVisible);
   };
-  const { replace } = useSearch('q', '');
+  const { replace } = useSearch('q', 'is:open');
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
-    replace(label, popupData.name);
+    if (item === 'label') replace(item, popupData.title);
+    else replace(item, popupData.name);
     setIsComponentVisible(false);
   };
 
   return (
     <S.FilterLayer onClick={handleOnFilterPopup}>
-      <span className="filter__label">{label}</span>
+      <span className="filter__label">{item}</span>
       <S.ArrowDown />
       {/**
        * // TODO
        * 초기에 여러개의 필터 팝업창 중에 하나의 필터 팝업창만 어떻게 띄울까 고민함
        * 팝업마다 보여줘야할 데이터가 다르기 때문에 팝업의 상태를 객체로 관리하는게 맞을꺼같아 우선 진행
-       * 현재 모든 팝업의 상태를 불린형태로 popupState[label]로 관리
-       * popupState[label]이 true인 팝업만 초기에 띄워주지만
+       * 현재 모든 팝업의 상태를 불린형태로 popupState[item]로 관리
+       * popupState[item]이 true인 팝업만 초기에 띄워주지만
        * 모든 팝업을 한 번씩 클릭하면 결국 전부 true가 되서 초기에만 사용되는 변수값으로 전락되버림
        *
        *
@@ -67,11 +68,11 @@ export default function Filter({
         >
           {isComponentVisible && (
             <Popup>
-              <header>{label} 필터</header>
+              <header>{item} 필터</header>
               {filterPopupData.map((popupData: IPopupData) => (
                 <Contents
                   key={`popup-${popupData.id}`}
-                  label={label}
+                  item={item}
                   popupData={popupData}
                   handleItemClick={handleItemClick}
                 />

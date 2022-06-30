@@ -4,9 +4,10 @@
  *  */
 
 export interface IPopupData {
-  id: number;
+  id?: number;
   imageUrl?: string;
-  status?: any;
-  color?: string;
-  name: string;
+  status?: string;
+  backgroundColor?: string;
+  title?: string;
+  name?: string;
 }

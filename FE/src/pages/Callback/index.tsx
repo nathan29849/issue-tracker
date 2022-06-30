@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 import { Loader } from '@components/Indicator/Loader';
 import { useLogin } from '@hooks/useLogin';
-import theme from '@styles/theme';
+import { alignPosXY } from '@styles/mixin';
 
 function Callback() {
   const { search } = window.location;
@@ -16,8 +16,7 @@ function Callback() {
   return (
     <div
       css={css`
-        height: 100vh;
-        background-color: ${theme.color.background};
+        ${alignPosXY('fixed')}
       `}
     >
       <Loader text="로그인 중입니다.." size={16} />

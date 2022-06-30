@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { typoSmall, flexbox } from '@styles/mixin';
+import { typoXSmall, typoSmall, flexbox } from '@styles/mixin';
 
 export const Icon = styled.span`
   position: absolute;
@@ -57,7 +57,17 @@ export const FilterButton = styled.div`
   }
 `;
 
+export const FilterErrorText = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -11rem;
+  color: ${({ theme }) => theme.color.red};
+  ${typoXSmall(400)}
+`;
+
 export const FilterBarLayer = styled.form`
+  position: relative;
   display: inline-flex;
   height: 2.5rem;
   border: 1px solid ${({ theme }) => theme.color.line};

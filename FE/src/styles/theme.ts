@@ -37,6 +37,9 @@ const zIndex = {
     header: 900, // Filter-Bar 영역
     main: 800, // Issue-List 영역
   },
+  sideBar: {
+    popup: 100, // Side-Bar Popup 영역
+  },
 };
 
 const theme = {
