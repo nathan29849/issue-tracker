@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import * as S from './style';
 
+import { getLabels, deleteLabel } from '@apis/label';
 import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Label } from '@components/Label';
@@ -12,14 +13,9 @@ import Modal from '@components/Modal';
 import TabList from '@components/TabList';
 import { ILabelTypes } from '@recoil/atoms/label';
 
-const getLabels = async () => {
-  const res = await fetch('/issue/label');
-  return res.json();
-};
-
 export default function LabelPage() {
   const queryClient = useQueryClient();
-  const { data, status } = useQuery('labelData', getLabels);
+  const { data: labelDatas, status } = useQuery('labelData', getLabels);
   const [openForm, setOpenForm] = useState(false);
   const [editOpenForm, setEditOpenForm] = useState<{ [id: number]: boolean }>(
     {},
@@ -27,6 +23,12 @@ export default function LabelPage() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
+
+  const fetchDeleteLabel = useMutation(deleteLabel, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('labelData');
+    },
+  });
 
   const handleLabelEditClick = (id: number) => {
     setEditOpenForm(prevEditFormState => ({
@@ -44,20 +46,8 @@ export default function LabelPage() {
     setModalVisible(false);
   };
 
-  const deleteLabel = useMutation(
-    (id: number) =>
-      fetch(`/issue/label/${id}`, {
-        method: 'DELETE',
-      }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('labelData');
-      },
-    },
-  );
-
   const handleLabelDeleteSubmit = () => {
-    deleteLabel.mutate(deleteId);
+    fetchDeleteLabel.mutate(deleteId);
     setModalVisible(false);
   };
 
@@ -97,10 +87,10 @@ export default function LabelPage() {
       )}
       <S.Main>
         <S.LabelCount>
-          {status === 'success' ? data.length : 0}개의 레이블
+          {status === 'success' ? labelDatas.length : 0}개의 레이블
         </S.LabelCount>
         {status === 'success' &&
-          data.map((label: ILabelTypes) =>
+          labelDatas.map((label: ILabelTypes) =>
             editOpenForm[label.id] ? (
               <Form
                 key={`EditLabelForm-${label.title}`}
@@ -118,7 +108,7 @@ export default function LabelPage() {
                   >
                     {label.title}
                   </Label>
-                  <S.LabelTitle>Label Title</S.LabelTitle>
+                  <S.LabelTitle>{label.description}</S.LabelTitle>
                 </S.LabelLeft>
                 <S.LabelRight>
                   <button

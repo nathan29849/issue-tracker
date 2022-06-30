@@ -1,12 +1,15 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
+import { DeleteLabel } from './DeleteLabel';
 import { GetLabels } from './GetLabels';
 import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
+import { PatchLabel } from './PatchLabel';
 import { PostImage } from './PostImage';
 import { PostIssue } from './PostIssue';
+import { PostLabels } from './PostLabels';
 
 const getIssue = rest.get('/issue', (req, res, ctx) =>
   res(
@@ -50,58 +53,12 @@ const getIssue = rest.get('/issue', (req, res, ctx) =>
   ),
 );
 
-const getLable = rest.get('/issue/label', (req, res, ctx) =>
-  res(
-    ctx.status(200),
-    ctx.delay(1000),
-    ctx.json([
-      {
-        id: 81,
-        backgroundColor: '#F7F7FC',
-        title: 'duplicate',
-        description: 'duplicate Des',
-        textColor: 'BLACK',
-      },
-      {
-        id: 82,
-        backgroundColor: '#004DE3',
-        title: 'documentation',
-        description: 'documentation Des',
-        textColor: 'WHITE',
-      },
-      {
-        id: 83,
-        backgroundColor: '#C60B00',
-        title: 'bug',
-        description: 'bug Des',
-        textColor: 'WHITE',
-      },
-    ]),
-  ),
-);
-
-const postLabel = rest.post('/issue/label', (req, res, ctx) => {
-  const { title, backgroundColor, description, textColor } = JSON.parse(
-    req.body,
-  );
-
-  return res(
-    ctx.status(200),
-    ctx.delay(1000),
-    ctx.json({
-      title,
-      backgroundColor,
-      description,
-      textColor,
-    }),
-  );
-});
-
 export const handlers = [
   getIssue,
-  getLable,
-  postLabel,
   GetLabels,
+  PostLabels,
+  DeleteLabel,
+  PatchLabel,
   GitHubLogin,
   RefreshGitHubLogin,
   PostIssue,
