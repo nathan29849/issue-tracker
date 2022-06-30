@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
 import * as S from './style';
 
@@ -8,10 +7,15 @@ import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
 import { Textarea, Input } from '@components/Input';
 import { SideBar } from '@components/SideBar';
+import {
+  useSelectedAssigneeId,
+  useSelectedMileStoneId,
+  useSelectedLabelId,
+} from '@components/SideBar/context';
 import UserAvatar from '@components/UserAvatar';
 import { useInput } from '@hooks/useInput';
 import { usePostIssue } from '@hooks/usePostIssue';
-import { userState } from '@recoil/atoms/user';
+import { useProfileImage } from '@recoil/selectors/user';
 
 const issuePagePath = '/issue';
 
@@ -19,15 +23,14 @@ const issuePagePath = '/issue';
 export const NewMain = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = usePostIssue();
-  const user = useRecoilValue(userState);
-
+  const profileImage = useProfileImage();
+  const selectedAssignees = useSelectedAssigneeId();
+  const selectedLabels = useSelectedLabelId();
+  const [selectedMileStone] = useSelectedMileStoneId();
   const title = useInput();
   const comment = useInput();
 
-  const handleClickCancelButton = () => {
-    navigate(issuePagePath);
-  };
-
+  const handleClickCancelButton = () => navigate(issuePagePath);
   const handleClickSubmitButton = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (title.value.trim().length === 0) {
@@ -37,6 +40,9 @@ export const NewMain = () => {
     mutate({
       title: title.value,
       content: comment.value,
+      assigneesId: selectedAssignees,
+      labelsId: selectedLabels,
+      milestoneId: selectedMileStone,
     });
   };
 
@@ -44,7 +50,7 @@ export const NewMain = () => {
     <S.DetailMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.InputContainer>
         <S.UserAvatar>
-          <UserAvatar src={user!.profileImageUrl} size="lg" />
+          <UserAvatar src={profileImage} size="lg" />
         </S.UserAvatar>
         <S.Inputs>
           <Input width="100%" placeholder="제목" size="md" {...title} />
