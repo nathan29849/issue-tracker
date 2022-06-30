@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import * as S from './formStyle';
 
+import { postLabels, patchLabel, PostLabelRequestBody } from '@apis/label';
 import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
@@ -54,6 +55,21 @@ export default function Form({
     bgColor: openFormValue.bgColor,
     textColor: openFormValue.textColor,
   });
+
+  const fetchPostLabels = useMutation(postLabels, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('labelData');
+    },
+  });
+
+  const fetchPatchLabel = useMutation(
+    ({ patchId, newLabel }: any) => patchLabel(patchId, newLabel),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('labelData');
+      },
+    },
+  );
 
   const handleLabelText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOpenFormValue(prevState => ({
@@ -114,64 +130,38 @@ export default function Form({
     setIsComponentVisible(false);
   };
 
-  const createLabel = useMutation(
-    (newLabel: ILabelTypes) =>
-      fetch('/issue/label', {
-        method: 'POST',
-        body: JSON.stringify(newLabel),
-      }),
-    {
-      onSuccess: () => {
-        // queryKey가 'labelData'로 시작하는 모든 쿼리 무효화
-        queryClient.invalidateQueries('labelData');
-      },
-    },
-  );
-
-  const patchLabel = useMutation(
-    (newLabel: ILabelTypes) =>
-      fetch('/issue/label', {
-        method: 'PATCH',
-        body: JSON.stringify(newLabel),
-      }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('labelData');
-      },
-    },
-  );
-
   const handleSubmit = (
     e: React.SyntheticEvent<HTMLFormElement>,
-    id?: number,
+    patchId?: number,
   ) => {
     e.preventDefault();
+    const newLabel = {
+      title: openFormValue.labelText,
+      description: openFormValue.descriptionText,
+      backgroundColor: openFormValue.bgColor,
+      textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
+    };
 
-    if (id) {
-      const newLabel = {
-        id,
-        title: openFormValue.labelText,
-        description: openFormValue.descriptionText,
-        backgroundColor: openFormValue.bgColor,
-        textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
-      };
-      patchLabel.mutate(newLabel);
+    if (patchId) {
+      fetchPatchLabel.mutate({ patchId, newLabel });
     } else {
-      const newLabel = {
-        title: openFormValue.labelText,
-        description: openFormValue.descriptionText,
-        backgroundColor: openFormValue.bgColor,
-        textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
-      };
-      createLabel.mutate(newLabel);
+      fetchPostLabels.mutate(newLabel);
     }
   };
 
   useEffect(() => {
-    if (createLabel.isSuccess) {
+    if (fetchPostLabels.isSuccess) {
+      console.log(fetchPostLabels.data);
       handleCloseForm();
     }
-  }, [createLabel, handleCloseForm]);
+  }, [fetchPostLabels, fetchPatchLabel, handleCloseForm]);
+
+  useEffect(() => {
+    if (fetchPatchLabel.isSuccess) {
+      console.log(fetchPatchLabel.data);
+      handleCloseForm(fetchPatchLabel.data.patchId);
+    }
+  }, [fetchPatchLabel, handleCloseForm]);
 
   return (
     <S.FormWrapper title={title}>
