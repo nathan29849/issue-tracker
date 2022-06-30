@@ -48,7 +48,7 @@ export default function Milestone() {
             onClick={() => handleLabelClick('open')}
           >
             <I.MileStone />
-            <span>열린 이슈({openMileStoneCount})</span>
+            <span>열린 마일스톤({openMileStoneCount})</span>
           </S.MileStoneLabel>
 
           <S.MileStoneLabel
@@ -56,7 +56,7 @@ export default function Milestone() {
             onClick={() => handleLabelClick('close')}
           >
             <I.Bucket />
-            <span>닫힌 이슈({closeMileStoneCount})</span>
+            <span>닫힌 마일스톤({closeMileStoneCount})</span>
           </S.MileStoneLabel>
         </S.MainHeaderLabel>
 
