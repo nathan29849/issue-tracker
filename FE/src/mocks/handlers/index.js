@@ -1,6 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
+import { DeleteMileStone } from './DeleteMileStone';
 import { GetLabels } from './GetLabels';
 import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
@@ -108,4 +109,5 @@ export const handlers = [
   GetUsers,
   GetMileStones,
   PostImage,
+  DeleteMileStone,
 ];

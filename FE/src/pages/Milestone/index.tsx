@@ -1,22 +1,48 @@
+import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import * as S from './style';
 
-import { getMileStones } from '@apis/milestone';
+import { getMileStones, deleteMileStone } from '@apis/milestone';
 import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { ProgressBar } from '@components/Indicator';
 import Form from '@components/Indicator/Form';
+import Modal from '@components/Modal';
 import TabList from '@components/TabList';
 
 export default function Milestone() {
+  const queryClient = useQueryClient();
   const [openForm, setOpenForm] = useState(false);
   const [mileStoneCount, setMileStoneCount] = useState({ open: 0, close: 0 });
   const [labelMileStoneStatus, setLabelMileStoneStatus] = useState(true);
   const [renderMileStone, setRenderMileStone] = useState({});
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+
   const { data: mileStoneData } = useQuery('milestoneData', getMileStones);
+
+  const fetchDeleteMileStone = useMutation(deleteMileStone, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('milestoneData');
+    },
+  });
+
+  const handleLabelDeleteClick = (id: number) => {
+    setModalVisible(true);
+    setDeleteId(id);
+  };
+
+  const handleLabelDeleteCancel = () => {
+    setModalVisible(false);
+  };
+
+  const handleLabelDeleteSubmit = () => {
+    fetchDeleteMileStone.mutate(deleteId);
+    setModalVisible(false);
+  };
 
   const handleLabelClick = (paramLabelMileStoneStatus: string) => {
     if (paramLabelMileStoneStatus === 'open') {
@@ -128,7 +154,10 @@ export default function Milestone() {
                     </button>
                   </div>
                   <div>
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => handleLabelDeleteClick(mileStone.id)}
+                    >
                       <I.Trash color="#FF3B30" />
                       <span className="button--delete">삭제</span>
                     </button>
@@ -145,6 +174,26 @@ export default function Milestone() {
           ))
         ) : (
           <div>등록된 마일스톤이 없습니다.</div>
+        )}
+        {modalVisible && (
+          <Modal>
+            <header>해당 레이블을 정말 삭제하시겠습니까?</header>
+            <div>
+              <Button
+                outlined
+                type="button"
+                onClick={handleLabelDeleteCancel}
+                css={css`
+                  margin-right: 1rem;
+                `}
+              >
+                닫기
+              </Button>
+              <Button type="button" onClick={handleLabelDeleteSubmit}>
+                확인
+              </Button>
+            </div>
+          </Modal>
         )}
       </S.Main>
     </S.LabelPageLayer>
