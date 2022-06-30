@@ -145,13 +145,7 @@ export default function LabelPage() {
           )}
         {modalVisible && (
           <Modal>
-            <header
-              css={css`
-                margin-bottom: 2rem;
-              `}
-            >
-              해당 레이블을 정말 삭제하시겠습니까?
-            </header>
+            <header>해당 레이블을 정말 삭제하시겠습니까?</header>
             <div>
               <Button
                 outlined
