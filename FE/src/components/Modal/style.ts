@@ -27,6 +27,10 @@ export const ModalWrapper = styled.div`
   left: 0;
   z-index: 1000;
   margin: 0 auto;
+
+  header {
+    margin-bottom: 2rem;
+  }
 `;
 
 export const ModalOverlay = styled.div`
