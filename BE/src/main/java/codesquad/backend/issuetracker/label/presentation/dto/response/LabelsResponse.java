@@ -8,4 +8,13 @@ import lombok.Getter;
 public class LabelsResponse {
 
 	private List<LabelDto> labels;
+
+	public LabelsResponse(
+		List<LabelDto> labels) {
+		this.labels = labels;
+	}
+
+	public static LabelsResponse of(List<LabelDto> labels) {
+		return new LabelsResponse(labels);
+	}
 }
