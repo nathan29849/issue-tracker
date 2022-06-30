@@ -7,6 +7,7 @@ import * as S from './style';
 import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
 import { Textarea, Input } from '@components/Input';
+import { SideBar } from '@components/SideBar';
 import UserAvatar from '@components/UserAvatar';
 import { useInput } from '@hooks/useInput';
 import { usePostIssue } from '@hooks/usePostIssue';
@@ -41,13 +42,15 @@ export const NewMain = () => {
 
   return (
     <S.DetailMainLayer as="form" onSubmit={handleClickSubmitButton}>
-      <S.Inputs>
+      <S.InputContainer>
         <S.UserAvatar>
           <UserAvatar src={user!.profileImageUrl} size="lg" />
         </S.UserAvatar>
-        <Input width="100%" placeholder="제목" size="md" {...title} />
-        <Textarea width="100%" {...comment} />
-      </S.Inputs>
+        <S.Inputs>
+          <Input width="100%" placeholder="제목" size="md" {...title} />
+          <Textarea width="100%" {...comment} />
+        </S.Inputs>
+      </S.InputContainer>
       <S.Buttons>
         <TextButton
           size="md"
@@ -69,7 +72,9 @@ export const NewMain = () => {
           완료
         </Button>
       </S.Buttons>
-      <S.SideBar>사이드바</S.SideBar>
+      <S.SideBar>
+        <SideBar />
+      </S.SideBar>
     </S.DetailMainLayer>
   );
 };

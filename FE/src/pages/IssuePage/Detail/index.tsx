@@ -2,6 +2,7 @@ import React from 'react';
 
 import * as S from './style';
 
+import { SideBarProvider } from '@components/SideBar/context';
 import { DetailHeader, NewHeader } from '@pages/IssuePage/Detail/Header';
 import { NewMain } from '@pages/IssuePage/Detail/Main';
 
@@ -12,7 +13,17 @@ export default function IssueDetailPage({ newIssue = false }) {
         {newIssue ? <NewHeader /> : <DetailHeader title="이슈 제목" num={1} />}
         {/* URL에 따라  */}
       </S.IssueHeader>
-      <S.IssueMain>{newIssue ? <NewMain /> : <NewMain />}</S.IssueMain>
+      <S.IssueMain>
+        {newIssue ? (
+          <SideBarProvider>
+            <NewMain />
+          </SideBarProvider>
+        ) : (
+          <SideBarProvider>
+            <NewMain />
+          </SideBarProvider>
+        )}
+      </S.IssueMain>
     </S.IssueContainer>
   );
 }
