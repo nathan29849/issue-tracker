@@ -82,6 +82,7 @@ export const InputLayer = styled.div<{
   error?: boolean;
   success?: boolean;
   active?: boolean;
+  dragEnter?: boolean;
 }>`
   ${typoSmall(400)};
   position: relative;
@@ -166,6 +167,17 @@ export const InputLayer = styled.div<{
       
       ${PlaceHolder} {
         color: ${theme.color.darkRed};
+      };
+  `};
+
+  ${({ dragEnter, theme }) =>
+    dragEnter &&
+    `
+      border-color: ${theme.color.blue} !important;
+      background-color: ${theme.color.lightBlue} !important;
+      
+      ${PlaceHolder} {
+        color: ${theme.color.darkBlue};
       };
   `};
 `;
