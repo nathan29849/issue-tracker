@@ -10,14 +10,24 @@ export {
   useAssignee,
   useAssigneeState,
   useSetAssigneeState,
+  useSelectedAssignee,
+  useSelectedAssigneeId,
 } from './AssigneePanel';
 
-export { useLabel, useLabelState, useSetLabelState } from './LabelPanel';
+export {
+  useLabel,
+  useLabelState,
+  useSetLabelState,
+  useSelectedLabel,
+  useSelectedLabelId,
+} from './LabelPanel';
 
 export {
   useMileStone,
   useMileStoneState,
   useSetMileStoneState,
+  useSelectedMileStone,
+  useSelectedMileStoneId,
 } from './MileStonePanel';
 
 export { AssigneePanelProvider, LabelPanelProvider, MileStonePanelProvider };
