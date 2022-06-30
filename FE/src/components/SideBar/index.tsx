@@ -30,7 +30,14 @@ export const SideBar = () => {
   useEffect(() => {
     initAssigneePanel(userData);
     initLabelPanel(labelData);
-    initMileStonePanel(milestoneData);
+
+    if (milestoneData) {
+      const milestone = Object.values(milestoneData).reduce(
+        (acc, cur) => acc.concat(cur),
+        [],
+      );
+      initMileStonePanel(milestone);
+    }
   }, [userData, labelData, milestoneData]);
 
   return (

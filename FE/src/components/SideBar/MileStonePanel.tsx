@@ -37,12 +37,20 @@ const MileStonePanel: React.FC<{ allowDuplicates?: boolean }> = ({
       <S.List>
         {state
           .filter(({ selected }) => selected)
-          ?.map(({ milestone: { id, title, progressRate } }) => (
-            <S.MileStoneItem key={id}>
-              <ProgressBar width={progressRate} />
-              <S.MileStoneTitle>{title}</S.MileStoneTitle>
-            </S.MileStoneItem>
-          ))}
+          ?.map(
+            ({
+              milestone: { id, title, openIssueCount, closedIssueCount },
+            }) => {
+              const totalIssueCount = openIssueCount + closedIssueCount;
+              const progressWidth = (closedIssueCount / totalIssueCount) * 100;
+              return (
+                <S.MileStoneItem key={id}>
+                  <ProgressBar width={progressWidth} />
+                  <S.MileStoneTitle>{title}</S.MileStoneTitle>
+                </S.MileStoneItem>
+              );
+            },
+          )}
       </S.List>
     </S.PanelContainer>
   );
