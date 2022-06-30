@@ -23,7 +23,7 @@ export type FilterLabelTypes =
 interface NavigationProps {
   allCheck: boolean;
   calculateCheckCount: () => number;
-  handleIssueAllCheck: (status: boolean) => void;
+  handleIssueAllCheck: (allCheckStatus: boolean) => void;
 }
 
 export default function Navigation({
@@ -32,7 +32,7 @@ export default function Navigation({
   handleIssueAllCheck,
 }: NavigationProps) {
   // console.log(calculateCheckCount);
-  const { init } = useSearch('q', 'is:open');
+  const { urlParamInit } = useSearch('q', 'is:open');
   const location = useLocation();
   const filterLabels: FilterLabelTypes[] = [
     'assignee',
@@ -80,10 +80,10 @@ export default function Navigation({
   const handleLabelClick = (status: string) => {
     if (status === 'open') {
       setLabelIssueStatus(true);
-      init({ paramValue: 'is:open' });
+      urlParamInit({ paramValue: 'is:open' });
     } else if (status === 'close') {
       setLabelIssueStatus(false);
-      init({ paramValue: 'is:close' });
+      urlParamInit({ paramValue: 'is:close' });
     }
   };
 

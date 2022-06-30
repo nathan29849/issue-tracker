@@ -8,7 +8,10 @@ export const useSearch = (
   const [searchParams, setSearchParams] = useSearchParams();
   const paramValue = searchParams.get(paramKey) ?? defaultValue;
 
-  const add = (param1: string | { paramValue: string }, param2?: string) => {
+  const urlParamAdd = (
+    param1: string | { paramValue: string },
+    param2?: string,
+  ) => {
     const [key, value] =
       typeof param1 === 'string'
         ? [param1, param2]
@@ -25,7 +28,7 @@ export const useSearch = (
     setSearchParams(newSearchParams);
   };
 
-  const replace = (
+  const urlParamReplace = (
     param1: string | { paramValue: string },
     param2?: string,
   ) => {
@@ -55,7 +58,10 @@ export const useSearch = (
     setSearchParams(newSearchParams);
   };
 
-  const init = (param1: string | { paramValue: string }, param2?: string) => {
+  const urlParamInit = (
+    param1: string | { paramValue: string },
+    param2?: string,
+  ) => {
     if (typeof param1 === 'string') {
       const [key, value] = [param1, param2];
 
@@ -66,5 +72,5 @@ export const useSearch = (
     setSearchParams(`${paramKey}=${param1.paramValue}`);
   };
 
-  return { paramValue, add, replace, init };
+  return { paramValue, urlParamAdd, urlParamReplace, urlParamInit };
 };

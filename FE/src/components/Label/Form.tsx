@@ -169,7 +169,6 @@ export default function Form({
 
   useEffect(() => {
     if (createLabel.isSuccess) {
-      alert('label add success');
       handleCloseForm();
     }
   }, [createLabel, handleCloseForm]);

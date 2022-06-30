@@ -34,8 +34,8 @@ export default function Issue() {
     );
   };
 
-  const handleIssueAllCheck = (status: boolean) => {
-    if (status) {
+  const handleIssueAllCheck = (allCheckStatus: boolean) => {
+    if (allCheckStatus) {
       const newCheckIssue = checkIssue.map(issue => {
         const obj = {} as ICheckIssue;
         obj.id = issue.id;
@@ -65,7 +65,7 @@ export default function Issue() {
   };
 
   const calculateCheckCount = () => {
-    const count = checkIssue.filter(issue => issue.check === true).length;
+    const count = checkIssue.filter(issue => issue.check).length;
     return count;
   };
 

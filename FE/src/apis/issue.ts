@@ -22,12 +22,12 @@ export const postIssue = async (
     body: JSON.stringify(requestBody),
   });
 
-  const data = await response.json();
+  const issueData = await response.json();
 
   // TODO: 임시 로직 고치기
-  if (!Object.hasOwn(data, 'issueId')) {
+  if (!Object.hasOwn(issueData, 'issueId')) {
     throw Error('이슈 등록 실패');
   }
 
-  return data;
+  return issueData;
 };
