@@ -60,4 +60,10 @@ public class LabelService {
 
 		return LabelDto.createBy(label);
 	}
+
+	public void remove(Long id) {
+		Label label = labelRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 라벨이 존재하지 않습니다."));
+		labelRepository.delete(label);
+	}
 }

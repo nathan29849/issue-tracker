@@ -61,6 +61,7 @@ public class LabelController {
 	public ResponseEntity<Void> remove(
 		@PathVariable Long id
 	) {
-		return null;
+		labelService.remove(id);
+		return ResponseEntity.ok().build();
 	}
 }
