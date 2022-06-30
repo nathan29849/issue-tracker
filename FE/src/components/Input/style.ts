@@ -4,7 +4,7 @@ import { typoSmall, inlineFlexbox, typoXSmall, flexbox } from '@styles/mixin';
 
 export const WordCount = styled.div`
   ${typoXSmall(400)};
-  color: ${({ theme }) => theme.color.label};
+  color: ${({ theme }) => theme.color.blue};
   position: absolute;
   bottom: 4.5rem;
   right: 1.59375rem;
