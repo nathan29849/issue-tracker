@@ -23,32 +23,37 @@ public class MilestoneDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private final LocalDate dueDate;
 
-	private final Integer progressRate;
+	private Integer openIssueCount;
+	private Integer closedIssueCount;
 
 	public MilestoneDto(Long id, String title, String description, LocalDateTime createdAt,
-		LocalDateTime updatedAt, LocalDate dueDate, Integer progressRate) {
+		LocalDateTime updatedAt, LocalDate dueDate,
+		Integer openIssueCount, Integer closedIssueCount) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.dueDate = dueDate;
-		this.progressRate = progressRate;
+		this.openIssueCount = openIssueCount;
+		this.closedIssueCount = closedIssueCount;
 	}
 
 	public static MilestoneDto createBy(Milestone milestone) {
+		Integer openIssueCount = countOpenIssue(milestone);
 		return new MilestoneDto(
 			milestone.getId(), milestone.getTitle(), milestone.getDescription(),
 			milestone.getCreatedAt(), milestone.getUpdatedAt(), milestone.getDueDate(),
-			calcProgressRate(milestone)
-		);
+			openIssueCount, countClosedIssue(milestone, openIssueCount));
 	}
 
-	private static Integer calcProgressRate(Milestone milestone) {
-		int issueSize = milestone.getIssues().size();
-		int openIssueSize = (int) milestone.getIssues()
+	private static Integer countOpenIssue(Milestone milestone) {
+		return (int) milestone.getIssues()
 			.stream().filter(i -> i.getStatus() == IssueStatus.OPEN).count();
-		return (issueSize == 0) ? 0 : openIssueSize/issueSize;
+	}
+
+	private static Integer countClosedIssue(Milestone milestone, Integer openIssueCount) {
+		return milestone.getIssues().size() - openIssueCount;
 	}
 
 }

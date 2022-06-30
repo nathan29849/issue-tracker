@@ -3,6 +3,8 @@ package codesquad.backend.issuetracker.issue.domain;
 import codesquad.backend.issuetracker.issue.presentation.dto.IssueStatus;
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,5 +25,6 @@ public class Issue {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Milestone milestone;
 
+	@Enumerated(EnumType.STRING)
 	private IssueStatus status;
 }

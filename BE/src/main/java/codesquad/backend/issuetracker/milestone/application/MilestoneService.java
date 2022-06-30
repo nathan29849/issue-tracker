@@ -80,11 +80,6 @@ public class MilestoneService {
 		milestoneRepository.delete(milestone);
 	}
 
-	public MilestoneDto find(Long id) {
-		Milestone milestone = findById(id);
-		return MilestoneDto.createBy(milestone);
-	}
-
 	private Milestone findById(Long id) {
 		return milestoneRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
