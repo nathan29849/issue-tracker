@@ -4,6 +4,7 @@ import * as S from './style';
 
 import I from '@components/Icons';
 import { Loader } from '@components/Indicator';
+import { useDeferredVisibleUpdate } from '@hooks/useDeferredVisibleUpdate';
 import { useFileUpload } from '@hooks/useFileUpload';
 import { OverridableProps } from '@utils/types';
 
@@ -60,8 +61,8 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
   setValue,
   ...restProps
 }: TextareaProps<T>) => {
-  const textareaRef = useRef<HTMLInputElement>(null);
   const id = useId();
+  const textareaRef = useRef<HTMLInputElement>(null);
   const allowedFileTypes = [
     'image/jpg',
     'image/jpeg',
@@ -70,6 +71,12 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
   ];
   const { isLoading, uploadFiles } = useFileUpload(allowedFileTypes);
   const [isDragEnter, setIsDragEnter] = useState(false);
+
+  // value 값이 변할 때마다 effect 발생
+  // 1. isElementVisible가 즉시 false가 된다.
+  // 2. 250ms 타이머가 설정된다.
+  // 3. 타이머가 끝나면 isElementVisible이 1500ms동안 true가 되었다가 false로 변한다.
+  const { isElementVisible } = useDeferredVisibleUpdate([value], 250, 1500);
 
   const handleUploadFiles = async (files: FileList | null) => {
     const imageInfoArr = await uploadFiles(files);
@@ -121,7 +128,11 @@ export const TTextarea = <T extends React.ElementType = 'input'>({
       {/* TODO: 2초간 보여줄 문자열 */}
 
       <S.PlaceHolder>{placeholder || '코멘트를 입력하세요'}</S.PlaceHolder>
-      <S.WordCount>띄어쓰기 </S.WordCount>
+      {isElementVisible && (
+        <S.WordCount>
+          띄어쓰기 포함 <span>{value.length}</span>자
+        </S.WordCount>
+      )}
 
       <S.Footer>
         {isLoading ? (
