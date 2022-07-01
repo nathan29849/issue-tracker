@@ -9,6 +9,15 @@ interface PostIssueRequestBody {
   milestoneId: number;
 }
 
+// queryString 추가해야함.
+export const getIssues = async () => {
+  const response = await fetch(`${process.env.TEAM30_BASE_URL}/api/issues`);
+  const issues = await response.json();
+
+  // TODO: 에러 핸들링
+  return issues;
+};
+
 export const postIssue = async (
   requestBody: PostIssueRequestBody,
 ): Promise<{ issueId: number }> => {

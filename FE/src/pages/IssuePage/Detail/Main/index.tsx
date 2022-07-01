@@ -84,3 +84,12 @@ export const NewMain = () => {
     </S.DetailMainLayer>
   );
 };
+
+// ISSUE DETAIL
+export const DetailMain = () => (
+  <S.DetailMainLayer>
+    <S.SideBar>
+      <SideBar />
+    </S.SideBar>
+  </S.DetailMainLayer>
+);

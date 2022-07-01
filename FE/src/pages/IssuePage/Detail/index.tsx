@@ -4,7 +4,7 @@ import * as S from './style';
 
 import { SideBarProvider } from '@components/SideBar/context';
 import { DetailHeader, NewHeader } from '@pages/IssuePage/Detail/Header';
-import { NewMain } from '@pages/IssuePage/Detail/Main';
+import { DetailMain, NewMain } from '@pages/IssuePage/Detail/Main';
 
 export default function IssueDetailPage({ newIssue = false }) {
   return (
@@ -20,7 +20,7 @@ export default function IssueDetailPage({ newIssue = false }) {
           </SideBarProvider>
         ) : (
           <SideBarProvider>
-            <NewMain />
+            <DetailMain />
           </SideBarProvider>
         )}
       </S.IssueMain>
