@@ -5,15 +5,15 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class IssueDetailDto {
+public class IssueDto {
 
 	private Long id;
 	private String title;
-	private String content;
 	private LocalDateTime createdAt;
+	private IssueStatus status;
 	private List<IssueLabelDto> labels;
 	private IssueMilestoneDto milestone;
 	private UserDto author;
 	private List<UserDto> assignees;
-	private List<IssueCommentDto> comments;
+
 }

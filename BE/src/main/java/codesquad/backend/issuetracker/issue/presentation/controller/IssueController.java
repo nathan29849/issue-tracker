@@ -1,14 +1,15 @@
 package codesquad.backend.issuetracker.issue.presentation.controller;
 
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueAssigneeEditRequest;
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueCreateRequest;
+import codesquad.backend.issuetracker.issue.application.IssueService;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueDetailDto;
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueIdDto;
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueLabelEditRequest;
-import codesquad.backend.issuetracker.issue.presentation.dto.IssuesResponseDto;
-import codesquad.backend.issuetracker.issue.presentation.dto.SingleIssueDto;
+import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
+import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +22,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/issues")
 @RestController
+@RequiredArgsConstructor
 public class IssueController {
+
+	private final IssueService issueService;
 
 	@Operation(summary = "이슈 상세 정보 조회")
 	@GetMapping("/{id}")
-	public IssueDetailDto retrieveDetail(
+	public IssueDetailResponse retrieveDetail(
 		@PathVariable Long id
 	){
-		return null;
+		return issueService.findById(id);
 	}
 
 	@Operation(summary = "이슈 목록 전체 조회")
 	@GetMapping
-	public IssuesResponseDto retrieveIssues(
+	public IssuesResponse retrieveIssues(
 		FilterCondition condition
 	){
 		return null;
@@ -41,7 +45,7 @@ public class IssueController {
 
 	@Operation(summary = "이슈 작성")
 	@PostMapping
-	public ResponseEntity<IssueIdDto> create(
+	public IssueIdResponse create(
 		@RequestBody IssueCreateRequest issueCreateRequest
 	){
 		return null;
@@ -49,7 +53,7 @@ public class IssueController {
 
 	@Operation(summary = "이슈 제목 편집")
 	@PatchMapping("/{id}/title")
-	public IssueDetailDto editTitle(
+	public IssueDetailResponse editTitle(
 		@PathVariable Long id,
 		@RequestBody String title
 	) {
@@ -58,7 +62,7 @@ public class IssueController {
 
 	@Operation(summary = "이슈 내용 편집")
 	@PatchMapping("/{id}/content")
-	public IssueDetailDto editContent(
+	public IssueDetailResponse editContent(
 		@PathVariable Long id,
 		@RequestBody String content
 	) {
@@ -67,27 +71,27 @@ public class IssueController {
 
 	@Operation(summary = "이슈 마일스톤 편집")
 	@PatchMapping("/{id}/milestone")
-	public IssueDetailDto editMilestone(
+	public IssueDetailResponse editMilestone(
 		@PathVariable Long id,
-		@RequestBody(required = false) Long milestoneId
+		@RequestBody Long milestoneId
 	) {
 		return null;
 	}
 
 	@Operation(summary = "이슈 라벨 편집")
 	@PatchMapping("/{id}/label")
-	public IssueDetailDto editLabel(
+	public IssueDetailResponse editLabel(
 		@PathVariable Long id,
-		@RequestBody(required = false) IssueLabelEditRequest issueLabelEditRequest
+		@RequestBody IssueLabelEditRequest issueLabelEditRequest
 	) {
 		return null;
 	}
 
 	@Operation(summary = "이슈 assignee 편집")
 	@PatchMapping("/{id}/assignee")
-	public IssueDetailDto editAssignee(
+	public IssueDetailResponse editAssignee(
 		@PathVariable Long id,
-		@RequestBody(required = false) IssueAssigneeEditRequest issueAssigneeEditRequest
+		@RequestBody IssueAssigneeEditRequest issueAssigneeEditRequest
 	) {
 		return null;
 	}
