@@ -1,11 +1,13 @@
 package codesquad.backend.issuetracker.issue.presentation.dto.response;
 
 import codesquad.backend.issuetracker.comment.presentation.dto.CommentDto;
+import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.presentation.dto.UserDto;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -20,4 +22,43 @@ public class IssueDetailResponse {
 	private UserDto author;
 	private List<UserDto> assignees;
 	private List<CommentDto> comments;
+
+	public IssueDetailResponse(Long id, String title, String content, LocalDateTime createdAt,
+		List<LabelDto> labels,
+		MilestoneDto milestone, UserDto author,
+		List<UserDto> assignees,
+		List<CommentDto> comments) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.createdAt = createdAt;
+		this.labels = labels;
+		this.milestone = milestone;
+		this.author = author;
+		this.assignees = assignees;
+		this.comments = comments;
+	}
+
+	public static IssueDetailResponse createBy(Issue issue) {
+		List<LabelDto> labels = issue.getLabels().stream()
+			.map(LabelDto::createBy)
+			.collect(Collectors.toList());
+
+		List<UserDto> assignees = issue.getAssignees().stream()
+			.map(UserDto::createBy)
+			.collect(Collectors.toList());
+
+		List<CommentDto> comments = issue.getComments().stream()
+			.map(CommentDto::createBy)
+			.collect(Collectors.toList());
+
+		return new IssueDetailResponse(
+			issue.getId(), issue.getTitle(), issue.getContent(),
+			issue.getCreatedAt(), labels,
+			MilestoneDto.createBy(issue.getMilestone()),
+			UserDto.createBy(issue.getAuthor()),
+			assignees, comments
+		);
+	}
+
 }

@@ -1,6 +1,6 @@
 package codesquad.backend.issuetracker.issue.domain;
 
-import codesquad.backend.issuetracker.label.presentation.dto.TextColor;
+import codesquad.backend.issuetracker.label.domain.Label;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,10 +20,9 @@ public class IssueLabel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String title;
-	private String backgroundColor;
-	private TextColor textColor;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Issue issue;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Label label;
 }

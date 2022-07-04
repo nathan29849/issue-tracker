@@ -1,10 +1,15 @@
 package codesquad.backend.issuetracker.user.domain;
 
-import javax.persistence.Column;
+import codesquad.backend.issuetracker.issue.domain.Issue;
+import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -17,7 +22,6 @@ import lombok.ToString;
 public class User {
 
 	@Id
-	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -25,6 +29,13 @@ public class User {
 	private String username;
 	private String nodeId;
 	private String imageUrl;
+
+	@OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<Issue> issues = new ArrayList<>();
+
+	@OneToMany(mappedBy = "assignee", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<IssueAssignee> assignees = new ArrayList<>();
+
 
 	public User(String authId, String username, String nodeId, String imageUrl) {
 		this.authId = authId;
