@@ -1,6 +1,7 @@
 package codesquad.backend.issuetracker.issue.domain;
 
 import codesquad.backend.issuetracker.comment.domain.Comment;
+import codesquad.backend.issuetracker.common.domain.BaseEntity;
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Issue {
+public class Issue extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +39,9 @@ public class Issue {
 	@Enumerated(EnumType.STRING)
 	private IssueStatus status;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	private User user;
+	private User author;
 
 //	@JoinColumn 없애도 자동으로 외래키를 통해 연관관계를 맺는다.
 	@ManyToOne(fetch = FetchType.LAZY)
