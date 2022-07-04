@@ -2,12 +2,12 @@ package codesquad.backend.issuetracker.oauth.presentation.controller;
 
 import codesquad.backend.issuetracker.exception.AuthException;
 import codesquad.backend.issuetracker.exception.ErrorCode;
-import codesquad.backend.issuetracker.oauth.application.LoginService;
-import codesquad.backend.issuetracker.oauth.application.JwtFactory;
 import codesquad.backend.issuetracker.oauth.application.GithubAuthService;
+import codesquad.backend.issuetracker.oauth.application.JwtFactory;
+import codesquad.backend.issuetracker.oauth.application.LoginService;
+import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubToken;
 import codesquad.backend.issuetracker.oauth.presentation.dto.GithubUser;
-import codesquad.backend.issuetracker.oauth.presentation.dto.GithubLoginUserDto;
 import codesquad.backend.issuetracker.oauth.presentation.dto.TokenType;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.net.URI;

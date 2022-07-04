@@ -1,10 +1,10 @@
 package codesquad.backend.issuetracker.milestone.presentation.controller;
 
 import codesquad.backend.issuetracker.milestone.application.MilestoneService;
+import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
+import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneEditRequest;
 import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneCountResponse;
-import codesquad.backend.issuetracker.milestone.presentation.dto.request.MilestoneCreateRequest;
-import codesquad.backend.issuetracker.milestone.presentation.dto.MilestoneDto;
 import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestoneIdResponse;
 import codesquad.backend.issuetracker.milestone.presentation.dto.response.MilestonesResponse;
 import io.swagger.v3.oas.annotations.Operation;

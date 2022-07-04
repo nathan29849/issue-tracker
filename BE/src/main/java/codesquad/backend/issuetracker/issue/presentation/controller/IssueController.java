@@ -1,12 +1,12 @@
 package codesquad.backend.issuetracker.issue.presentation.controller;
 
 import codesquad.backend.issuetracker.issue.application.IssueService;
+import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
-import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
-import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
