@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,21 +46,17 @@ public class Milestone {
 
 	private LocalDate dueDate;
 
-	@Transient
-	private Integer progressRate;
-
 	@OneToMany(mappedBy = "milestone")
 	private List<Issue> issues = new ArrayList<>();
 
-	public Milestone(String title, String description, LocalDate dueDate, Integer progressRate) {
+	public Milestone(String title, String description, LocalDate dueDate) {
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
-		this.progressRate = progressRate;
 	}
 
 	public static Milestone createBy(String title, String description, LocalDate dueDate){
-		return new Milestone(title, description, dueDate, 0);
+		return new Milestone(title, description, dueDate);
 	}
 
 	public void edit(String title, String description, LocalDate dueDate) {

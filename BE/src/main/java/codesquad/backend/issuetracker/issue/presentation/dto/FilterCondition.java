@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.issue.presentation.dto;
 
+import codesquad.backend.issuetracker.issue.domain.IssueStatus;
 import lombok.Getter;
 
 @Getter

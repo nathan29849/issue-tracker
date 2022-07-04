@@ -12,6 +12,8 @@ public class IssueService {
 	private final IssueRepository issueRepository;
 
 	public IssueDetailResponse findById(Long id) {
+		issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
 		return null;
 	}
 }

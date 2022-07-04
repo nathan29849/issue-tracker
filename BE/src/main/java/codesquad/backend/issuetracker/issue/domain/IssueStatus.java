@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.issue.presentation.dto;
+package codesquad.backend.issuetracker.issue.domain;
 
 import lombok.Getter;
 
