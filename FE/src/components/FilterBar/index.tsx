@@ -46,6 +46,7 @@ export default function FilterBar() {
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
+    if ((e.target as Element).classList.contains('popup-header')) return;
     if (popupData.status === 'is:open' || popupData.status === 'is:close') {
       urlParamInit({ paramValue: popupData.status });
     } else {
@@ -93,7 +94,7 @@ export default function FilterBar() {
         >
           {isComponentVisible && (
             <Popup>
-              <header>이슈 필터</header>
+              <header className="popup-header">이슈 필터</header>
               {issueFilterData.info.map((popupData: IPopupData) => (
                 <Contents
                   key={`popup-${popupData.name}`}

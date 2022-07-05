@@ -151,14 +151,12 @@ export default function Form({
 
   useEffect(() => {
     if (fetchPostLabels.isSuccess) {
-      console.log(fetchPostLabels.data);
       handleCloseForm();
     }
   }, [fetchPostLabels, fetchPatchLabel, handleCloseForm]);
 
   useEffect(() => {
     if (fetchPatchLabel.isSuccess) {
-      console.log(fetchPatchLabel.data);
       handleCloseForm(fetchPatchLabel.data.patchId);
     }
   }, [fetchPatchLabel, handleCloseForm]);
@@ -167,8 +165,11 @@ export default function Form({
     <S.FormWrapper title={title}>
       <S.FormLeftInner>
         <S.FormTitle>{title}</S.FormTitle>
-        <Label bgColor="#EFF0F6" darkText>
-          레이블 이름
+        <Label
+          bgColor={openFormValue.bgColor}
+          darkText={openFormValue.textColor === '어두운색'}
+        >
+          {openFormValue.labelText || '레이블 이름'}
         </Label>
         <div />
       </S.FormLeftInner>

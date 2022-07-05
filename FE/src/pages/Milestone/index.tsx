@@ -164,7 +164,11 @@ export default function Milestone() {
                   </div>
                 </div>
                 <ProgressBar
-                  width={50}
+                  width={Math.floor(
+                    (mileStone.closedIssueCount /
+                      (mileStone.openIssueCount + mileStone.closedIssueCount)) *
+                      100,
+                  )}
                   detail
                   leftText={`열린 이슈 ${mileStone.openIssueCount}`}
                   rightText={`닫힌 이슈 ${mileStone.closedIssueCount}`}
