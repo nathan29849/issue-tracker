@@ -35,6 +35,7 @@ export default function Filter({
     popupData: IPopupData,
   ) => {
     e.stopPropagation();
+    if ((e.target as Element).classList.contains('popup-header')) return;
     if (item === 'label') urlParamReplace(item, popupData.title);
     else urlParamReplace(item, popupData.name);
     setIsComponentVisible(false);
@@ -68,7 +69,7 @@ export default function Filter({
         >
           {isComponentVisible && (
             <Popup>
-              <header>{item} 필터</header>
+              <header className="popup-header">{item} 필터</header>
               {filterPopupData.map((popupData: IPopupData) => (
                 <Contents
                   key={`popup-${popupData.id}`}

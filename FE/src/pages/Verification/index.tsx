@@ -17,7 +17,8 @@ function Verification() {
     }
 
     silentRefresh('/error');
-  }, [isLoggedIn]);
+  }, [isLoggedIn, silentRefresh]);
+
   return !isLoggedIn ? (
     <div
       css={css`
