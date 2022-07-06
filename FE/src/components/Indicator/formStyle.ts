@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { typoLarge, flexbox } from '@styles/mixin';
+import { typoLarge, typoXSmall, flexbox } from '@styles/mixin';
 import { moveDownAnimation } from '@utils/animation';
 
 export const FormWrapper = styled.form`
@@ -24,7 +24,16 @@ export const FormContents = styled.div`
   ${flexbox({ dir: 'column' })};
 `;
 
+export const DueDateErrorText = styled.div`
+  position: absolute;
+  top: -1rem;
+  right: 0;
+  color: ${({ theme }) => theme.color.red};
+  ${typoXSmall(400)}
+`;
+
 export const FormInputWrapper = styled.div`
+  position: relative;
   margin-bottom: 1rem;
   ${flexbox({ dir: 'row' })};
   gap: 1rem;

@@ -26,6 +26,7 @@ export default function Form({
   handleCloseForm,
 }: FormProps) {
   const queryClient = useQueryClient();
+  const [isValidDueDate, setIsValidDueDate] = useState(true);
 
   const [openFormValue, setOpenFormValue] = useState({
     title: mileStoneData?.title || '',
@@ -68,6 +69,7 @@ export default function Form({
   };
 
   const handleMileStoneDueDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsValidDueDate(true);
     setOpenFormValue(prevState => ({
       ...prevState,
       dueDate: e.target.value,
@@ -95,7 +97,7 @@ export default function Form({
     };
 
     if (!checkDueDate(newMileStone.dueDate)) {
-      console.log('에러처리');
+      setIsValidDueDate(false);
       return;
     }
 
@@ -137,6 +139,9 @@ export default function Form({
             placeholder="완료일(선택) ex.YYYY-MM-DD"
             onChange={handleMileStoneDueDate}
           />
+          <S.DueDateErrorText>
+            {!isValidDueDate && <span>날짜 형식이 잘못되었습니다.</span>}
+          </S.DueDateErrorText>
         </S.FormInputWrapper>
         <S.FormInputWrapper>
           <Input
