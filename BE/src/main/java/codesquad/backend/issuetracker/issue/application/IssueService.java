@@ -40,7 +40,12 @@ public class IssueService {
 
 	@Transactional(readOnly = true)
 	public IssuesResponse findByFilter(FilterCondition condition) {
-		return null;
+		List<IssueDetailResponse> issueDetails = issueRepository.findAll()
+			.stream()
+			.map(IssueDetailResponse::createBy)
+			.collect(Collectors.toList());
+
+		return new IssuesResponse(issueDetails);
 	}
 
 	@Transactional

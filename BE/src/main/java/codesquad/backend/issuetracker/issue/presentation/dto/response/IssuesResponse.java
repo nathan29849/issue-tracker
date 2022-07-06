@@ -7,4 +7,8 @@ import lombok.Getter;
 public class IssuesResponse {
 
 	private List<IssueDetailResponse> issues;
+
+	public IssuesResponse(List<IssueDetailResponse> issues) {
+		this.issues = issues;
+	}
 }
