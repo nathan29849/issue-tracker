@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -11,16 +10,22 @@ import { ProgressBar } from '@components/Indicator';
 import Form from '@components/Indicator/Form';
 import Modal from '@components/Modal';
 import TabList from '@components/TabList';
+import { IMileStone } from '@type/milestone';
 
 export default function Milestone() {
   const queryClient = useQueryClient();
   const [openForm, setOpenForm] = useState(false);
+  const [editOpenForm, setEditOpenForm] = useState<{ [id: number]: boolean }>(
+    {},
+  );
   const [mileStoneCount, setMileStoneCount] = useState({ open: 0, close: 0 });
-  const [labelMileStoneStatus, setLabelMileStoneStatus] = useState(true);
+  const [mileStoneStatus, setMileStoneStatus] = useState(true);
   const [renderMileStone, setRenderMileStone] = useState({});
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [closeModalVisible, setCloseModalVisible] = useState(false);
+
+  const [clickedId, setClickedId] = useState(0);
 
   const { data: mileStoneData } = useQuery('milestoneData', getMileStones);
 
@@ -30,25 +35,56 @@ export default function Milestone() {
     },
   });
 
-  const handleLabelDeleteClick = (id: number) => {
-    setModalVisible(true);
-    setDeleteId(id);
+  const handleMileStoneEditClick = (id: number) => {
+    setEditOpenForm(prevEditFormState => ({
+      ...prevEditFormState,
+      [id]: true,
+    }));
   };
 
-  const handleLabelDeleteCancel = () => {
-    setModalVisible(false);
+  const handleMileStoneCloseClick = (id: number) => {
+    setCloseModalVisible(true);
+    setClickedId(id);
   };
 
-  const handleLabelDeleteSubmit = () => {
-    fetchDeleteMileStone.mutate(deleteId);
-    setModalVisible(false);
+  const handleMileStoneDeleteClick = (id: number) => {
+    setDeleteModalVisible(true);
+    setClickedId(id);
+  };
+
+  const handleMileStoneCancelClick = () => {
+    setDeleteModalVisible(false);
+  };
+
+  const handleCloseCancelClick = () => {
+    setCloseModalVisible(false);
+  };
+
+  const handleMileStoneSubmit = () => {
+    fetchDeleteMileStone.mutate(clickedId);
+    setDeleteModalVisible(false);
+  };
+
+  const handleCloseSubmit = () => {
+    setCloseModalVisible(false);
   };
 
   const handleLabelClick = (paramLabelMileStoneStatus: string) => {
     if (paramLabelMileStoneStatus === 'open') {
-      setLabelMileStoneStatus(true);
+      setMileStoneStatus(true);
     } else if (paramLabelMileStoneStatus === 'close') {
-      setLabelMileStoneStatus(false);
+      setMileStoneStatus(false);
+    }
+  };
+
+  const handleCloseForm = (id?: number) => {
+    if (id) {
+      setEditOpenForm(prevEditFormState => ({
+        ...prevEditFormState,
+        [id]: false,
+      }));
+    } else {
+      setOpenForm(false);
     }
   };
 
@@ -70,9 +106,8 @@ export default function Milestone() {
   }, [mileStoneData]);
 
   useEffect(() => {
-    // mileStoneData if절로 조건을 안주면 type error 발생
     if (mileStoneData) {
-      if (labelMileStoneStatus) {
+      if (mileStoneStatus) {
         setRenderMileStone({
           ...mileStoneData.currentMilestones,
           ...mileStoneData.nullDueDateMilestones,
@@ -81,7 +116,7 @@ export default function Milestone() {
         setRenderMileStone(mileStoneData.expiredMilestones);
       }
     }
-  }, [mileStoneData, labelMileStoneStatus]);
+  }, [mileStoneData, mileStoneStatus]);
 
   return (
     <S.LabelPageLayer>
@@ -99,11 +134,17 @@ export default function Milestone() {
           </Button>
         )}
       </S.Header>
-      {openForm && <Form />}
+      {openForm && (
+        <Form
+          title="새로운 마일스톤 추가"
+          onEdit={false}
+          handleCloseForm={handleCloseForm}
+        />
+      )}
       <S.Main>
         <S.MainHeaderLabel>
           <S.MileStoneLabel
-            labelMileStoneStatus={labelMileStoneStatus}
+            mileStoneStatus={mileStoneStatus}
             onClick={() => handleLabelClick('open')}
           >
             <I.MileStone />
@@ -111,7 +152,7 @@ export default function Milestone() {
           </S.MileStoneLabel>
 
           <S.MileStoneLabel
-            labelMileStoneStatus={!labelMileStoneStatus}
+            mileStoneStatus={!mileStoneStatus}
             onClick={() => handleLabelClick('close')}
           >
             <I.Bucket />
@@ -120,84 +161,90 @@ export default function Milestone() {
         </S.MainHeaderLabel>
 
         {Object.keys(renderMileStone).length !== 0 ? (
-          Object.values(renderMileStone).map((mileStone: any) => (
-            <S.MileStoneItemWrapper>
-              <S.MileStoneLeft>
-                <S.MileStoneTitle>
-                  <div>
-                    <I.MileStone color="#007AFF" />
-                    <span className="milestone-mainTitle">
-                      {mileStone.title}
-                    </span>
+          Object.values(renderMileStone).map((mileStone: any | IMileStone) =>
+            editOpenForm[mileStone.id] ? (
+              <Form
+                key={`EditMileStoneForm-${mileStone.title}`}
+                title="마일스톤 편집"
+                onEdit
+                mileStoneData={mileStone}
+                handleCloseForm={id => handleCloseForm(id)}
+              />
+            ) : (
+              <S.MileStoneItemWrapper>
+                <S.MileStoneLeft>
+                  <S.MileStoneTitle>
+                    <div>
+                      <I.MileStone color="#007AFF" />
+                      <span className="milestone-mainTitle">
+                        {mileStone.title}
+                      </span>
+                    </div>
+                    <div>
+                      <I.Calendar color="#6E7191" />
+                      <span className="milestone-date">
+                        {mileStone.dueDate ? mileStone.dueDate : '만료일 없음'}
+                      </span>
+                    </div>
+                  </S.MileStoneTitle>
+                  <p className="milestone-des">{mileStone.description}</p>
+                </S.MileStoneLeft>
+                <S.MileStoneRight>
+                  <div className="milestone-buttons">
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => handleMileStoneCloseClick(mileStone.id)}
+                      >
+                        <I.Bucket color="#6E7191" />
+                        <span className="button--text">닫기</span>
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => handleMileStoneEditClick(mileStone.id)}
+                      >
+                        <I.Edit color="#6E7191" />
+                        <span className="button--text">편집</span>
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => handleMileStoneDeleteClick(mileStone.id)}
+                      >
+                        <I.Trash color="#FF3B30" />
+                        <span className="button--delete">삭제</span>
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <I.Calendar color="#6E7191" />
-                    <span className="milestone-date">
-                      {mileStone.dueDate ? mileStone.dueDate : '만료일 없음'}
-                    </span>
-                  </div>
-                </S.MileStoneTitle>
-                <p className="milestone-des">{mileStone.description}</p>
-              </S.MileStoneLeft>
-              <S.MileStoneRight>
-                <div className="milestone-buttons">
-                  <div>
-                    <button type="button">
-                      <I.Bucket color="#6E7191" />
-                      <span className="button--text">닫기</span>
-                    </button>
-                  </div>
-                  <div>
-                    <button type="button">
-                      <I.Edit color="#6E7191" />
-                      <span className="button--text">편집</span>
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => handleLabelDeleteClick(mileStone.id)}
-                    >
-                      <I.Trash color="#FF3B30" />
-                      <span className="button--delete">삭제</span>
-                    </button>
-                  </div>
-                </div>
-                <ProgressBar
-                  width={Math.floor(
-                    (mileStone.closedIssueCount /
-                      (mileStone.openIssueCount + mileStone.closedIssueCount)) *
-                      100,
-                  )}
-                  detail
-                  leftText={`열린 이슈 ${mileStone.openIssueCount}`}
-                  rightText={`닫힌 이슈 ${mileStone.closedIssueCount}`}
-                />
-              </S.MileStoneRight>
-            </S.MileStoneItemWrapper>
-          ))
+                  <ProgressBar
+                    width={50}
+                    detail
+                    leftText={`열린 이슈 ${mileStone.openIssueCount}`}
+                    rightText={`닫힌 이슈 ${mileStone.closedIssueCount}`}
+                  />
+                </S.MileStoneRight>
+              </S.MileStoneItemWrapper>
+            ),
+          )
         ) : (
           <div>등록된 마일스톤이 없습니다.</div>
         )}
-        {modalVisible && (
-          <Modal>
-            <header>해당 레이블을 정말 삭제하시겠습니까?</header>
-            <div>
-              <Button
-                outlined
-                type="button"
-                onClick={handleLabelDeleteCancel}
-                css={css`
-                  margin-right: 1rem;
-                `}
-              >
-                닫기
-              </Button>
-              <Button type="button" onClick={handleLabelDeleteSubmit}>
-                확인
-              </Button>
-            </div>
-          </Modal>
+        {deleteModalVisible && (
+          <Modal
+            title="해당 마일스톤을 정말 삭제하시겠습니까?"
+            handleCancelClick={handleMileStoneCancelClick}
+            handleSubmit={handleMileStoneSubmit}
+          />
+        )}
+        {closeModalVisible && (
+          <Modal
+            title="해당 마일스톤을 정말 닫으시겠습니까?"
+            handleCancelClick={handleCloseCancelClick}
+            handleSubmit={handleCloseSubmit}
+          />
         )}
       </S.Main>
     </S.LabelPageLayer>

@@ -14,3 +14,9 @@ export interface MileStone {
   expiredMilestones: IMileStone[];
   nullDueDateMilestones: IMileStone[];
 }
+
+export interface MileStoneRequestBody {
+  title: string;
+  description: string;
+  dueDate: string;
+}
