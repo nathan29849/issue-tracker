@@ -45,6 +45,7 @@ export const Content = styled.div`
   line-height: 1.75;
 
   img {
+    display: block;
     width: auto;
     height: 100%;
     object-fit: cover;
