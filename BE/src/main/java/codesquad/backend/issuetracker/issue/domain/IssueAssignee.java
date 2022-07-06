@@ -25,4 +25,9 @@ public class IssueAssignee {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Issue issue;
+
+	public IssueAssignee(User assignee, Issue issue) {
+		this.assignee = assignee;
+		this.issue = issue;
+	}
 }

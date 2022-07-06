@@ -25,4 +25,9 @@ public class IssueLabel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Label label;
+
+	public IssueLabel(Issue issue, Label label) {
+		this.issue = issue;
+		this.label = label;
+	}
 }

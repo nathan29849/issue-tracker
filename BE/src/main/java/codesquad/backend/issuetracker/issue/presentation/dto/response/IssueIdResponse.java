@@ -7,4 +7,7 @@ public class IssueIdResponse {
 
 	private Long issueId;
 
+	public IssueIdResponse(Long issueId) {
+		this.issueId = issueId;
+	}
 }

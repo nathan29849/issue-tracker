@@ -9,6 +9,7 @@ import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetai
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +47,11 @@ public class IssueController {
 	@Operation(summary = "이슈 작성")
 	@PostMapping
 	public IssueIdResponse create(
+		HttpServletRequest request,
 		@RequestBody IssueCreateRequest issueCreateRequest
 	){
-		return null;
+		Long userId = (Long) request.getAttribute("userId");
+		return issueService.add(userId, issueCreateRequest);
 	}
 
 	@Operation(summary = "이슈 제목 편집")

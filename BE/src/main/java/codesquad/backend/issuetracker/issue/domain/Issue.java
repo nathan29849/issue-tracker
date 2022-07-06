@@ -55,4 +55,32 @@ public class Issue extends BaseEntity {
 
 	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
+
+	public Issue(String title, String content,
+		IssueStatus status, User author) {
+		this.title = title;
+		this.content = content;
+		this.status = status;
+		this.author = author;
+	}
+
+	public static Issue createBy(String title, String content, User author) {
+		return new Issue(title, content, IssueStatus.OPEN, author);
+	}
+
+	public void updateMilestone(Milestone milestone) {
+		this.milestone = milestone;
+	}
+
+	public void updateAssignees(List<IssueAssignee> assignees) {
+		this.assignees = assignees;
+	}
+
+	public void updateLabels(List<IssueLabel> labels) {
+		this.labels = labels;
+	}
+
+	public void updateComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 }
