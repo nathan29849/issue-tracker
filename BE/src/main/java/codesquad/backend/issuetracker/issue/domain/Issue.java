@@ -68,6 +68,14 @@ public class Issue extends BaseEntity {
 		return new Issue(title, content, IssueStatus.OPEN, author);
 	}
 
+	public void updateTitle(String title) {
+		this.title = title;
+	}
+
+	public void updateContent(String content){
+		this.content = content;
+	}
+
 	public void updateMilestone(Milestone milestone) {
 		this.milestone = milestone;
 	}

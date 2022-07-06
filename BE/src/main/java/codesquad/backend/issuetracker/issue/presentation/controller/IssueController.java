@@ -60,7 +60,7 @@ public class IssueController {
 		@PathVariable Long id,
 		@RequestBody String title
 	) {
-		return null;
+		return issueService.editTitle(id, title);
 	}
 
 	@Operation(summary = "이슈 내용 편집")
@@ -69,7 +69,7 @@ public class IssueController {
 		@PathVariable Long id,
 		@RequestBody String content
 	) {
-		return null;
+		return issueService.editContent(id, content);
 	}
 
 	@Operation(summary = "이슈 마일스톤 편집")
@@ -78,7 +78,7 @@ public class IssueController {
 		@PathVariable Long id,
 		@RequestBody Long milestoneId
 	) {
-		return null;
+		return issueService.editMilestone(id, milestoneId);
 	}
 
 	@Operation(summary = "이슈 라벨 편집")
@@ -87,7 +87,7 @@ public class IssueController {
 		@PathVariable Long id,
 		@RequestBody IssueLabelEditRequest issueLabelEditRequest
 	) {
-		return null;
+		return issueService.editLabel(id, issueLabelEditRequest);
 	}
 
 	@Operation(summary = "이슈 assignee 편집")
@@ -96,7 +96,7 @@ public class IssueController {
 		@PathVariable Long id,
 		@RequestBody IssueAssigneeEditRequest issueAssigneeEditRequest
 	) {
-		return null;
+		return issueService.editAssignee(id, issueAssigneeEditRequest);
 	}
 
 	@Operation(summary = "이슈 삭제")

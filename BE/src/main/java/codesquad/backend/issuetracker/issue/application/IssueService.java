@@ -3,10 +3,11 @@ package codesquad.backend.issuetracker.issue.application;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
 import codesquad.backend.issuetracker.issue.domain.IssueLabel;
-import codesquad.backend.issuetracker.issue.domain.IssueStatus;
 import codesquad.backend.issuetracker.issue.infrastructure.IssueRepository;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
@@ -58,32 +59,88 @@ public class IssueService {
 		}
 
 		if (issueCreateRequest.getAssigneesId() != null) {
-			List<User> assignees = issueCreateRequest.getAssigneesId().stream()
-				.map(a -> userRepository.findById(a)
-					.orElseThrow(() -> new IllegalArgumentException("올바른 유저가 아닙니다."))
-				).collect(Collectors.toList());
-
-			List<IssueAssignee> issueAssignees = assignees.stream()
-				.map(assignee -> new IssueAssignee(assignee, issue))
-				.collect(Collectors.toList());
-
+			List<IssueAssignee> issueAssignees = getIssueAssigneeById(issue, issueCreateRequest.getAssigneesId());
 			issue.updateAssignees(issueAssignees);
 		}
 
 		if (issueCreateRequest.getLabelsId() != null) {
-			List<Label> labels = issueCreateRequest.getLabelsId().stream()
-				.map(l -> labelRepository.findById(l)
-					.orElseThrow(() -> new IllegalArgumentException("올바른 라벨이 아닙니다."))
-				).collect(Collectors.toList());
-
-			List<IssueLabel> issueLabels = labels.stream()
-				.map(label -> new IssueLabel(issue, label))
-				.collect(Collectors.toList());
-
+			List<IssueLabel> issueLabels = getIssueLabelsById(issue, issueCreateRequest.getLabelsId());
 			issue.updateLabels(issueLabels);
 		}
 
 		Issue savedIssue = issueRepository.save(issue);
 		return new IssueIdResponse(savedIssue.getId());
+	}
+
+	@Transactional
+	public IssueDetailResponse editTitle(Long id, String title) {
+		Issue issue = issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+
+		issue.updateTitle(title);
+		return IssueDetailResponse.createBy(issue);
+	}
+
+	@Transactional
+	public IssueDetailResponse editContent(Long id, String content) {
+		Issue issue = issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+
+		issue.updateContent(content);
+		return IssueDetailResponse.createBy(issue);
+	}
+
+	@Transactional
+	public IssueDetailResponse editMilestone(Long id, Long milestoneId) {
+		Issue issue = issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+
+		Milestone milestone = milestoneRepository.findById(milestoneId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
+		issue.updateMilestone(milestone);
+		return IssueDetailResponse.createBy(issue);
+	}
+
+	@Transactional
+	public IssueDetailResponse editLabel(Long id, IssueLabelEditRequest request) {
+		Issue issue = issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+
+		List<IssueLabel> issueLabels = getIssueLabelsById(issue, request.getLabelsId());
+		issue.updateLabels(issueLabels);
+		return IssueDetailResponse.createBy(issue);
+	}
+
+	private List<IssueLabel> getIssueLabelsById(Issue issue, List<Long> labelsId) {
+		List<Label> labels = labelsId.stream()
+			.map(labelId -> labelRepository.findById(labelId)
+				.orElseThrow(() -> new IllegalArgumentException("올바른 라벨이 아닙니다."))
+			).collect(Collectors.toList());
+
+		 return labels.stream()
+			.map(label -> new IssueLabel(issue, label))
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public IssueDetailResponse editAssignee(Long id, IssueAssigneeEditRequest request) {
+		Issue issue = issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+
+		List<IssueAssignee> issueAssignees = getIssueAssigneeById(issue,
+			request.getAssigneesId());
+		issue.updateAssignees(issueAssignees);
+		return IssueDetailResponse.createBy(issue);
+	}
+
+	private List<IssueAssignee> getIssueAssigneeById(Issue issue, List<Long> assigneesId) {
+		List<User> assignees = assigneesId.stream()
+			.map(assigneeId -> userRepository.findById(assigneeId)
+				.orElseThrow(() -> new IllegalArgumentException("올바른 유저가 아닙니다."))
+			).collect(Collectors.toList());
+
+		return assignees.stream()
+			.map(assignee -> new IssueAssignee(assignee, issue))
+			.collect(Collectors.toList());
 	}
 }
