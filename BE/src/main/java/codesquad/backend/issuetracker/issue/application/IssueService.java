@@ -33,9 +33,8 @@ public class IssueService {
 	private final LabelRepository labelRepository;
 
 	@Transactional(readOnly = true)
-	public IssueDetailResponse findById(Long id) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+	public IssueDetailResponse findDetailById(Long id) {
+		Issue issue = findById(id);
 		return IssueDetailResponse.createBy(issue);
 	}
 
@@ -49,8 +48,7 @@ public class IssueService {
 		 User author = userRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("올바른 유저가 아닙니다."));
 
-		Issue issue = Issue.createBy(issueCreateRequest.getTitle(),
-			issueCreateRequest.getContent(), author);
+		Issue issue = Issue.createBy(issueCreateRequest.getTitle(), issueCreateRequest.getContent(), author);
 
 		if (issueCreateRequest.getMilestoneId() != null) {
 			Milestone milestone = milestoneRepository.findById(issueCreateRequest.getMilestoneId())
@@ -74,27 +72,21 @@ public class IssueService {
 
 	@Transactional
 	public IssueDetailResponse editTitle(Long id, String title) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
-
+		Issue issue =findById(id);
 		issue.updateTitle(title);
 		return IssueDetailResponse.createBy(issue);
 	}
 
 	@Transactional
 	public IssueDetailResponse editContent(Long id, String content) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
-
+		Issue issue = findById(id);
 		issue.updateContent(content);
 		return IssueDetailResponse.createBy(issue);
 	}
 
 	@Transactional
 	public IssueDetailResponse editMilestone(Long id, Long milestoneId) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
-
+		Issue issue = findById(id);
 		Milestone milestone = milestoneRepository.findById(milestoneId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 마일스톤이 존재하지 않습니다."));
 		issue.updateMilestone(milestone);
@@ -103,9 +95,7 @@ public class IssueService {
 
 	@Transactional
 	public IssueDetailResponse editLabel(Long id, IssueLabelEditRequest request) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
-
+		Issue issue = findById(id);
 		List<IssueLabel> issueLabels = getIssueLabelsById(issue, request.getLabelsId());
 		issue.updateLabels(issueLabels);
 		return IssueDetailResponse.createBy(issue);
@@ -124,9 +114,7 @@ public class IssueService {
 
 	@Transactional
 	public IssueDetailResponse editAssignee(Long id, IssueAssigneeEditRequest request) {
-		Issue issue = issueRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
-
+		Issue issue = findById(id);
 		List<IssueAssignee> issueAssignees = getIssueAssigneeById(issue,
 			request.getAssigneesId());
 		issue.updateAssignees(issueAssignees);
@@ -142,5 +130,15 @@ public class IssueService {
 		return assignees.stream()
 			.map(assignee -> new IssueAssignee(assignee, issue))
 			.collect(Collectors.toList());
+	}
+
+//	@Transactional
+//	public void remove(Long id) {
+//
+//	}
+
+	private Issue findById(Long id) {
+		return issueRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
 	}
 }

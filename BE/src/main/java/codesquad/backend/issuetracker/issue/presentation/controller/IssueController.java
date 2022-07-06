@@ -33,7 +33,7 @@ public class IssueController {
 	public IssueDetailResponse retrieveDetail(
 		@PathVariable Long id
 	){
-		return issueService.findById(id);
+		return issueService.findDetailById(id);
 	}
 
 	@Operation(summary = "이슈 목록 전체 조회")
