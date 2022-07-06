@@ -2,7 +2,9 @@ import { atom } from 'recoil';
 
 export interface IMileStoneTypes {
   id: number;
-  name: string;
+  title: string;
+  description?: string;
+  dueDate?: string;
 }
 
 export const mileStoneState = atom<{ info: IMileStoneTypes[] }>({
@@ -11,11 +13,13 @@ export const mileStoneState = atom<{ info: IMileStoneTypes[] }>({
     info: [
       {
         id: 1,
-        name: 'muffinMileStone한글네글',
+        title: 'muffinMileStone한글네글',
+        description: 'muffinMileStone한글네글 des',
       },
       {
         id: 2,
-        name: 'colaMileStone한글셋',
+        title: 'colaMileStone한글셋',
+        description: 'muffinMileStone한글셋 des',
       },
     ],
   },

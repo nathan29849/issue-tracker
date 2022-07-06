@@ -8,9 +8,11 @@ import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
 import { PatchLabel } from './PatchLabel';
+import { PatchMilestone } from './PatchMileStone';
 import { PostImage } from './PostImage';
 import { PostIssue } from './PostIssue';
 import { PostLabels } from './PostLabels';
+import { PostMileStones } from './PostMileStones';
 
 const getIssue = rest.get('/issue', (req, res, ctx) =>
   res(
@@ -87,6 +89,8 @@ export const handlers = [
   PostIssue,
   GetUsers,
   GetMileStones,
+  PostMileStones,
+  PatchMilestone,
   PostImage,
   DeleteMileStone,
 ];

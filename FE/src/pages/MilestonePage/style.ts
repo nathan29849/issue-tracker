@@ -10,8 +10,8 @@ export const Header = styled.header`
 
 export const MileStoneLabel = styled.div`
   cursor: pointer;
-  color: ${(props: { labelMileStoneStatus: boolean }) =>
-    props.labelMileStoneStatus ? theme.color.titleActive : theme.color.label};
+  color: ${(props: { mileStoneStatus: boolean }) =>
+    props.mileStoneStatus ? theme.color.titleActive : theme.color.label};
   span {
     margin-left: 0.375rem;
   }
