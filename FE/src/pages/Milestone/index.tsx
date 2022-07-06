@@ -20,7 +20,7 @@ export default function Milestone() {
   );
   const [mileStoneCount, setMileStoneCount] = useState({ open: 0, close: 0 });
   const [mileStoneStatus, setMileStoneStatus] = useState(true);
-  const [renderMileStone, setRenderMileStone] = useState({});
+  const [renderMileStone, setRenderMileStone] = useState<IMileStone[]>([]);
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [closeModalVisible, setCloseModalVisible] = useState(false);
@@ -94,24 +94,24 @@ export default function Milestone() {
         mileStoneData.currentMilestones.length +
         mileStoneData.nullDueDateMilestones.length;
       const closeMileStoneCount = mileStoneData.expiredMilestones.length;
+      const newMileStoneArr = mileStoneData.currentMilestones.concat(
+        mileStoneData.nullDueDateMilestones,
+      );
       setMileStoneCount({
         open: openMileStoneCount,
         close: closeMileStoneCount,
       });
-      setRenderMileStone({
-        ...mileStoneData.currentMilestones,
-        ...mileStoneData.nullDueDateMilestones,
-      });
+      setRenderMileStone(newMileStoneArr);
     }
   }, [mileStoneData]);
 
   useEffect(() => {
     if (mileStoneData) {
       if (mileStoneStatus) {
-        setRenderMileStone({
-          ...mileStoneData.currentMilestones,
-          ...mileStoneData.nullDueDateMilestones,
-        });
+        const newMileStoneArr = mileStoneData.currentMilestones.concat(
+          mileStoneData.nullDueDateMilestones,
+        );
+        setRenderMileStone(newMileStoneArr);
       } else {
         setRenderMileStone(mileStoneData.expiredMilestones);
       }
@@ -160,8 +160,8 @@ export default function Milestone() {
           </S.MileStoneLabel>
         </S.MainHeaderLabel>
 
-        {Object.keys(renderMileStone).length !== 0 ? (
-          Object.values(renderMileStone).map((mileStone: any | IMileStone) =>
+        {renderMileStone.length !== 0 ? (
+          renderMileStone.map((mileStone: IMileStone) =>
             editOpenForm[mileStone.id] ? (
               <Form
                 key={`EditMileStoneForm-${mileStone.title}`}
