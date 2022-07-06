@@ -10,6 +10,7 @@ import I from '@components/Icons';
 import { Input } from '@components/Input';
 import { IMileStoneTypes } from '@recoil/atoms/milestone';
 import { MileStoneRequestBody } from '@type/milestone';
+import { checkDueDate } from '@utils/date';
 
 interface FormProps {
   title: string;
@@ -93,6 +94,11 @@ export default function Form({
       dueDate: openFormValue.dueDate,
     };
 
+    if (!checkDueDate(newMileStone.dueDate)) {
+      console.log('에러처리');
+      return;
+    }
+
     if (patchId) {
       fetchPatchMileStone.mutate({ patchId, newMileStone });
     } else {
@@ -125,7 +131,7 @@ export default function Form({
             onChange={handleMileStoneTitle}
           />
           <Input
-            type="number"
+            type="text"
             width="50%"
             value={openFormValue.dueDate || ''}
             placeholder="완료일(선택) ex.YYYY-MM-DD"
