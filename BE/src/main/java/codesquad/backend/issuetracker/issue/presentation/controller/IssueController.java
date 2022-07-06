@@ -104,7 +104,8 @@ public class IssueController {
 	public ResponseEntity<Void> remove(
 		@PathVariable Long id
 	) {
-		return null;
+		issueService.remove(id);
+		return ResponseEntity.ok().build();
 	}
 
 }

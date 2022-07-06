@@ -132,10 +132,11 @@ public class IssueService {
 			.collect(Collectors.toList());
 	}
 
-//	@Transactional
-//	public void remove(Long id) {
-//
-//	}
+	@Transactional
+	public void remove(Long id) {
+		Issue issue = findById(id);
+		issueRepository.delete(issue);
+	}
 
 	private Issue findById(Long id) {
 		return issueRepository.findById(id)
