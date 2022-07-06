@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import * as S from './style';
 
@@ -6,6 +6,7 @@ import { TextButton } from '@components/Button';
 import I from '@components/Icons';
 import { Label } from '@components/Label';
 import theme from '@styles/theme';
+import { textToHtml } from '@utils/textToHtml';
 import { getTimeDiffFromNow } from '@utils/time';
 
 interface SystemComment {
@@ -14,7 +15,7 @@ interface SystemComment {
 }
 
 interface Props extends SystemComment {
-  children: React.ReactNode;
+  text: string;
   isIssueAuthor: boolean;
   isEditable?: boolean;
   borderColor?: string;
@@ -23,7 +24,7 @@ interface Props extends SystemComment {
 }
 
 export const Comment: React.FC<Props> = ({
-  children,
+  text,
   userName,
   createdAt,
   isIssueAuthor,
@@ -33,8 +34,8 @@ export const Comment: React.FC<Props> = ({
   textColor,
 }) => {
   const timeDiffFromCreatedTimeToNow = getTimeDiffFromNow(createdAt);
+  const html = useMemo(() => textToHtml(text), [text]);
 
-  // 코멘트 컨텐츠를 적절하게 변환시킨 후 Content에 넣는다.
   return (
     <S.CommentLayer
       borderColor={borderColor}
@@ -67,7 +68,7 @@ export const Comment: React.FC<Props> = ({
           </S.EmojiButton>
         </S.Buttons>
       </S.Header>
-      <S.Content>{children}</S.Content>
+      <S.Content dangerouslySetInnerHTML={{ __html: html }} />
     </S.CommentLayer>
   );
 };
@@ -75,25 +76,23 @@ export const Comment: React.FC<Props> = ({
 export const ClosedIssueComment: React.FC<SystemComment> = props => (
   <Comment
     {...props}
+    text="이슈가 닫혔습니다."
     isIssueAuthor={false}
     isEditable={false}
     bgColor={theme.color.lightPurple}
     borderColor={theme.color.purple}
     textColor={theme.color.darkPurple}
-  >
-    이슈가 닫혔습니다.
-  </Comment>
+  />
 );
 
 export const ReopenIssueComment: React.FC<SystemComment> = props => (
   <Comment
     {...props}
+    text="이슈가 다시 열렸습니다."
     isIssueAuthor={false}
     isEditable={false}
     bgColor={theme.color.lightBlue}
     borderColor={theme.color.blue}
     textColor={theme.color.darkBlue}
-  >
-    이슈가 다시 열렸습니다.
-  </Comment>
+  />
 );
