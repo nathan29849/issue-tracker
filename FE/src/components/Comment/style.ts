@@ -43,6 +43,13 @@ export const Content = styled.div`
   padding: 1rem 1.5rem;
   background-color: ${({ theme }) => theme.color.offWhite};
   line-height: 1.75;
+
+  img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
 `;
 
 export const CommentLayer = styled.article<{
