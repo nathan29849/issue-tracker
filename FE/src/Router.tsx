@@ -9,7 +9,7 @@ import IssuePage from '@pages/IssuePage';
 import IssueDetailPage from '@pages/IssuePage/Detail';
 import LabelPage from '@pages/LabelPage';
 import Login from '@pages/Login';
-import Milestone from '@pages/Milestone';
+import Milestone from '@pages/MilestonePage';
 import NotFound from '@pages/NotFound';
 import Verification from '@pages/Verification';
 

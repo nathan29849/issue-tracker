@@ -52,20 +52,20 @@ export default function Milestone() {
     setClickedId(id);
   };
 
-  const handleMileStoneCancelClick = () => {
+  const handleDeleteModalCancelClick = () => {
     setDeleteModalVisible(false);
   };
 
-  const handleCloseCancelClick = () => {
+  const handleCloseModalCancelClick = () => {
     setCloseModalVisible(false);
   };
 
-  const handleMileStoneSubmit = () => {
+  const handleDeleteModalSubmit = () => {
     fetchDeleteMileStone.mutate(clickedId);
     setDeleteModalVisible(false);
   };
 
-  const handleCloseSubmit = () => {
+  const handleCloseModalSubmit = () => {
     setCloseModalVisible(false);
   };
 
@@ -94,24 +94,24 @@ export default function Milestone() {
         mileStoneData.currentMilestones.length +
         mileStoneData.nullDueDateMilestones.length;
       const closeMileStoneCount = mileStoneData.expiredMilestones.length;
-      const newMileStoneArr = mileStoneData.currentMilestones.concat(
-        mileStoneData.nullDueDateMilestones,
-      );
       setMileStoneCount({
         open: openMileStoneCount,
         close: closeMileStoneCount,
       });
-      setRenderMileStone(newMileStoneArr);
+      setRenderMileStone([
+        ...mileStoneData.currentMilestones,
+        ...mileStoneData.nullDueDateMilestones,
+      ]);
     }
   }, [mileStoneData]);
 
   useEffect(() => {
     if (mileStoneData) {
       if (mileStoneStatus) {
-        const newMileStoneArr = mileStoneData.currentMilestones.concat(
-          mileStoneData.nullDueDateMilestones,
-        );
-        setRenderMileStone(newMileStoneArr);
+        setRenderMileStone([
+          ...mileStoneData.currentMilestones,
+          ...mileStoneData.nullDueDateMilestones,
+        ]);
       } else {
         setRenderMileStone(mileStoneData.expiredMilestones);
       }
@@ -171,7 +171,7 @@ export default function Milestone() {
                 handleCloseForm={id => handleCloseForm(id)}
               />
             ) : (
-              <S.MileStoneItemWrapper>
+              <S.MileStoneItemWrapper key={`mileStone-${mileStone.id}`}>
                 <S.MileStoneLeft>
                   <S.MileStoneTitle>
                     <div>
@@ -220,7 +220,12 @@ export default function Milestone() {
                     </div>
                   </div>
                   <ProgressBar
-                    width={50}
+                    width={Math.floor(
+                      (mileStone.closedIssueCount /
+                        (mileStone.openIssueCount +
+                          mileStone.closedIssueCount)) *
+                        100,
+                    )}
                     detail
                     leftText={`열린 이슈 ${mileStone.openIssueCount}`}
                     rightText={`닫힌 이슈 ${mileStone.closedIssueCount}`}
@@ -235,15 +240,15 @@ export default function Milestone() {
         {deleteModalVisible && (
           <Modal
             title="해당 마일스톤을 정말 삭제하시겠습니까?"
-            handleCancelClick={handleMileStoneCancelClick}
-            handleSubmit={handleMileStoneSubmit}
+            handleCancelClick={handleDeleteModalCancelClick}
+            handleSubmit={handleDeleteModalSubmit}
           />
         )}
         {closeModalVisible && (
           <Modal
             title="해당 마일스톤을 정말 닫으시겠습니까?"
-            handleCancelClick={handleCloseCancelClick}
-            handleSubmit={handleCloseSubmit}
+            handleCancelClick={handleCloseModalCancelClick}
+            handleSubmit={handleCloseModalSubmit}
           />
         )}
       </S.Main>
