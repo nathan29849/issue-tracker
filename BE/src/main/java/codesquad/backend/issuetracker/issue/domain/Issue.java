@@ -6,6 +6,7 @@ import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,14 +82,17 @@ public class Issue extends BaseEntity {
 	}
 
 	public void updateAssignees(List<IssueAssignee> assignees) {
-		this.assignees = assignees;
+		this.assignees.clear();
+		this.assignees.addAll(assignees);
 	}
 
 	public void updateLabels(List<IssueLabel> labels) {
-		this.labels = labels;
+		this.labels.clear();
+		this.labels.addAll(labels);
 	}
 
 	public void updateComments(List<Comment> comments) {
-		this.comments = comments;
+		this.comments.clear();
+		this.comments.addAll(comments);
 	}
 }

@@ -3,8 +3,11 @@ package codesquad.backend.issuetracker.issue.presentation.controller;
 import codesquad.backend.issuetracker.issue.application.IssueService;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueContentEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueMilestoneEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueTitleEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
@@ -58,27 +61,27 @@ public class IssueController {
 	@PatchMapping("/{id}/title")
 	public IssueDetailResponse editTitle(
 		@PathVariable Long id,
-		@RequestBody String title
+		@RequestBody IssueTitleEditRequest request
 	) {
-		return issueService.editTitle(id, title);
+		return issueService.editTitle(id, request.getTitle());
 	}
 
 	@Operation(summary = "이슈 내용 편집")
 	@PatchMapping("/{id}/content")
 	public IssueDetailResponse editContent(
 		@PathVariable Long id,
-		@RequestBody String content
+		@RequestBody IssueContentEditRequest request
 	) {
-		return issueService.editContent(id, content);
+		return issueService.editContent(id, request.getContent());
 	}
 
 	@Operation(summary = "이슈 마일스톤 편집")
 	@PatchMapping("/{id}/milestone")
 	public IssueDetailResponse editMilestone(
 		@PathVariable Long id,
-		@RequestBody Long milestoneId
+		@RequestBody IssueMilestoneEditRequest request
 	) {
-		return issueService.editMilestone(id, milestoneId);
+		return issueService.editMilestone(id, request.getMilestoneId());
 	}
 
 	@Operation(summary = "이슈 라벨 편집")
