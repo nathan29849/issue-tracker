@@ -40,7 +40,7 @@ public class IssueController {
 	public IssuesResponse retrieveIssues(
 		FilterCondition condition
 	){
-		return null;
+		return issueService.findByFilter(condition);
 	}
 
 	@Operation(summary = "이슈 작성")

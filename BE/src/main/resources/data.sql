@@ -48,7 +48,7 @@ insert into issue(title, content, created_at, updated_at, status,  author_id, mi
 values('이슈1', '머핀에는 역시 콜라지!', '2020-01-12 00:00:01', '2020-01-12 00:00:01', 'OPEN', 1, null);
 
 insert into issue(title, content, created_at, updated_at, status,  author_id, milestone_id)
-values('이슈2', '나단, 머핀, 콜라가 함께하는 팀 프로젝트', '2020-01-12 00:00:01', '2020-01-12 00:00:01', 'CLOSE', 2, 1);
+values('이슈2', '나단, 머핀, 콜라가 함께하는 팀 프로젝트', '2020-01-12 00:00:01', '2020-01-12 00:00:01', 'CLOSED', 2, 1);
 
 insert into issue(title, content, created_at, updated_at, status,  author_id, milestone_id)
 values('이슈3', '근본은 프론트엔드다;;', '2021-01-12 00:00:01', '2021-01-12 00:00:01', 'OPEN', 2, 1);

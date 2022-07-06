@@ -40,6 +40,10 @@ public class MilestoneDto {
 	}
 
 	public static MilestoneDto createBy(Milestone milestone) {
+		if (milestone == null){
+			return null;
+		}
+
 		Integer openIssueCount = countOpenIssue(milestone);
 		return new MilestoneDto(
 			milestone.getId(), milestone.getTitle(), milestone.getDescription(),
