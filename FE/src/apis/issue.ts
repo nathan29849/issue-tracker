@@ -18,6 +18,22 @@ export const getIssues = async () => {
   return issues;
 };
 
+export const getIssue = async (issueId: number) => {
+  const accessToken = getCookie(ACCESS_TOKEN);
+  const response = await fetch(
+    `${process.env.TEAM30_BASE_URL}/api/issues/${issueId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+  const issue = await response.json();
+
+  // TODO: 에러 핸들링
+  return issue;
+};
+
 export const postIssue = async (
   requestBody: PostIssueRequestBody,
 ): Promise<{ issueId: number }> => {
