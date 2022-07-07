@@ -23,3 +23,12 @@ export const defaultBgColors = [
   '#BFD4F2',
   '#D4C5F9',
 ];
+
+export const issueFilterKeys = [
+  'is',
+  'me',
+  'assignee',
+  'label',
+  'mileStone',
+  'author',
+];
