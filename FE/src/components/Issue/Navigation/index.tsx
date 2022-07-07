@@ -12,13 +12,7 @@ import { authorState } from '@recoil/atoms/author';
 import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
 import { mileStoneState } from '@recoil/atoms/milestone';
-
-export type FilterLabelTypes =
-  | 'assignee'
-  | 'label'
-  | 'mileStone'
-  | 'author'
-  | 'checkStatus';
+import { FilterLabelTypes } from '@type/issue';
 
 interface NavigationProps {
   allCheck: boolean;
@@ -31,7 +25,6 @@ export default function Navigation({
   calculateCheckCount,
   handleIssueAllCheck,
 }: NavigationProps) {
-  // console.log(calculateCheckCount);
   const { urlParamInit } = useSearch('q', 'is:open');
   const location = useLocation();
   const filterLabels: FilterLabelTypes[] = [
@@ -45,10 +38,10 @@ export default function Navigation({
   const labelData = useRecoilValue(labelState);
   const milestoneData = useRecoilValue(mileStoneState);
   const authorData = useRecoilValue(authorState);
-  const checkStatusData = {
+  const checkBoxStatus = {
     info: [
-      { id: 'open-statusPopup', name: '선택한 이슈 열기' },
-      { id: 'close-statusPopup', name: '선택한 이슈 닫기' },
+      { id: 'open-statusPopup', title: '선택한 이슈 열기' },
+      { id: 'close-statusPopup', title: '선택한 이슈 닫기' },
     ],
   };
 
@@ -59,7 +52,7 @@ export default function Navigation({
     label: false,
     mileStone: false,
     author: false,
-    checkStatus: false,
+    checkBoxStatus: false,
   });
 
   const [filterPopupData, setFilterPoupData] = useState({
@@ -67,7 +60,7 @@ export default function Navigation({
     label: labelData,
     mileStone: milestoneData,
     author: authorData,
-    checkStatus: checkStatusData,
+    checkBoxStatus,
   });
 
   const [labelIssueStatus, setLabelIssueStatus] = useState(true);
@@ -143,9 +136,9 @@ export default function Navigation({
       <S.RightLayer>
         {calculateCheckCount() !== 0 ? (
           <Filter
-            onPopup={onPopup('checkStatus')}
-            item="checkStatus"
-            filterPopupData={filterPopupData.checkStatus.info}
+            onPopup={onPopup('checkBoxStatus')}
+            item="checkBoxStatus"
+            filterPopupData={filterPopupData.checkBoxStatus.info}
             handleFilterClick={handleFilterClick}
           />
         ) : (

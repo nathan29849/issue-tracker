@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import * as S from './style';
 
@@ -8,13 +9,10 @@ import I from '@components/Icons';
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
 import { IPopupData } from '@components/Popup/type';
-import {
-  searchDebounceDelay,
-  limitedLengthSearchValue,
-} from '@constants/default';
 import useComponentVisible from '@hooks/useComponentVisible';
-import useDebounce from '@hooks/useDebouce';
 import { useSearch } from '@hooks/useSearch';
+import { issueState } from '@recoil/atoms/issue';
+import { checkSearchParamKey } from '@utils/inputSearch';
 
 export default function FilterBar() {
   const location = useLocation();
@@ -29,8 +27,8 @@ export default function FilterBar() {
   };
 
   const [searchValue, setSearchValue] = useState('is:open');
-  const [isValidSearch, setIsValidSearch] = useState(true);
-  const debouncedValue = useDebounce(searchValue, searchDebounceDelay);
+
+  const setIssueState = useSetRecoilState(issueState);
 
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
@@ -52,6 +50,9 @@ export default function FilterBar() {
     } else {
       urlParamReplace('me', popupData.status);
     }
+
+    // TODO: call filter get api => response issue recoil set
+    setIssueState([]);
     setIsComponentVisible(false);
   };
 
@@ -59,17 +60,14 @@ export default function FilterBar() {
     setSearchValue(e.target.value);
   };
 
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isValidSearch) alert('문자수 길이를 체크해주세요!');
-    // debouncedValue 파싱 함수 호출 이후 파싱된 데이터로 api 요청하기
+    if (!checkSearchParamKey(searchValue)) {
+      // 사용자에게 부정확한 키가 존재한다고 알려주기.
+      setSearchValue('');
+    }
+    // TODO: call filter get api => response issue recoil set
   };
-
-  useEffect(() => {
-    if (debouncedValue && debouncedValue.length > limitedLengthSearchValue)
-      setIsValidSearch(false);
-    else setIsValidSearch(true);
-  }, [debouncedValue]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -81,9 +79,9 @@ export default function FilterBar() {
   }, [location]);
 
   return (
-    <S.FilterBarLayer onSubmit={handleSubmit}>
+    <S.FilterBarLayer onSubmit={handleSearchSubmit}>
       <S.FilterButton onClick={handleOnFilterPopup}>
-        <span>필터</span>
+        <span>Filter</span>
         <div
           ref={ref}
           css={css`
@@ -94,7 +92,7 @@ export default function FilterBar() {
         >
           {isComponentVisible && (
             <Popup>
-              <header className="popup-header">이슈 필터</header>
+              <header className="popup-header">Issue Filter</header>
               {issueFilterData.info.map((popupData: IPopupData) => (
                 <Contents
                   key={`popup-${popupData.name}`}
@@ -119,11 +117,6 @@ export default function FilterBar() {
           onChange={handleChangeSearchInput}
         />
       </S.SearchBar>
-      <S.FilterErrorText>
-        {!isValidSearch && (
-          <span>검색 문자가 {limitedLengthSearchValue}자 초과하였습니다.</span>
-        )}
-      </S.FilterErrorText>
     </S.FilterBarLayer>
   );
 }

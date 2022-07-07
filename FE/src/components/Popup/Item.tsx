@@ -38,10 +38,10 @@ export const getModalItem = (item: string, popupData: IPopupData) => {
         </>
       );
     case 'mileStone':
-      return <div className="filter__name">{popupData.name}</div>;
+      return <div className="filter__name">{popupData.title}</div>;
 
-    case 'checkStatus':
-      return <div className="filter__name">{popupData.name}</div>;
+    case 'checkBoxStatus':
+      return <div className="filter__name">{popupData.title}</div>;
     default:
       throw Error('label type not found');
   }
