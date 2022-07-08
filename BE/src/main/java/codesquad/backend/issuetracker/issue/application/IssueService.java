@@ -3,13 +3,17 @@ package codesquad.backend.issuetracker.issue.application;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
 import codesquad.backend.issuetracker.issue.domain.IssueLabel;
+import codesquad.backend.issuetracker.issue.domain.IssueStatus;
 import codesquad.backend.issuetracker.issue.infrastructure.IssueRepository;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
+import codesquad.backend.issuetracker.issue.presentation.dto.UserDto;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueStatusEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
+import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueStatusResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
 import codesquad.backend.issuetracker.label.domain.Label;
 import codesquad.backend.issuetracker.label.infrastructure.LabelRepository;
@@ -146,5 +150,18 @@ public class IssueService {
 	private Issue findById(Long id) {
 		return issueRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
+	}
+
+	public IssueStatusResponse editStatus(Long issueId, Long userId,
+		IssueStatusEditRequest issueStatusEditRequest) {
+		User editor = userRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("올바른 유저가 아닙니다."));
+
+		Issue issue = findById(issueId);
+		IssueStatus status = issueStatusEditRequest.getStatus();
+
+		issue.updateStatus(status);
+
+		return IssueStatusResponse.createBy(status, editor);
 	}
 }

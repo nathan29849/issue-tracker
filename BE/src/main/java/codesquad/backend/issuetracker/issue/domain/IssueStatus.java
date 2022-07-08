@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum IssueStatus {
-	OPEN, CLOSED
+	OPEN, CLOSED,  REOPEN
 }

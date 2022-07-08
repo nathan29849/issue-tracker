@@ -95,4 +95,8 @@ public class Issue extends BaseEntity {
 		this.comments.clear();
 		this.comments.addAll(comments);
 	}
+
+	public void updateStatus(IssueStatus status) {
+		this.status = status;
+	}
 }

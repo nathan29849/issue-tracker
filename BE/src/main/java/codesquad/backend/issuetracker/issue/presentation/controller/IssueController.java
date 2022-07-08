@@ -7,9 +7,11 @@ import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueConten
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueMilestoneEditRequest;
+import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueStatusEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueTitleEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueDetailResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueIdResponse;
+import codesquad.backend.issuetracker.issue.presentation.dto.response.IssueStatusResponse;
 import codesquad.backend.issuetracker.issue.presentation.dto.response.IssuesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.servlet.http.HttpServletRequest;
@@ -109,6 +111,17 @@ public class IssueController {
 	) {
 		issueService.remove(id);
 		return ResponseEntity.ok().build();
+	}
+
+	@Operation(summary = "이슈 상태 변경")
+	@PatchMapping("/{id}/status")
+	public IssueStatusResponse editStatus(
+		@PathVariable(name = "id") Long issueId,
+		HttpServletRequest request,
+		@RequestBody IssueStatusEditRequest issueStatusEditRequest
+	) {
+		Long userId = (Long) request.getAttribute("userId");
+		return issueService.editStatus(issueId, userId, issueStatusEditRequest);
 	}
 
 }

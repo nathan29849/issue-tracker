@@ -28,7 +28,7 @@ public class User {
 	private String authId;
 	private String username;
 	private String nodeId;
-	private String imageUrl;
+	private String profileImageUrl;
 
 	@OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<Issue> issues = new ArrayList<>();
@@ -37,11 +37,11 @@ public class User {
 	private List<IssueAssignee> assignees = new ArrayList<>();
 
 
-	public User(String authId, String username, String nodeId, String imageUrl) {
+	public User(String authId, String username, String nodeId, String profileImageUrl) {
 		this.authId = authId;
 		this.username = username;
 		this.nodeId = nodeId;
-		this.imageUrl = imageUrl;
+		this.profileImageUrl = profileImageUrl;
 	}
 
 	public User update(@NonNull User user) {
@@ -50,7 +50,7 @@ public class User {
 		 */
 		this.authId = user.getAuthId();
 		this.username = user.getUsername();
-		this.imageUrl = user.getImageUrl();
+		this.profileImageUrl = user.getProfileImageUrl();
 		return this;
 	}
 }

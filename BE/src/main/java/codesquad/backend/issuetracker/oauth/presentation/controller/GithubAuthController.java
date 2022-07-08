@@ -68,7 +68,7 @@ public class GithubAuthController {
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.ACCESS))
 			.header(HttpHeaders.SET_COOKIE, getCookie(user, TokenType.REFRESH))
 			.body(new GithubLoginUserDto(
-				user.getAuthId(), user.getUsername(), user.getImageUrl(),
+				user.getAuthId(), user.getUsername(), user.getProfileImageUrl(),
 				getToken(user, TokenType.ACCESS), getToken(user, TokenType.REFRESH)
 			));
 	}

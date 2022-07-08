@@ -10,17 +10,17 @@ public class UserDto {
 	private Long id;
 	private String authId;
 	private String username;
-	private String imageUrl;
+	private String profileImageUrl;
 
-	public UserDto(Long id, String authId, String username, String imageUrl) {
+	public UserDto(Long id, String authId, String username, String profileImageUrl) {
 		this.id = id;
 		this.authId = authId;
 		this.username = username;
-		this.imageUrl = imageUrl;
+		this.profileImageUrl = profileImageUrl;
 	}
 
 	public static UserDto createBy(User user) {
-		return new UserDto(user.getId(), user.getAuthId(), user.getUsername(), user.getImageUrl());
+		return new UserDto(user.getId(), user.getAuthId(), user.getUsername(), user.getProfileImageUrl());
 	}
 
 	public static UserDto createBy(IssueAssignee issueAssignee){
