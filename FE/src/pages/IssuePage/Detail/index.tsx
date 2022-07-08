@@ -10,8 +10,7 @@ export default function IssueDetailPage({ newIssue = false }) {
   return (
     <S.IssueContainer>
       <S.IssueHeader>
-        {newIssue ? <NewHeader /> : <DetailHeader title="이슈 제목" num={1} />}
-        {/* URL에 따라  */}
+        {newIssue ? <NewHeader /> : <DetailHeader />}
       </S.IssueHeader>
       <S.IssueMain>
         {newIssue ? (
