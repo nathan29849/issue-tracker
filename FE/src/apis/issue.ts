@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN } from '@constants/cookie';
+import { Issue } from '@type/issue';
 import { getCookie } from '@utils/cookie';
 
 interface PostIssueRequestBody {
@@ -18,7 +19,7 @@ export const getIssues = async () => {
   return issues;
 };
 
-export const getIssue = async (issueId: number) => {
+export const getIssue = async (issueId?: string): Promise<Issue> => {
   const accessToken = getCookie(ACCESS_TOKEN);
   const response = await fetch(
     `${process.env.TEAM30_BASE_URL}/api/issues/${issueId}`,
@@ -53,6 +54,27 @@ export const postIssue = async (
   if (!Object.hasOwn(issueData, 'issueId')) {
     throw Error('이슈 등록 실패');
   }
+
+  return issueData;
+};
+
+export const patchIssueTitle = async (issueId: string, title: string) => {
+  const accessToken = getCookie(ACCESS_TOKEN);
+  const response = await fetch(
+    `${process.env.TEAM30_BASE_URL}/api/issues/${issueId}/title`,
+    {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    },
+  );
+
+  const issueData = await response.json();
+
+  // TODO: 에러 핸들링
 
   return issueData;
 };
