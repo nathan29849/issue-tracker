@@ -5,16 +5,16 @@ import * as S from './style';
 
 import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
-import { Textarea, Input } from '@components/Input';
 import { SideBar } from '@components/SideBar';
 import {
   useSelectedAssigneeId,
   useSelectedMileStoneId,
   useSelectedLabelId,
 } from '@components/SideBar/context';
-import UserAvatar from '@components/UserAvatar';
 import { useInput } from '@hooks/useInput';
 import { usePostIssue } from '@hooks/usePostIssue';
+import Inputs from '@pages/IssuePage/Detail/Main/Inputs';
+import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { useProfileImage } from '@recoil/selectors/user';
 
 const issuePagePath = '/issue';
@@ -49,13 +49,8 @@ export const NewMain = () => {
   return (
     <S.DetailMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.InputContainer>
-        <S.UserAvatar>
-          <UserAvatar src={profileImage} size="lg" />
-        </S.UserAvatar>
-        <S.Inputs>
-          <Input width="100%" placeholder="제목" size="md" {...title} />
-          <Textarea width="100%" {...comment} />
-        </S.Inputs>
+        <UserAvatarLayer profileImage={profileImage} />
+        <Inputs title={title} comment={comment} />
       </S.InputContainer>
       <S.Buttons>
         <TextButton
