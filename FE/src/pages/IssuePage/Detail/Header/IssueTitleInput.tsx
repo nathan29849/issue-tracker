@@ -6,11 +6,12 @@ import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
 import { useInput } from '@hooks/useInput';
+import { ButtonClickEventHandler } from '@type/eventHandler';
 
 interface Props {
   initialValue: string;
-  handleClickEditCompleteButton: (title: string) => React.MouseEventHandler;
-  handleClickEditCancelButton: React.MouseEventHandler;
+  handleClickEditCompleteButton: (title: string) => ButtonClickEventHandler;
+  handleClickEditCancelButton: ButtonClickEventHandler;
 }
 
 const IssueTitleInput: React.FC<Props> = ({

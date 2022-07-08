@@ -57,6 +57,7 @@ export const DetailHeader: React.FC = memo(() => {
         />
       ) : (
         <IssueTitle
+          isLoading={patchTitleLoading}
           title={issueDetailData.title}
           issueNumber={issueDetailData.id}
           issueStatus={issueDetailData.issueStatus}

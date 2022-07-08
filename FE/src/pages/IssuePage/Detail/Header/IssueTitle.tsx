@@ -4,17 +4,21 @@ import * as S from './style';
 
 import { Button } from '@components/Button';
 import I from '@components/Icons';
+import IssueTitleLoader from '@pages/IssuePage/Detail/Header/IssueTitleLoader';
+import { ButtonClickEventHandler } from '@type/eventHandler';
 
 interface Props {
+  isLoading: boolean;
   title: string;
   issueNumber: string;
   issueStatus: 'OPEN' | 'CLOSED' | 'REOPEN';
-  handleClickEditTitleButton: React.MouseEventHandler;
-  handleClickCloseIssueButton: React.MouseEventHandler;
-  handleClickReopenIssueButton: React.MouseEventHandler;
+  handleClickEditTitleButton: ButtonClickEventHandler;
+  handleClickCloseIssueButton: ButtonClickEventHandler;
+  handleClickReopenIssueButton: ButtonClickEventHandler;
 }
 
 const IssueTitle: React.FC<Props> = ({
+  isLoading,
   title,
   issueNumber,
   issueStatus,
@@ -24,7 +28,9 @@ const IssueTitle: React.FC<Props> = ({
 }) => {
   const isIssueClosed = issueStatus === 'CLOSED';
 
-  return (
+  return isLoading ? (
+    <IssueTitleLoader />
+  ) : (
     <>
       <S.Title>
         <S.IssueTitle>{title}</S.IssueTitle>
