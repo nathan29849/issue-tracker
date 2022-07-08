@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
-import { Button, TextButton } from '@components/Button';
-import I from '@components/Icons';
 import { SideBar } from '@components/SideBar';
 import {
   useSelectedAssigneeId,
@@ -14,6 +12,7 @@ import {
 import { useInput } from '@hooks/useInput';
 import { usePostIssue } from '@hooks/usePostIssue';
 import Inputs from '@pages/IssuePage/Detail/Main/Inputs';
+import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { useProfileImage } from '@recoil/selectors/user';
 
@@ -30,7 +29,10 @@ export const NewMain = () => {
   const title = useInput();
   const comment = useInput();
 
-  const handleClickCancelButton = () => navigate(issuePagePath);
+  const handleClickCancelButton = useCallback(
+    () => navigate(issuePagePath),
+    [],
+  );
   const handleClickSubmitButton = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (title.value.trim().length === 0) {
@@ -52,27 +54,12 @@ export const NewMain = () => {
         <UserAvatarLayer profileImage={profileImage} />
         <Inputs title={title} comment={comment} />
       </S.InputContainer>
-      <S.Buttons>
-        <TextButton
-          size="md"
-          type="button"
-          onClick={handleClickCancelButton}
-          disabled={isLoading}
-        >
-          <I.XMark />
-          작성 취소
-        </TextButton>
-
-        <Button
-          size="md"
-          type="button"
-          onClick={handleClickSubmitButton}
-          disabled={!title.value.trim().length}
-          loading={isLoading}
-        >
-          완료
-        </Button>
-      </S.Buttons>
+      <NewIssueMainButtons
+        handleClickSubmitButton={handleClickSubmitButton}
+        handleClickCancelButton={handleClickCancelButton}
+        isLoading={isLoading}
+        submitButtonDisabled={!title.value.trim().length}
+      />
       <S.SideBar>
         <SideBar />
       </S.SideBar>
