@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { flexbox } from '@styles/mixin';
 
-export const DetailMainLayer = styled.section`
+export const NewMainLayer = styled.section`
   display: grid;
   grid-template-columns: 58.75rem 21.25rem;
   margin-top: 2rem;
@@ -10,11 +10,20 @@ export const DetailMainLayer = styled.section`
   border-top: 1px solid ${({ theme }) => theme.color.line};
 `;
 
+export const DetailMainLayer = styled(NewMainLayer)``;
+
 export const IssueComments = styled.main`
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 2;
+`;
+
+export const CommentsContainer = styled(IssueComments)`
+  display: grid;
+  grid-template-columns: 2.75rem 55rem;
+  min-height: 1rem;
+  gap: 1rem;
 `;
 
 export const InputContainer = styled(IssueComments)`

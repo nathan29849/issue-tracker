@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
+import { Comment } from '@components/Comment';
 import { SideBar } from '@components/SideBar';
 import {
   useSelectedAssigneeId,
@@ -49,7 +50,7 @@ export const NewMain = () => {
   };
 
   return (
-    <S.DetailMainLayer as="form" onSubmit={handleClickSubmitButton}>
+    <S.NewMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.InputContainer>
         <UserAvatarLayer profileImage={profileImage} />
         <Inputs title={title} comment={comment} />
@@ -63,15 +64,28 @@ export const NewMain = () => {
       <S.SideBar>
         <SideBar />
       </S.SideBar>
-    </S.DetailMainLayer>
+    </S.NewMainLayer>
   );
 };
 
 // ISSUE DETAIL
-export const DetailMain = () => (
-  <S.DetailMainLayer>
-    <S.SideBar>
-      <SideBar />
-    </S.SideBar>
-  </S.DetailMainLayer>
-);
+export const DetailMain = () => {
+  const a = 1;
+  const profileImage = useProfileImage();
+  return (
+    <S.DetailMainLayer>
+      <S.CommentsContainer>
+        <UserAvatarLayer profileImage={profileImage} />
+        <Comment
+          text="임시"
+          userName="mjsdo"
+          createdAt={new Date('2022-07-08T00:00:00Z')}
+          isIssueAuthor={false}
+        />
+      </S.CommentsContainer>
+      <S.SideBar>
+        <SideBar />
+      </S.SideBar>
+    </S.DetailMainLayer>
+  );
+};
