@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 
 import * as S from './style';
 
@@ -19,10 +19,20 @@ const IssueTitleInput: React.FC<Props> = ({
   handleClickEditCancelButton,
 }) => {
   const issueTitleInput = useInput(initialValue);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <>
-      <Input placeholder="제목" width={940} {...issueTitleInput} />
+      <Input
+        ref={inputRef}
+        placeholder="제목"
+        width={940}
+        {...issueTitleInput}
+      />
       <S.Buttons>
         <Button outlined onClick={handleClickEditCancelButton}>
           <I.XMark />
