@@ -15,6 +15,7 @@ import {
 import { useInput } from '@hooks/useInput';
 import { useUserState } from '@hooks/useIsLoggedIn';
 import { usePostIssue } from '@hooks/usePostIssue';
+import { CommentCreateForm } from '@pages/IssuePage/Detail/Main/CommentForm';
 import IssueComment from '@pages/IssuePage/Detail/Main/IssueComment';
 import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
 import NewMainInputs from '@pages/IssuePage/Detail/Main/NewIssueMainInputs';
@@ -100,6 +101,7 @@ export const DetailMain = () => {
               />
             );
           })}
+          <CommentCreateForm />
         </S.IssueComments>
       )}
       <S.SideBar>
