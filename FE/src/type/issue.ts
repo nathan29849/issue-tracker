@@ -4,7 +4,7 @@ import { User } from '@type/user';
 
 export type CommentStatusType = 'NORMAL' | 'REOPEN' | 'CLOSED';
 
-export interface Comment {
+export interface CommentType {
   id: string;
   content: string;
   createdAt: string;
@@ -30,7 +30,7 @@ export interface Issue {
   milestone: IMileStone;
   author: User;
   assignees: User[];
-  comments: Comment[];
+  comments: CommentType[];
   issueStatus: IssueStatus;
 }
 
