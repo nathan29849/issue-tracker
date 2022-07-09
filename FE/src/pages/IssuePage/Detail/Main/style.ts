@@ -31,6 +31,11 @@ export const IssueComment = styled.div`
   }
 `;
 
+export const IssueCommentForm = styled.form`
+  display: flex;
+  gap: 1rem;
+`;
+
 // Comment 관련 레이아웃은 Comment 컴포넌트의 스타일 파일에 존재함.
 
 export const InputContainer = styled(IssueComments)`
