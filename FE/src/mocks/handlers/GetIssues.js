@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-export const getIssues = rest.get('/issue', (req, res, ctx) =>
+export const GetIssues = rest.get('/issue', (req, res, ctx) =>
   res(
     ctx.status(200),
     ctx.delay(1000),

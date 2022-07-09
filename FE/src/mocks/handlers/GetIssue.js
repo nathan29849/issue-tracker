@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-export const getIssue = rest.get(
+export const GetIssue = rest.get(
   `${process.env.TEAM30_BASE_URL}/api/issues/:id`,
   (req, res, ctx) => {
     const {

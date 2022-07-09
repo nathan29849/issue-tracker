@@ -1,7 +1,8 @@
+import { DeleteIssue } from './DeleteIssue';
 import { DeleteLabel } from './DeleteLabel';
 import { DeleteMileStone } from './DeleteMileStone';
-import { getIssue } from './GetIssue';
-import { getIssues } from './GetIssues';
+import { GetIssue } from './GetIssue';
+import { GetIssues } from './GetIssues';
 import { GetLabels } from './GetLabels';
 import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
@@ -16,21 +17,22 @@ import { PostLabels } from './PostLabels';
 import { PostMileStones } from './PostMileStones';
 
 export const handlers = [
-  getIssue,
+  GitHubLogin,
+  RefreshGitHubLogin,
+  GetIssues,
+  GetIssue,
   patchIssueTitle,
-  getIssues,
+  PostIssue,
+  DeleteIssue,
   GetLabels,
   PostLabels,
   DeleteLabel,
   PatchLabel,
-  GitHubLogin,
-  RefreshGitHubLogin,
-  PostIssue,
-  GetUsers,
   GetMileStones,
   PostMileStones,
   PatchMilestone,
-  PostImage,
   DeleteMileStone,
+  GetUsers,
+  PostImage,
   PostComment,
 ];
