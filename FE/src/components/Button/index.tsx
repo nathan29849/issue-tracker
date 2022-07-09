@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import * as S from './style';
 
 import { Loader } from '@components/Indicator';
+import theme from '@styles/theme';
 import { OverridableProps } from '@utils/types';
 
 type ButtonProps<T extends React.ElementType> = OverridableProps<
@@ -19,6 +20,7 @@ type TextButtonProps<T extends React.ElementType> = OverridableProps<
   {
     children: React.ReactNode;
     size?: 'sm' | 'md';
+    color?: string;
   }
 >;
 
@@ -61,10 +63,11 @@ export const TextButton = memo(
   <T extends React.ElementType = 'button'>({
     children,
     size = 'sm',
+    color = theme.color.label,
     as,
     ...restProps
   }: TextButtonProps<T>) => (
-    <S.TextButton as={as ?? 'button'} size={size} {...restProps}>
+    <S.TextButton as={as ?? 'button'} size={size} color={color} {...restProps}>
       {children}
     </S.TextButton>
   ),
