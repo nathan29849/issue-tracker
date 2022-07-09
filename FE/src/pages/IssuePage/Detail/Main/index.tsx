@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
@@ -74,9 +74,9 @@ export const NewMain = () => {
 };
 
 // ISSUE DETAIL
-export const DetailMain = () => {
+export const DetailMain: React.FC<{ issueId: string }> = ({ issueId }) => {
   const { authId } = useUserState();
-  const { id: issueId } = useParams();
+
   const { data: issueDetailData, isLoading: getIssueLoading } = useQuery(
     ['issueDetail'],
     () => getIssue(issueId),
@@ -101,7 +101,7 @@ export const DetailMain = () => {
               />
             );
           })}
-          <CreateCommentForm />
+          <CreateCommentForm issueId={issueId} />
         </S.IssueComments>
       )}
       <S.SideBar>
