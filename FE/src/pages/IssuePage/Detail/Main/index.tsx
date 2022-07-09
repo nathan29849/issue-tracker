@@ -15,9 +15,9 @@ import {
 import { useInput } from '@hooks/useInput';
 import { useUserState } from '@hooks/useIsLoggedIn';
 import { usePostIssue } from '@hooks/usePostIssue';
-import Inputs from '@pages/IssuePage/Detail/Main/Inputs';
 import IssueComment from '@pages/IssuePage/Detail/Main/IssueComment';
 import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
+import NewMainInputs from '@pages/IssuePage/Detail/Main/NewIssueMainInputs';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { useProfileImage } from '@recoil/selectors/user';
 
@@ -57,7 +57,7 @@ export const NewMain = () => {
     <S.NewMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.InputContainer>
         <UserAvatarLayer profileImage={profileImage} />
-        <Inputs title={title} comment={comment} />
+        <NewMainInputs title={title} comment={comment} />
       </S.InputContainer>
       <NewIssueMainButtons
         handleClickSubmitButton={handleClickSubmitButton}
