@@ -5,6 +5,7 @@ import { User } from '@type/user';
 export type CommentStatusType = 'NORMAL' | 'REOPEN' | 'CLOSED';
 
 export interface Comment {
+  id: string;
   content: string;
   createdAt: string;
   updatedAt: string;

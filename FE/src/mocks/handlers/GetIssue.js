@@ -74,6 +74,7 @@ export const getIssue = rest.get(
         ],
         comments: [
           {
+            id: '1',
             content:
               '작성된코멘트\n ![사진](https://avatars.githubusercontent.com/u/79135734?s=96&v=4) \n코멘트코멘트입니다입니다.',
             createdAt: '2022-07-08T05:44:26.264Z',
@@ -88,6 +89,7 @@ export const getIssue = rest.get(
             type: 'NORMAL',
           },
           {
+            id: '2',
             content:
               'AS FA SD FA\n AS DF AS DF AS FA SF AS FA SD FA SD FA SF AS FA SF AS DF AS DF AS FA SF ASF',
             createdAt: '2022-07-08T05:44:26.264Z',
@@ -102,6 +104,7 @@ export const getIssue = rest.get(
             type: 'NORMAL',
           },
           {
+            id: '3',
             content: '',
             createdAt: '2022-07-08T05:44:26.264Z',
             updatedAt: '2022-07-08T05:44:26.264Z',
