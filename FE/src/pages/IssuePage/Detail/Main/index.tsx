@@ -12,10 +12,12 @@ import {
   useSelectedMileStoneId,
   useSelectedLabelId,
 } from '@components/SideBar/context';
+import { useDeleteIssue } from '@hooks/useDeleteIssue';
 import { useInput } from '@hooks/useInput';
 import { useUserState } from '@hooks/useIsLoggedIn';
 import { usePostIssue } from '@hooks/usePostIssue';
 import { CreateCommentForm } from '@pages/IssuePage/Detail/Main/CommentForm';
+import DeleteIssueButton from '@pages/IssuePage/Detail/Main/DeleteIssueButton';
 import IssueComment from '@pages/IssuePage/Detail/Main/IssueComment';
 import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
 import NewMainInputs from '@pages/IssuePage/Detail/Main/NewIssueMainInputs';
@@ -82,6 +84,9 @@ export const DetailMain: React.FC<{ issueId: string }> = ({ issueId }) => {
     () => getIssue(issueId),
   );
 
+  const { mutate: deleteIssueMutateFn, isLoading: deleteIssueLoading } =
+    useDeleteIssue(issueId);
+
   const isLoading = !issueDetailData || getIssueLoading;
 
   return (
@@ -106,7 +111,14 @@ export const DetailMain: React.FC<{ issueId: string }> = ({ issueId }) => {
       )}
       <S.SideBar>
         <SideBar />
+        {issueDetailData?.author.authId === authId && (
+          <DeleteIssueButton
+            requestDeleteIssue={deleteIssueMutateFn}
+            deleteIssueLoading={deleteIssueLoading}
+          />
+        )}
       </S.SideBar>
+      )
     </S.DetailMainLayer>
   );
 };
