@@ -6,12 +6,13 @@ import { Button } from '@components/Button';
 import I from '@components/Icons';
 import IssueTitleLoader from '@pages/IssuePage/Detail/Header/IssueTitleLoader';
 import { ButtonClickEventHandler } from '@type/eventHandler';
+import { IssueStatus } from '@type/issue';
 
 interface Props {
   isLoading: boolean;
   title: string;
   issueNumber: string;
-  issueStatus: 'OPEN' | 'CLOSED' | 'REOPEN';
+  issueStatus: IssueStatus;
   handleClickEditTitleButton: ButtonClickEventHandler;
   handleClickCloseIssueButton: ButtonClickEventHandler;
   handleClickReopenIssueButton: ButtonClickEventHandler;
@@ -26,7 +27,8 @@ const IssueTitle: React.FC<Props> = ({
   handleClickCloseIssueButton,
   handleClickReopenIssueButton,
 }) => {
-  const isIssueClosed = issueStatus === 'CLOSED';
+  const { status } = issueStatus;
+  const isIssueClosed = status === 'CLOSED';
 
   return isLoading ? (
     <IssueTitleLoader />

@@ -67,7 +67,6 @@ export const DetailHeader: React.FC = memo(() => {
         />
       )}
       <S.MetaData>
-        {/* NOTE: Backend와 상의 후 재개  */}
         <IssueStatusInfo
           issueStatus={issueDetailData.issueStatus}
           updatedAt={issueDetailData.updatedAt}

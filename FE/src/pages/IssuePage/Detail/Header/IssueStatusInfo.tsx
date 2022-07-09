@@ -3,16 +3,16 @@ import React, { memo, useMemo } from 'react';
 import * as S from './style';
 
 import { IssueLabel } from '@components/Label';
-import { IssueStatusType } from '@type/issue';
+import { IssueStatus, IssueStatusType } from '@type/issue';
 import { getTimeDiffFromNow } from '@utils/time';
 
 interface Props {
-  issueStatus: IssueStatusType;
+  issueStatus: IssueStatus;
   updatedAt: string;
 }
 
-const getPredicateByIssueStatus = (issueStatus: IssueStatusType) => {
-  switch (issueStatus) {
+const getPredicateByIssueStatus = (status: IssueStatusType) => {
+  switch (status) {
     case 'OPEN':
       return '열렸습니다';
     case 'REOPEN':
@@ -20,18 +20,19 @@ const getPredicateByIssueStatus = (issueStatus: IssueStatusType) => {
     case 'CLOSED':
       return '닫혔습니다';
     default:
-      throw new Error(`Unknown IssueStatus, ${issueStatus}`);
+      throw new Error(`Unknown IssueStatus, ${status}`);
   }
 };
 
 const IssueStatusInfo: React.FC<Props> = ({ issueStatus, updatedAt }) => {
-  const isIssueClosed = issueStatus === 'CLOSED';
+  const { editor, status } = issueStatus;
+  const isIssueClosed = status === 'CLOSED';
   const timeDiff = useMemo(
     () => getTimeDiffFromNow(new Date(updatedAt)),
     [updatedAt],
   );
 
-  const predicate = getPredicateByIssueStatus(issueStatus);
+  const predicate = getPredicateByIssueStatus(status);
 
   return (
     <>
@@ -39,7 +40,7 @@ const IssueStatusInfo: React.FC<Props> = ({ issueStatus, updatedAt }) => {
         <IssueLabel closed={isIssueClosed} />
       </S.IssueStatus>
       <S.IssueStatusDetail>
-        이 이슈가 {timeDiff}에 X에 의해 {predicate}
+        이 이슈가 {timeDiff}에 {editor.userId}에 의해 {predicate}
       </S.IssueStatusDetail>
     </>
   );
