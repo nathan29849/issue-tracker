@@ -1,7 +1,8 @@
 package codesquad.backend.issuetracker.comment.presentation.dto;
 
 import codesquad.backend.issuetracker.comment.domain.Comment;
-import codesquad.backend.issuetracker.user.domain.User;
+import codesquad.backend.issuetracker.issue.presentation.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -9,12 +10,17 @@ import lombok.Getter;
 public class CommentDto {
 
 	private String content;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdAt;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updatedAt;
-	private User author;
+
+	private UserDto author;
 
 	public CommentDto(String content, LocalDateTime createdAt, LocalDateTime updatedAt,
-		User author) {
+		UserDto author) {
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -24,6 +30,6 @@ public class CommentDto {
 	public static  CommentDto createBy(Comment comment) {
 		return new CommentDto(comment.getContent(),
 			comment.getCreatedAt(), comment.getUpdatedAt(),
-			comment.getAuthor());
+			UserDto.createBy(comment.getAuthor()));
 	}
 }

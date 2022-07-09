@@ -17,7 +17,7 @@ public class IssueDetailResponse {
 
 	private Long id;
 	private String title;
-	private String content;
+//	private String content;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdAt;
@@ -29,14 +29,13 @@ public class IssueDetailResponse {
 	private List<CommentDto> comments;
 	private IssueStatus issueStatus;
 
-	public IssueDetailResponse(Long id, String title, String content, LocalDateTime createdAt,
+	public IssueDetailResponse(Long id, String title, LocalDateTime createdAt,
 		List<LabelDto> labels,
 		MilestoneDto milestone, UserDto author,
 		List<UserDto> assignees,
 		List<CommentDto> comments, IssueStatus issueStatus) {
 		this.id = id;
 		this.title = title;
-		this.content = content;
 		this.createdAt = createdAt;
 		this.labels = labels;
 		this.milestone = milestone;
@@ -60,7 +59,7 @@ public class IssueDetailResponse {
 			.collect(Collectors.toList());
 
 		return new IssueDetailResponse(
-			issue.getId(), issue.getTitle(), issue.getContent(),
+			issue.getId(), issue.getTitle(),
 			issue.getCreatedAt(), labels,
 			MilestoneDto.createBy(issue.getMilestone()),
 			UserDto.createBy(issue.getAuthor()),

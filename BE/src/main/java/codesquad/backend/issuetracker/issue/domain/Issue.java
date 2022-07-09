@@ -6,7 +6,6 @@ import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import codesquad.backend.issuetracker.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +34,8 @@ public class Issue extends BaseEntity {
 	@Column(nullable = false)
 	private String title;
 
-	private String content;
+// content를 없애고 comment로 대체한다.
+//	private String content;
 
 	@Enumerated(EnumType.STRING)
 	private IssueStatus status;
@@ -57,24 +57,22 @@ public class Issue extends BaseEntity {
 	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
 
-	public Issue(String title, String content,
-		IssueStatus status, User author) {
+	public Issue(String title, IssueStatus status, User author) {
 		this.title = title;
-		this.content = content;
 		this.status = status;
 		this.author = author;
 	}
 
-	public static Issue createBy(String title, String content, User author) {
-		return new Issue(title, content, IssueStatus.OPEN, author);
+	public static Issue createBy(String title, User author) {
+		return new Issue(title, IssueStatus.OPEN, author);
 	}
 
 	public void updateTitle(String title) {
 		this.title = title;
 	}
 
-	public void updateContent(String content){
-		this.content = content;
+	public void addComment(Comment comment){
+		this.comments.add(comment);
 	}
 
 	public void updateMilestone(Milestone milestone) {

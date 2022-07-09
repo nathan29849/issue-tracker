@@ -1,12 +1,12 @@
 package codesquad.backend.issuetracker.issue.application;
 
+import codesquad.backend.issuetracker.comment.domain.Comment;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
 import codesquad.backend.issuetracker.issue.domain.IssueLabel;
 import codesquad.backend.issuetracker.issue.domain.IssueStatus;
 import codesquad.backend.issuetracker.issue.infrastructure.IssueRepository;
 import codesquad.backend.issuetracker.issue.presentation.dto.FilterCondition;
-import codesquad.backend.issuetracker.issue.presentation.dto.UserDto;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueAssigneeEditRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueCreateRequest;
 import codesquad.backend.issuetracker.issue.presentation.dto.request.IssueLabelEditRequest;
@@ -57,7 +57,7 @@ public class IssueService {
 		 User author = userRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("올바른 유저가 아닙니다."));
 
-		Issue issue = Issue.createBy(issueCreateRequest.getTitle(), issueCreateRequest.getContent(), author);
+		Issue issue = Issue.createBy(issueCreateRequest.getTitle(), author);
 
 		if (issueCreateRequest.getMilestoneId() != null) {
 			Milestone milestone = milestoneRepository.findById(issueCreateRequest.getMilestoneId())
@@ -75,6 +75,8 @@ public class IssueService {
 			issue.updateLabels(issueLabels);
 		}
 
+		issue.addComment(new Comment(issueCreateRequest.getContent(), issue, author));
+
 		Issue savedIssue = issueRepository.save(issue);
 		return new IssueIdResponse(savedIssue.getId());
 	}
@@ -88,9 +90,10 @@ public class IssueService {
 
 	@Transactional
 	public IssueDetailResponse editContent(Long id, String content) {
-		Issue issue = findById(id);
-		issue.updateContent(content);
-		return IssueDetailResponse.createBy(issue);
+//		Issue issue = findById(id);
+//		issue.addComment(content);
+//		return IssueDetailResponse.createBy(issue);
+		return null;
 	}
 
 	@Transactional

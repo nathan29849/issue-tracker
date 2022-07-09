@@ -9,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Comment extends BaseEntity {
@@ -26,4 +29,10 @@ public class Comment extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User author;
+
+	public Comment(String content, Issue issue, User author) {
+		this.content = content;
+		this.issue = issue;
+		this.author = author;
+	}
 }
