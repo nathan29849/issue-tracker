@@ -79,7 +79,7 @@ export const getIssue = rest.get(
             createdAt: '2022-07-08T05:44:26.264Z',
             updatedAt: '2022-07-08T05:44:26.264Z',
             author: {
-              id: 0,
+              userId: 'mjsdo',
               authId: '123',
               username: 'mjsdo',
               profileImageUrl:
@@ -93,11 +93,11 @@ export const getIssue = rest.get(
             createdAt: '2022-07-08T05:44:26.264Z',
             updatedAt: '2022-07-08T05:44:26.264Z',
             author: {
-              id: 0,
-              authId: '123',
-              username: 'mjsdo',
+              userId: 'muffin',
+              authId: '456',
+              username: 'muffin',
               profileImageUrl:
-                'https://avatars.githubusercontent.com/u/79135734?s=96&v=4',
+                'https://avatars.githubusercontent.com/u/45479309?v=4',
             },
             type: 'NORMAL',
           },
@@ -106,7 +106,7 @@ export const getIssue = rest.get(
             createdAt: '2022-07-08T05:44:26.264Z',
             updatedAt: '2022-07-08T05:44:26.264Z',
             author: {
-              id: 0,
+              userId: 'mjsdo',
               authId: '123',
               username: 'mjsdo',
               profileImageUrl:
@@ -115,7 +115,16 @@ export const getIssue = rest.get(
             type: 'CLOSED',
           },
         ],
-        issueStatus: 'CLOSED',
+        issueStatus: {
+          status: 'CLOSED',
+          editor: {
+            userId: 'mjsdo',
+            authId: '123',
+            username: 'mjsdo',
+            profileImageUrl:
+              'https://avatars.githubusercontent.com/u/79135734?s=96&v=4',
+          },
+        },
       }),
     );
   },
