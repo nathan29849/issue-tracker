@@ -6,3 +6,8 @@ export const useIsLoggedIn = () => {
   const user = useRecoilValue(userState);
   return !!user;
 };
+
+export const useUserState = () => {
+  const user = useRecoilValue(userState);
+  return user;
+};
