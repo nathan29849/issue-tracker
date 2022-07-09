@@ -14,6 +14,11 @@ export interface Comment {
 
 export type IssueStatusType = 'OPEN' | 'CLOSED' | 'REOPEN';
 
+export interface IssueStatus {
+  status: IssueStatusType;
+  editor: User;
+}
+
 export interface Issue {
   id: string;
   title: string;
@@ -25,10 +30,7 @@ export interface Issue {
   author: User;
   assignees: User[];
   comments: Comment[];
-  issueStatus: {
-    status: IssueStatusType;
-    editor: User;
-  };
+  issueStatus: IssueStatus;
 }
 
 export type FilterLabelTypes =
