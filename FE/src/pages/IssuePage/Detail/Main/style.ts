@@ -10,7 +10,9 @@ export const NewMainLayer = styled.section`
   border-top: 1px solid ${({ theme }) => theme.color.line};
 `;
 
-export const DetailMainLayer = styled(NewMainLayer)``;
+export const DetailMainLayer = styled(NewMainLayer)`
+  margin-bottom: 15rem;
+`;
 
 export const IssueComments = styled.main`
   grid-column-start: 1;
