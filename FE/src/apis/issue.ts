@@ -72,9 +72,29 @@ export const patchIssueTitle = async (issueId: string, title: string) => {
     },
   );
 
-  const issueData = await response.json();
+  const responseData = await response.json();
 
   // TODO: 에러 핸들링
 
-  return issueData;
+  return responseData;
+};
+
+export const deleteIssue = async (issueId: string) => {
+  const accessToken = getCookie(ACCESS_TOKEN);
+
+  const response = await fetch(
+    `${process.env.TEAM30_BASE_URL}/api/issues/${issueId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  const responseData = await response.json();
+
+  // TODO: 에러 핸들링
+
+  return responseData;
 };
