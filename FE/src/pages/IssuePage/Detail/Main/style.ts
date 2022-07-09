@@ -19,12 +19,13 @@ export const IssueComments = styled.main`
   grid-row-end: 2;
 `;
 
-export const CommentsContainer = styled(IssueComments)`
-  display: grid;
-  grid-template-columns: 2.75rem 55rem;
-  min-height: 1rem;
+export const IssueComment = styled.article`
+  display: flex;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 `;
+
+// Comment 관련 레이아웃은 Comment 컴포넌트의 스타일 파일에 존재함.
 
 export const InputContainer = styled(IssueComments)`
   display: grid;
