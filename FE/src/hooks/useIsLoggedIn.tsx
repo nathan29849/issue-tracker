@@ -9,5 +9,10 @@ export const useIsLoggedIn = () => {
 
 export const useUserState = () => {
   const user = useRecoilValue(userState);
+
+  if (!user) {
+    throw new Error('Unknown user error');
+  }
+
   return user;
 };
