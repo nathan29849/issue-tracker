@@ -68,8 +68,8 @@ export const SideBar = styled.aside`
 `;
 
 export const DeleteIssueButtonLayer = styled.div`
-  ${flexbox({ jc: 'flex-end' })};
-  margin-top: 0.75rem;
+  ${flexbox({ jc: 'flex-end', ai: 'center' })};
+  min-height: 3rem;
   padding: 0 2rem;
 `;
 
