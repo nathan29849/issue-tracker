@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import * as S from './style';
 
-import { Comment } from '@components/Comment';
+import { getIssue } from '@apis/issue';
+import { Loader } from '@components/Indicator';
 import { SideBar } from '@components/SideBar';
 import {
   useSelectedAssigneeId,
@@ -11,8 +13,10 @@ import {
   useSelectedLabelId,
 } from '@components/SideBar/context';
 import { useInput } from '@hooks/useInput';
+import { useUserState } from '@hooks/useIsLoggedIn';
 import { usePostIssue } from '@hooks/usePostIssue';
 import Inputs from '@pages/IssuePage/Detail/Main/Inputs';
+import IssueComment from '@pages/IssuePage/Detail/Main/IssueComment';
 import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { useProfileImage } from '@recoil/selectors/user';
@@ -70,19 +74,34 @@ export const NewMain = () => {
 
 // ISSUE DETAIL
 export const DetailMain = () => {
-  const a = 1;
-  const profileImage = useProfileImage();
+  const { authId } = useUserState();
+  const { id: issueId } = useParams();
+  const { data: issueDetailData, isLoading: getIssueLoading } = useQuery(
+    ['issueDetail'],
+    () => getIssue(issueId),
+  );
+
+  const isLoading = !issueDetailData || getIssueLoading;
+
   return (
     <S.DetailMainLayer>
-      <S.CommentsContainer>
-        <UserAvatarLayer profileImage={profileImage} />
-        <Comment
-          text="임시"
-          userName="mjsdo"
-          createdAt={new Date('2022-07-08T00:00:00Z')}
-          isIssueAuthor={false}
-        />
-      </S.CommentsContainer>
+      {isLoading ? (
+        <Loader size={3} />
+      ) : (
+        <S.IssueComments>
+          {issueDetailData.comments.map(commentProps => {
+            const { id, author } = commentProps;
+            return (
+              <IssueComment
+                key={id}
+                isEditable={authId === author.authId}
+                isIssueAuthor={issueDetailData.author.authId === author.authId}
+                {...commentProps}
+              />
+            );
+          })}
+        </S.IssueComments>
+      )}
       <S.SideBar>
         <SideBar />
       </S.SideBar>
