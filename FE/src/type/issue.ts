@@ -25,7 +25,10 @@ export interface Issue {
   author: User;
   assignees: User[];
   comments: Comment[];
-  issueStatus: IssueStatusType;
+  issueStatus: {
+    status: IssueStatusType;
+    editor: User;
+  };
 }
 
 export type FilterLabelTypes =
