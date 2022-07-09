@@ -9,6 +9,7 @@ import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
 import { patchIssueTitle } from './PatchIssue';
 import { PatchLabel } from './PatchLabel';
 import { PatchMilestone } from './PatchMileStone';
+import { PostComment } from './PostComment';
 import { PostImage } from './PostImage';
 import { PostIssue } from './PostIssue';
 import { PostLabels } from './PostLabels';
@@ -31,4 +32,5 @@ export const handlers = [
   PatchMilestone,
   PostImage,
   DeleteMileStone,
+  PostComment,
 ];
