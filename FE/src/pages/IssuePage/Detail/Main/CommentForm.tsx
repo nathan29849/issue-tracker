@@ -9,7 +9,7 @@ import { useInput } from '@hooks/useInput';
 import { useUserState } from '@hooks/useIsLoggedIn';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 
-export const CommentCreateForm = () => {
+export const CreateCommentForm = () => {
   const { profileImageUrl } = useUserState();
   const comment = useInput();
 
