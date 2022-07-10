@@ -49,18 +49,33 @@ public class CommentService {
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 댓글입니다."));
 
-		update(commentEditRequest, issue, author, comment);
+		validate(issue, author, comment);
+		comment.updateContent(commentEditRequest.getContent());
 		return CommentDto.createBy(comment);
 	}
 
-	private void update(CommentEditRequest commentEditRequest, Issue issue, User author,
-		Comment comment) {
-		if (author == comment.getAuthor() && issue == comment.getIssue()) {
-			comment.updateContent(commentEditRequest.getContent());
-		} else if (author != comment.getAuthor()) {
+	private void validate(Issue issue, User author, Comment comment) {
+		if (author != comment.getAuthor()){
 			throw new IllegalStateException("댓글 작성자가 아니므로 수정할 수 없습니다.");
-		} else {
+		}
+
+		if (issue == comment.getIssue()){
 			throw new IllegalStateException("댓글의 이슈가 올바르지 않습니다.");
 		}
+	}
+
+	@Transactional
+	public void remove(Long issueId, Long commentId, Long userId) {
+		Issue issue = issueRepository.findById(issueId)
+			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 이슈입니다."));
+
+		User author = userRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 유저입니다."));
+
+		Comment comment = commentRepository.findById(commentId)
+			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 댓글입니다."));
+
+		validate(issue, author, comment);
+		commentRepository.delete(comment);
 	}
 }

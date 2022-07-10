@@ -51,9 +51,12 @@ public class CommentController {
 	@DeleteMapping(("{issueId}/comments/{commentId}"))
 	public ResponseEntity<Void> delete(
 		@PathVariable Long issueId,
-		@PathVariable Long commentId
+		@PathVariable Long commentId,
+		HttpServletRequest request
 	){
-		return null;
+		Long userId = (Long) request.getAttribute("userId");
+		commentService.remove(issueId, commentId, userId);
+		return ResponseEntity.ok().build();
 	}
 
 	// TODO Reaction 생성, 조회 추가 예정
