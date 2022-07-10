@@ -1,6 +1,7 @@
 package codesquad.backend.issuetracker.issue.application;
 
 import codesquad.backend.issuetracker.comment.domain.Comment;
+import codesquad.backend.issuetracker.comment.infrastructure.CommentRepository;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
 import codesquad.backend.issuetracker.issue.domain.IssueLabel;
@@ -35,6 +36,7 @@ public class IssueService {
 	private final UserRepository userRepository;
 	private final MilestoneRepository milestoneRepository;
 	private final LabelRepository labelRepository;
+	private final CommentRepository commentRepository;
 
 	@Transactional(readOnly = true)
 	public IssueDetailResponse findDetailById(Long id) {
@@ -90,10 +92,10 @@ public class IssueService {
 
 	@Transactional
 	public IssueDetailResponse editContent(Long id, String content) {
-//		Issue issue = findById(id);
-//		issue.addComment(content);
-//		return IssueDetailResponse.createBy(issue);
-		return null;
+		Issue issue = findById(id);
+		Comment comment = issue.getComments().get(0);
+		comment.updateContent(content);
+		return IssueDetailResponse.createBy(issue);
 	}
 
 	@Transactional
