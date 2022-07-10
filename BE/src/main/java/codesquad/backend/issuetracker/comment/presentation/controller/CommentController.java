@@ -1,9 +1,12 @@
 package codesquad.backend.issuetracker.comment.presentation.controller;
 
-import codesquad.backend.issuetracker.comment.presentation.dto.CommentCreateRequest;
+import codesquad.backend.issuetracker.comment.application.CommentService;
+import codesquad.backend.issuetracker.comment.presentation.dto.request.CommentCreateRequest;
 import codesquad.backend.issuetracker.comment.presentation.dto.CommentDto;
-import codesquad.backend.issuetracker.comment.presentation.dto.CommentEditRequest;
+import codesquad.backend.issuetracker.comment.presentation.dto.request.CommentEditRequest;
+import codesquad.backend.issuetracker.comment.presentation.dto.response.CommentIdResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,13 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CommentController {
 
+	private CommentService commentService;
+
 	@Operation(summary = "코멘트 생성")
 	@PostMapping("/{id}/comments")
-	public CommentDto create(
-		@PathVariable Long id,
-		@RequestBody CommentCreateRequest commentCreateRequest
+	public CommentIdResponse create(
+		@PathVariable(name = "id") Long issueId,
+		@RequestBody CommentCreateRequest commentCreateRequest,
+		HttpServletRequest request
 	) {
-		return null;
+		Long userId = (Long) request.getAttribute("userId");
+		return commentService.add(issueId, userId, commentCreateRequest);
 	}
 
 	@Operation(summary = "코멘트 수정")
