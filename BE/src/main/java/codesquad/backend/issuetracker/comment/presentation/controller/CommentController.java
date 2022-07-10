@@ -40,9 +40,11 @@ public class CommentController {
 	public CommentDto edit(
 		@PathVariable Long issueId,
 		@PathVariable Long commentId,
-		@RequestBody CommentEditRequest commentEditRequest
+		@RequestBody CommentEditRequest commentEditRequest,
+		HttpServletRequest request
 	){
-		return null;
+		Long userId = (Long) request.getAttribute("userId");
+		return commentService.editContent(issueId, commentId, userId, commentEditRequest);
 	}
 
 	@Operation(summary = "코멘트 삭제")
