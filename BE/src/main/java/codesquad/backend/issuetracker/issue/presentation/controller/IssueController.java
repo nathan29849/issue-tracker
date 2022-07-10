@@ -71,10 +71,12 @@ public class IssueController {
 	@Operation(summary = "이슈 내용 편집")
 	@PatchMapping("/{id}/content")
 	public IssueDetailResponse editContent(
-		@PathVariable Long id,
-		@RequestBody IssueContentEditRequest request
+		@PathVariable(name = "id") Long issueId,
+		@RequestBody IssueContentEditRequest issueContentEditRequest,
+		HttpServletRequest request
 	) {
-		return issueService.editContent(id, request.getContent());
+		Long userId = (Long) request.getAttribute("userId");
+		return issueService.editContent(issueId, userId, issueContentEditRequest.getContent());
 	}
 
 	@Operation(summary = "이슈 마일스톤 편집")

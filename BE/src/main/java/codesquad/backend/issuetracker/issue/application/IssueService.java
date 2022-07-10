@@ -2,6 +2,8 @@ package codesquad.backend.issuetracker.issue.application;
 
 import codesquad.backend.issuetracker.comment.domain.Comment;
 import codesquad.backend.issuetracker.comment.infrastructure.CommentRepository;
+import codesquad.backend.issuetracker.exception.ErrorCode;
+import codesquad.backend.issuetracker.exception.UserValidationException;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.domain.IssueAssignee;
 import codesquad.backend.issuetracker.issue.domain.IssueLabel;
@@ -23,6 +25,7 @@ import codesquad.backend.issuetracker.milestone.infrastructure.MilestoneReposito
 import codesquad.backend.issuetracker.user.domain.User;
 import codesquad.backend.issuetracker.user.infrastructure.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -77,10 +80,25 @@ public class IssueService {
 			issue.updateLabels(issueLabels);
 		}
 
+		validateUser(issue, author);
 		issue.addComment(new Comment(issueCreateRequest.getContent(), issue, author));
 
 		Issue savedIssue = issueRepository.save(issue);
 		return new IssueIdResponse(savedIssue.getId());
+	}
+
+	private void validateUser(Issue issue, User user) {
+		if (issue.getAuthor() == user){
+			return;
+		}
+		Optional<IssueAssignee> optionalIssueAssignee = issue.getAssignees().stream()
+			.filter(issueAssignee -> issueAssignee.getAssignee() == user)
+			.findFirst();
+
+		if (optionalIssueAssignee.isPresent()) {
+			return;
+		}
+		throw new UserValidationException(ErrorCode.UNAUTHORIZED_USER);
 	}
 
 	@Transactional
@@ -91,8 +109,11 @@ public class IssueService {
 	}
 
 	@Transactional
-	public IssueDetailResponse editContent(Long id, String content) {
-		Issue issue = findById(id);
+	public IssueDetailResponse editContent(Long issueId, Long userId, String content) {
+		Issue issue = findById(issueId);
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new UserValidationException(ErrorCode.UNVALIDATED_USER));
+		validateUser(issue, user);
 		Comment comment = issue.getComments().get(0);
 		comment.updateContent(content);
 		return IssueDetailResponse.createBy(issue);
