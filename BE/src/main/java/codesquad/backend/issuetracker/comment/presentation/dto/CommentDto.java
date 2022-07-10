@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class CommentDto {
 
+	private Long id;
 	private String content;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -19,8 +20,9 @@ public class CommentDto {
 
 	private UserDto author;
 
-	public CommentDto(String content, LocalDateTime createdAt, LocalDateTime updatedAt,
+	public CommentDto(Long id, String content, LocalDateTime createdAt, LocalDateTime updatedAt,
 		UserDto author) {
+		this.id = id;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -28,7 +30,7 @@ public class CommentDto {
 	}
 
 	public static  CommentDto createBy(Comment comment) {
-		return new CommentDto(comment.getContent(),
+		return new CommentDto(comment.getId(), comment.getContent(),
 			comment.getCreatedAt(), comment.getUpdatedAt(),
 			UserDto.createBy(comment.getAuthor()));
 	}

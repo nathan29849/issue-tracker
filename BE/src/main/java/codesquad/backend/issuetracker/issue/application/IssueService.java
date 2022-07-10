@@ -155,6 +155,7 @@ public class IssueService {
 			.orElseThrow(() -> new IllegalArgumentException("해당 ID의 이슈가 존재하지 않습니다."));
 	}
 
+	@Transactional
 	public IssueStatusResponse editStatus(Long issueId, Long userId,
 		IssueStatusEditRequest issueStatusEditRequest) {
 		User editor = userRepository.findById(userId)

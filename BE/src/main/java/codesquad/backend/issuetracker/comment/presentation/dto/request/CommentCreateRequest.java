@@ -1,4 +1,4 @@
-package codesquad.backend.issuetracker.comment.presentation.dto;
+package codesquad.backend.issuetracker.comment.presentation.dto.request;
 
 import lombok.Getter;
 
