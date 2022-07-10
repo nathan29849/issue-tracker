@@ -3,5 +3,5 @@ export interface Label {
   backgroundColor: string;
   title: string;
   description?: string;
-  textColor: string;
+  textColor: 'BLACK' | 'WHITE';
 }

@@ -1,12 +1,12 @@
-// src/mocks/handlers.js
-import { rest } from 'msw';
-
 import { DeleteLabel } from './DeleteLabel';
 import { DeleteMileStone } from './DeleteMileStone';
+import { getIssue } from './GetIssue';
+import { getIssues } from './GetIssues';
 import { GetLabels } from './GetLabels';
 import { GetMileStones } from './GetMileStones';
 import { GetUsers } from './GetUsers';
 import { GitHubLogin, RefreshGitHubLogin } from './GitHubLogin';
+import { patchIssueTitle } from './PatchIssue';
 import { PatchLabel } from './PatchLabel';
 import { PatchMilestone } from './PatchMileStone';
 import { PostImage } from './PostImage';
@@ -14,72 +14,10 @@ import { PostIssue } from './PostIssue';
 import { PostLabels } from './PostLabels';
 import { PostMileStones } from './PostMileStones';
 
-const getIssue = rest.get('/issue', (req, res, ctx) =>
-  res(
-    ctx.status(200),
-    ctx.delay(1000),
-    ctx.json([
-      {
-        id: 1,
-        number: 3,
-        status: 'open',
-        title: '로그인 페이지 기능 작업',
-        manager: ['muffin', 'cola'],
-        labels: ['feat', 'sub', 'bug'],
-        milestone: '1주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
-        date: '2022-12-17T03:24:00',
-      },
-      {
-        id: 2,
-        number: 5, // 이슈 고유값
-        status: 'close',
-        title: '로그인 기능 작업',
-        manager: ['muffin', 'cola'],
-        labels: ['feat', 'sub', 'bug'],
-        milestone: '2주차 이슈트래커',
-        author: [{ name: 'cola', iamgeUrl: 'http://xxx' }],
-        date: '2022-12-17T03:24:00',
-      },
-      {
-        id: 3,
-        number: 2, // 이슈 고유값
-        status: 'close',
-        title: '리팩토링 작업',
-        manager: ['muffin', 'cola'],
-        labels: ['feat', 'sub', 'bug'],
-        milestone: '3주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
-        date: '2022-12-17T03:24:00',
-      },
-      {
-        id: 4,
-        number: 10,
-        status: 'open',
-        title: '레이블 페이지 기능 작업',
-        manager: ['muffin'],
-        labels: ['feat', 'sub'],
-        milestone: '3주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
-        date: '2022-12-17T03:24:00',
-      },
-      {
-        id: 5,
-        number: 12,
-        status: 'open',
-        title: '이슈 생성 페이지 기능 작업',
-        manager: ['cola'],
-        labels: ['feat', 'sub'],
-        milestone: '3주차 이슈트래커',
-        author: [{ name: 'cola', iamgeUrl: 'http://xxx' }],
-        date: '2022-12-17T03:24:00',
-      },
-    ]),
-  ),
-);
-
 export const handlers = [
   getIssue,
+  patchIssueTitle,
+  getIssues,
   GetLabels,
   PostLabels,
   DeleteLabel,

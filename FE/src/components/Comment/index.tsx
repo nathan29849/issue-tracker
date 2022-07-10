@@ -28,7 +28,7 @@ export const Comment: React.FC<Props> = ({
   userName,
   createdAt,
   isIssueAuthor,
-  isEditable = true,
+  isEditable = false,
   borderColor,
   bgColor,
   textColor,

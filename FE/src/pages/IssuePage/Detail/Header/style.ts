@@ -36,12 +36,12 @@ export const IssueStatus = styled.span`
   margin-right: 0.5rem;
 `;
 
-export const IssueDateInfo = styled.span`
+export const IssueStatusDetail = styled.span`
   ${typoMedium(400)};
   color: ${({ theme }) => theme.color.body};
 `;
 
-export const IssueCommentInfo = styled(IssueDateInfo)`
+export const IssueCommentCount = styled(IssueStatusDetail)`
   &::before {
     content: '∙';
     margin: 0 0.5rem;

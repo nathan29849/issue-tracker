@@ -31,39 +31,43 @@ type LoginButtonProps<T extends React.ElementType> = OverridableProps<
   }
 >;
 
-const TButton = <T extends React.ElementType = 'button'>({
-  children,
-  outlined = false,
-  size = 'sm',
-  loading,
-  as,
-  ...restProps
-}: ButtonProps<T>) =>
-  loading ? (
-    <S.LoaderWrapper size={size}>
-      <Loader size={3} />
-    </S.LoaderWrapper>
-  ) : (
-    <S.Button
-      as={as ?? 'button'}
-      type="button"
-      outlined={outlined}
-      size={size}
-      {...restProps}
-    >
-      <span>{children}</span>
-    </S.Button>
-  );
+export const Button = memo(
+  <T extends React.ElementType = 'button'>({
+    children,
+    outlined = false,
+    size = 'sm',
+    loading,
+    as,
+    ...restProps
+  }: ButtonProps<T>) =>
+    loading ? (
+      <S.LoaderWrapper size={size}>
+        <Loader size={3} />
+      </S.LoaderWrapper>
+    ) : (
+      <S.Button
+        as={as ?? 'button'}
+        type="button"
+        outlined={outlined}
+        size={size}
+        {...restProps}
+      >
+        <span>{children}</span>
+      </S.Button>
+    ),
+);
 
-const TTextButton = <T extends React.ElementType = 'button'>({
-  children,
-  size = 'sm',
-  as,
-  ...restProps
-}: TextButtonProps<T>) => (
-  <S.TextButton as={as ?? 'button'} size={size} {...restProps}>
-    {children}
-  </S.TextButton>
+export const TextButton = memo(
+  <T extends React.ElementType = 'button'>({
+    children,
+    size = 'sm',
+    as,
+    ...restProps
+  }: TextButtonProps<T>) => (
+    <S.TextButton as={as ?? 'button'} size={size} {...restProps}>
+      {children}
+    </S.TextButton>
+  ),
 );
 
 export const LoginButton = <T extends React.ElementType = 'button'>({
@@ -82,6 +86,3 @@ export const LoginButton = <T extends React.ElementType = 'button'>({
     {children}
   </S.LoginButton>
 );
-
-export const Button = memo(TButton);
-export const TextButton = memo(TTextButton);

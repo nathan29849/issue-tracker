@@ -1,6 +1,7 @@
 // 로그인 상태
 export interface User {
+  authId: string;
   userId: string;
-  userName: string;
+  username: string;
   profileImageUrl: string;
 }

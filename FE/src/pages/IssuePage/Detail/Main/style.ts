@@ -2,12 +2,16 @@ import styled from '@emotion/styled';
 
 import { flexbox } from '@styles/mixin';
 
-export const DetailMainLayer = styled.section`
+export const NewMainLayer = styled.section`
   display: grid;
   grid-template-columns: 58.75rem 21.25rem;
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid ${({ theme }) => theme.color.line};
+`;
+
+export const DetailMainLayer = styled(NewMainLayer)`
+  margin-bottom: 15rem;
 `;
 
 export const IssueComments = styled.main`
@@ -16,6 +20,14 @@ export const IssueComments = styled.main`
   grid-row-start: 1;
   grid-row-end: 2;
 `;
+
+export const IssueComment = styled.article`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+`;
+
+// Comment 관련 레이아웃은 Comment 컴포넌트의 스타일 파일에 존재함.
 
 export const InputContainer = styled(IssueComments)`
   display: grid;

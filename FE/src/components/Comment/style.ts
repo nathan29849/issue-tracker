@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { IssueComment } from '@pages/IssuePage/Detail/Main/style';
 import { flexbox, typoSmall, typoXSmall } from '@styles/mixin';
 
 export const Header = styled.header`
@@ -77,6 +78,10 @@ export const CommentLayer = styled.article<{
 
   ${Content} {
     color: ${textColor || theme.color.titleActive};
+  }
+  
+  ${IssueComment} & {
+    flex-grow: 1;
   }
 `,
 );

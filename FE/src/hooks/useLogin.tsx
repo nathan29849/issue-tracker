@@ -21,11 +21,17 @@ export const useLogin = () => {
 
   const login = async (searchParams: string) => {
     try {
-      const { accessToken, refreshToken, userId, userName, profileImageUrl } =
-        await githubLogin(searchParams);
+      const {
+        accessToken,
+        refreshToken,
+        authId,
+        userId,
+        username,
+        profileImageUrl,
+      } = await githubLogin(searchParams);
       setCookie(ACCESS_TOKEN, accessToken, ACCESS_TOKEN_OPTIONS);
       setCookie(REFRESH_TOKEN, refreshToken, REFRESH_TOKEN_OPTIONS);
-      setUser({ userId, userName, profileImageUrl });
+      setUser({ authId, userId, username, profileImageUrl });
     } catch (error) {
       console.error('Login Error: ', error);
     } finally {
@@ -47,11 +53,17 @@ export const useSilentRefresh = () => {
 
   const silentRefresh = async (fallbackURL: string = loginPagePath) => {
     try {
-      const { accessToken, refreshToken, userId, userName, profileImageUrl } =
-        await githubSilentRefresh();
+      const {
+        accessToken,
+        refreshToken,
+        authId,
+        userId,
+        username,
+        profileImageUrl,
+      } = await githubSilentRefresh();
       setCookie(ACCESS_TOKEN, accessToken, ACCESS_TOKEN_OPTIONS);
       setCookie(REFRESH_TOKEN, refreshToken, REFRESH_TOKEN_OPTIONS);
-      setUser({ userId, userName, profileImageUrl });
+      setUser({ authId, userId, username, profileImageUrl });
     } catch (error) {
       console.error('Silent Refresh Error: ', error);
       deleteCookie([ACCESS_TOKEN, REFRESH_TOKEN]);
