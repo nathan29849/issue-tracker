@@ -8,21 +8,22 @@ import codesquad.backend.issuetracker.issue.domain.Issue;
 import codesquad.backend.issuetracker.issue.infrastructure.IssueRepository;
 import codesquad.backend.issuetracker.user.domain.User;
 import codesquad.backend.issuetracker.user.infrastructure.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class CommentService {
 
-	private CommentRepository commentRepository;
-	private IssueRepository issueRepository;
-	private UserRepository userRepository;
-
+	private final CommentRepository commentRepository;
+	private final IssueRepository issueRepository;
+	private final UserRepository userRepository;
 
 	@Transactional
 	public CommentIdResponse add(
-		Long userId,
 		Long issueId,
+		Long userId,
 		CommentCreateRequest commentCreateRequest) {
 		Issue issue = issueRepository.findById(issueId)
 			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 이슈입니다."));

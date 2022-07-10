@@ -7,6 +7,7 @@ import codesquad.backend.issuetracker.comment.presentation.dto.request.CommentEd
 import codesquad.backend.issuetracker.comment.presentation.dto.response.CommentIdResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RequestMapping("/issues")
 @RestController
 public class CommentController {
 
-	private CommentService commentService;
+	private final CommentService commentService;
 
 	@Operation(summary = "코멘트 생성")
 	@PostMapping("/{id}/comments")
