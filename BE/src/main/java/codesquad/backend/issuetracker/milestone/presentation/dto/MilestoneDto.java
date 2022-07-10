@@ -1,6 +1,6 @@
 package codesquad.backend.issuetracker.milestone.presentation.dto;
 
-import codesquad.backend.issuetracker.issue.presentation.dto.IssueStatus;
+import codesquad.backend.issuetracker.issue.domain.IssueStatus;
 import codesquad.backend.issuetracker.milestone.domain.Milestone;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
@@ -40,6 +40,10 @@ public class MilestoneDto {
 	}
 
 	public static MilestoneDto createBy(Milestone milestone) {
+		if (milestone == null){
+			return null;
+		}
+
 		Integer openIssueCount = countOpenIssue(milestone);
 		return new MilestoneDto(
 			milestone.getId(), milestone.getTitle(), milestone.getDescription(),

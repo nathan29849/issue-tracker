@@ -1,8 +1,8 @@
 package codesquad.backend.issuetracker.milestone.domain;
 
+import codesquad.backend.issuetracker.common.domain.BaseEntity;
 import codesquad.backend.issuetracker.issue.domain.Issue;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -12,20 +12,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
-public class Milestone {
+public class Milestone extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,33 +31,19 @@ public class Milestone {
 	private String title;
 	private String description;
 
-	@NotNull
-	@Column(columnDefinition = "TIMESTAMP")
-	@CreatedDate
-	private LocalDateTime createdAt;
-
-	@NotNull
-	@Column(columnDefinition = "TIMESTAMP")
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
-
 	private LocalDate dueDate;
-
-	@Transient
-	private Integer progressRate;
 
 	@OneToMany(mappedBy = "milestone")
 	private List<Issue> issues = new ArrayList<>();
 
-	public Milestone(String title, String description, LocalDate dueDate, Integer progressRate) {
+	public Milestone(String title, String description, LocalDate dueDate) {
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
-		this.progressRate = progressRate;
 	}
 
 	public static Milestone createBy(String title, String description, LocalDate dueDate){
-		return new Milestone(title, description, dueDate, 0);
+		return new Milestone(title, description, dueDate);
 	}
 
 	public void edit(String title, String description, LocalDate dueDate) {

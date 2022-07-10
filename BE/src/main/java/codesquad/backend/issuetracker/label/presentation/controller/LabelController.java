@@ -1,10 +1,10 @@
 package codesquad.backend.issuetracker.label.presentation.controller;
 
 import codesquad.backend.issuetracker.label.application.LabelService;
-import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
-import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.LabelDto;
+import codesquad.backend.issuetracker.label.presentation.dto.request.LabelCreateRequest;
 import codesquad.backend.issuetracker.label.presentation.dto.request.LabelEditRequest;
+import codesquad.backend.issuetracker.label.presentation.dto.response.LabelCountResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelIdResponse;
 import codesquad.backend.issuetracker.label.presentation.dto.response.LabelsResponse;
 import io.swagger.v3.oas.annotations.Operation;

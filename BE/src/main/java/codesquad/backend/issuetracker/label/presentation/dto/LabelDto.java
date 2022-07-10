@@ -1,5 +1,6 @@
 package codesquad.backend.issuetracker.label.presentation.dto;
 
+import codesquad.backend.issuetracker.issue.domain.IssueLabel;
 import codesquad.backend.issuetracker.label.domain.Label;
 import lombok.Getter;
 
@@ -25,4 +26,10 @@ public class LabelDto {
 		return new LabelDto(label.getId(), label.getTitle(), label.getDescription(),
 			label.getBackgroundColor(), label.getTextColor());
 	}
+
+	public static LabelDto createBy(IssueLabel issueLabel) {
+		return createBy(issueLabel.getLabel());
+	}
+
+
 }
