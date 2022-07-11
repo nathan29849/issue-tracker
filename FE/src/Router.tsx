@@ -22,7 +22,7 @@ export default function Router() {
         <Route element={<Verification />}>
           <Route path="/issue" element={<Layout />}>
             <Route index element={<IssuePage />} />
-            <Route path="new" element={<IssueDetailPage newIssue />} />
+            <Route path="new" element={<IssueDetailPage />} />
             <Route path=":id" element={<IssueDetailPage />} />
             {/**/}
             <Route path="label" element={<LabelPage />} />

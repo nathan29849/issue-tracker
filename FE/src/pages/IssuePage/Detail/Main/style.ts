@@ -21,10 +21,24 @@ export const IssueComments = styled.main`
   grid-row-end: 2;
 `;
 
-export const IssueComment = styled.article`
+export const IssueComment = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
+
+  &:last-of-type {
+    margin-bottom: 2.5rem;
+  }
+`;
+
+export const IssueCommentForm = styled.form`
+  text-align: right;
+`;
+
+export const TextareaLayer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 `;
 
 // Comment 관련 레이아웃은 Comment 컴포넌트의 스타일 파일에 존재함.

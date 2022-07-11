@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from './style';
 
@@ -15,9 +15,10 @@ import {
 import { useInput } from '@hooks/useInput';
 import { useUserState } from '@hooks/useIsLoggedIn';
 import { usePostIssue } from '@hooks/usePostIssue';
-import Inputs from '@pages/IssuePage/Detail/Main/Inputs';
+import { CreateCommentForm } from '@pages/IssuePage/Detail/Main/CommentForm';
 import IssueComment from '@pages/IssuePage/Detail/Main/IssueComment';
 import NewIssueMainButtons from '@pages/IssuePage/Detail/Main/NewIssueMainButtons';
+import NewMainInputs from '@pages/IssuePage/Detail/Main/NewIssueMainInputs';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { useProfileImage } from '@recoil/selectors/user';
 
@@ -57,7 +58,7 @@ export const NewMain = () => {
     <S.NewMainLayer as="form" onSubmit={handleClickSubmitButton}>
       <S.InputContainer>
         <UserAvatarLayer profileImage={profileImage} />
-        <Inputs title={title} comment={comment} />
+        <NewMainInputs title={title} comment={comment} />
       </S.InputContainer>
       <NewIssueMainButtons
         handleClickSubmitButton={handleClickSubmitButton}
@@ -73,9 +74,9 @@ export const NewMain = () => {
 };
 
 // ISSUE DETAIL
-export const DetailMain = () => {
+export const DetailMain: React.FC<{ issueId: string }> = ({ issueId }) => {
   const { authId } = useUserState();
-  const { id: issueId } = useParams();
+
   const { data: issueDetailData, isLoading: getIssueLoading } = useQuery(
     ['issueDetail'],
     () => getIssue(issueId),
@@ -100,6 +101,7 @@ export const DetailMain = () => {
               />
             );
           })}
+          <CreateCommentForm issueId={issueId} />
         </S.IssueComments>
       )}
       <S.SideBar>
