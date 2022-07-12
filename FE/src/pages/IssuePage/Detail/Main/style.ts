@@ -67,6 +67,12 @@ export const SideBar = styled.aside`
   margin-left: 2rem;
 `;
 
+export const DeleteIssueButtonLayer = styled.div`
+  ${flexbox({ jc: 'flex-end', ai: 'center' })};
+  min-height: 3rem;
+  padding: 0 2rem;
+`;
+
 export const Buttons = styled.footer`
   ${flexbox({ jc: 'flex-end', ai: 'center' })};
   gap: 2rem;

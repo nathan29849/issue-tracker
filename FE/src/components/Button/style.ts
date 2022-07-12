@@ -82,21 +82,16 @@ export const Button = styled.button<{
 export const TextButton = styled.button<{ size: 'sm' | 'md' }>`
   ${flexbox({ jc: 'center', ai: 'center' })}
   background-color: inherit;
-  color: ${({ theme }) => theme.color.label};
+  color: ${({ color }) => color};
   cursor: pointer;
+  ${simpleOpacityTransition({
+    hoverOpacity: 0.8,
+    activeOpacity: 0.6,
+  })}
 
   ${({ size }) => (size === 'sm' ? typoXSmall(700) : typoSmall(700))}
 
-  &:hover {
-    color: ${({ theme }) => theme.color.body};
-  }
-
-  &:active {
-    color: ${({ theme }) => theme.color.titleActive};
-  }
-
   &:disabled {
-    color: ${({ theme }) => theme.color.body};
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;

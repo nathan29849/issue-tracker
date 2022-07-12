@@ -4,11 +4,12 @@ import ReactDom from 'react-dom';
 import * as S from './style';
 
 import { Button } from '@components/Button';
+import { ButtonClickEventHandler } from '@type/eventHandler';
 
 interface ModalProps {
   title: string;
-  handleCancelClick: () => void;
-  handleSubmit: () => void;
+  handleCancelClick: ButtonClickEventHandler;
+  handleSubmit: ButtonClickEventHandler;
 }
 
 export default function Modal({
