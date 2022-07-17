@@ -3,7 +3,7 @@ import { getCookie } from '@utils/cookie';
 
 interface UserData extends User {
   userId: string;
-  userName: string;
+  username: string;
   profileImageUrl: string;
   accessToken: string;
   refreshToken: string;

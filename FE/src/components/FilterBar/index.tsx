@@ -8,7 +8,7 @@ import * as S from './style';
 import I from '@components/Icons';
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
-import { IPopupData } from '@components/Popup/type';
+import { FilterPopupType } from '@components/Popup/type';
 import useComponentVisible from '@hooks/useComponentVisible';
 import { useSearch } from '@hooks/useSearch';
 import { issueState } from '@recoil/atoms/issue';
@@ -41,7 +41,7 @@ export default function FilterBar() {
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
-    popupData: IPopupData,
+    popupData: FilterPopupType,
   ) => {
     e.stopPropagation();
     if ((e.target as Element).classList.contains('popup-header')) return;
@@ -93,7 +93,7 @@ export default function FilterBar() {
           {isComponentVisible && (
             <Popup>
               <header className="popup-header">Issue Filter</header>
-              {issueFilterData.info.map((popupData: IPopupData) => (
+              {issueFilterData.info.map((popupData: FilterPopupType) => (
                 <Contents
                   key={`popup-${popupData.name}`}
                   item="이슈"

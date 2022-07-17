@@ -11,43 +11,6 @@ import { useAssignee } from '@components/SideBar/context';
 import UserAvatar from '@components/UserAvatar';
 import useComponentVisible from '@hooks/useComponentVisible';
 
-const AssigneePanel: React.FC<{ allowDuplicates?: boolean }> = ({
-  allowDuplicates = false,
-}) => {
-  const { state } = useAssignee();
-  const { isComponentVisible, setIsComponentVisible, ref } =
-    useComponentVisible(false);
-
-  return (
-    <S.PanelContainer>
-      <div
-        ref={ref}
-        css={css`
-          position: relative;
-        `}
-      >
-        <Header title="담당자" onClick={() => setIsComponentVisible(p => !p)} />
-        {isComponentVisible && (
-          <AssigneePopup allowDuplicates={allowDuplicates} />
-        )}
-      </div>
-
-      <S.List>
-        {state
-          .filter(({ selected }) => selected)
-          ?.map(({ user: { userId, profileImageUrl } }) => (
-            <S.AssigneeItem key={userId}>
-              <S.AvatarWrapper>
-                <UserAvatar size="lg" src={profileImageUrl} alt={userId} />
-              </S.AvatarWrapper>
-              <S.AssigneeName>{userId}</S.AssigneeName>
-            </S.AssigneeItem>
-          ))}
-      </S.List>
-    </S.PanelContainer>
-  );
-};
-
 const AssigneePopup: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
@@ -86,6 +49,43 @@ const AssigneePopup: React.FC<{ allowDuplicates?: boolean }> = ({
         </PopupS.InnerContainer>
       </Popup>
     </PopupS.PopupContainer>
+  );
+};
+
+const AssigneePanel: React.FC<{ allowDuplicates?: boolean }> = ({
+  allowDuplicates = false,
+}) => {
+  const { state } = useAssignee();
+  const { isComponentVisible, setIsComponentVisible, ref } =
+    useComponentVisible(false);
+
+  return (
+    <S.PanelContainer>
+      <div
+        ref={ref}
+        css={css`
+          position: relative;
+        `}
+      >
+        <Header title="담당자" onClick={() => setIsComponentVisible(p => !p)} />
+        {isComponentVisible && (
+          <AssigneePopup allowDuplicates={allowDuplicates} />
+        )}
+      </div>
+
+      <S.List>
+        {state
+          .filter(({ selected }) => selected)
+          ?.map(({ user: { userId, profileImageUrl } }) => (
+            <S.AssigneeItem key={userId}>
+              <S.AvatarWrapper>
+                <UserAvatar size="lg" src={profileImageUrl} alt={userId} />
+              </S.AvatarWrapper>
+              <S.AssigneeName>{userId}</S.AssigneeName>
+            </S.AssigneeItem>
+          ))}
+      </S.List>
+    </S.PanelContainer>
   );
 };
 
