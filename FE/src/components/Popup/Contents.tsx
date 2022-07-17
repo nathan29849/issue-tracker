@@ -1,14 +1,14 @@
 import I from '@components/Icons';
 import { getModalItem } from '@components/Popup/Item';
-import { IPopupData } from '@components/Popup/type';
+import { FilterPopupType } from '@components/Popup/type';
 import theme from '@styles/theme';
 
 interface ContentsProps {
   item: string;
-  popupData: IPopupData;
+  popupData: FilterPopupType;
   handleItemClick: (
     e: React.MouseEvent<HTMLElement>,
-    popupData: IPopupData,
+    popupData: FilterPopupType,
   ) => void;
 }
 

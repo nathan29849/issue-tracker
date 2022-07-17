@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import * as S from './formStyle';
 
-import { postLabels, patchLabel, PostLabelRequestBody } from '@apis/label';
+import { postLabels, patchLabel } from '@apis/label';
 import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
@@ -245,6 +245,7 @@ export default function Form({
                             background-color: ${color};
                             cursor: pointer;
                           `}
+                          aria-label="color button"
                           onClick={handleColorClick}
                         />
                       ))}

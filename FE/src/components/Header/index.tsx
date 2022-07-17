@@ -14,15 +14,6 @@ import { useLogout } from '@hooks/useLogout';
 import { userState } from '@recoil/atoms/user';
 import theme from '@styles/theme';
 
-export default function Header() {
-  return (
-    <S.HeaderLayer>
-      <Logo />
-      <UserAvatar />
-    </S.HeaderLayer>
-  );
-}
-
 const Logo = memo(() => (
   <Link to="/issue">
     <S.Logo>
@@ -105,3 +96,12 @@ const UserAvatar = memo(() => {
     </div>
   );
 });
+
+export default function Header() {
+  return (
+    <S.HeaderLayer>
+      <Logo />
+      <UserAvatar />
+    </S.HeaderLayer>
+  );
+}

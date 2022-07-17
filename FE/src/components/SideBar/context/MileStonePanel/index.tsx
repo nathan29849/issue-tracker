@@ -41,7 +41,7 @@ const milestonePanelReducer = (
     case 'SELECT_MILESTONE': {
       const { milestoneId } = action.payload;
 
-      return state.map(element =>
+      return state.map((element: any) =>
         element.milestone.id === milestoneId
           ? { milestone: element.milestone, selected: !element.selected }
           : element,
@@ -52,7 +52,7 @@ const milestonePanelReducer = (
     case 'REPLACE_MILESTONE': {
       const { milestoneId } = action.payload;
 
-      return state.map(element =>
+      return state.map((element: any) =>
         element.milestone.id === milestoneId
           ? { milestone: element.milestone, selected: !element.selected }
           : { milestone: element.milestone, selected: false },
@@ -115,17 +115,26 @@ export const useMileStone = () => {
     );
   }
 
-  const initPanel = useCallback((milestones: MileStone[] = []) => {
-    dispatch(initPanelAction(milestones));
-  }, []);
+  const initPanel = useCallback(
+    (milestones: MileStone[] = []) => {
+      dispatch(initPanelAction(milestones));
+    },
+    [dispatch],
+  );
 
-  const selectMileStone = useCallback((milestoneId: number) => {
-    dispatch(selectMileStoneAction(milestoneId));
-  }, []);
+  const selectMileStone = useCallback(
+    (milestoneId: number) => {
+      dispatch(selectMileStoneAction(milestoneId));
+    },
+    [dispatch],
+  );
 
-  const replaceMileStone = useCallback((milestoneId: number) => {
-    dispatch(replaceMileStoneAction(milestoneId));
-  }, []);
+  const replaceMileStone = useCallback(
+    (milestoneId: number) => {
+      dispatch(replaceMileStoneAction(milestoneId));
+    },
+    [dispatch],
+  );
 
   return { state, initPanel, selectMileStone, replaceMileStone };
 };
@@ -146,17 +155,26 @@ export const useSetMileStoneState = () => {
     throw Error('MileStone Panel Dispatch Provider Error');
   }
 
-  const initPanel = useCallback((milestones: MileStone[] = []) => {
-    dispatch(initPanelAction(milestones));
-  }, []);
+  const initPanel = useCallback(
+    (milestones: MileStone[] = []) => {
+      dispatch(initPanelAction(milestones));
+    },
+    [dispatch],
+  );
 
-  const selectMileStone = useCallback((milestoneId: number) => {
-    dispatch(selectMileStoneAction(milestoneId));
-  }, []);
+  const selectMileStone = useCallback(
+    (milestoneId: number) => {
+      dispatch(selectMileStoneAction(milestoneId));
+    },
+    [dispatch],
+  );
 
-  const replaceMileStone = useCallback((milestoneId: number) => {
-    dispatch(replaceMileStoneAction(milestoneId));
-  }, []);
+  const replaceMileStone = useCallback(
+    (milestoneId: number) => {
+      dispatch(replaceMileStoneAction(milestoneId));
+    },
+    [dispatch],
+  );
 
   return { initPanel, selectMileStone, replaceMileStone };
 };
@@ -180,5 +198,5 @@ export const useSelectedMileStoneId = () => {
 
   return state
     .filter(({ selected }) => selected)
-    .map(({ milestone: { id } }) => id);
+    .map(({ milestone: { id } }: any) => id);
 };

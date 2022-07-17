@@ -18,7 +18,7 @@ export const useLogout = () => {
     setUser(null);
     deleteCookie([ACCESS_TOKEN, REFRESH_TOKEN]);
     navigate(loginPagePath);
-  }, []);
+  }, [navigate, setUser]);
 
   return logout;
 };

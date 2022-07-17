@@ -55,7 +55,7 @@ export default function Navigation({
     checkBoxStatus: false,
   });
 
-  const [filterPopupData, setFilterPoupData] = useState({
+  const [filterPopupData, setFilterPoupData] = useState<any>({
     assignee: assigneeData,
     label: labelData,
     mileStone: milestoneData,

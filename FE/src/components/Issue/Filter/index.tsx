@@ -5,7 +5,7 @@ import * as S from './style';
 
 import Popup from '@components/Popup';
 import Contents from '@components/Popup/Contents';
-import { IPopupData } from '@components/Popup/type';
+import { FilterPopupType } from '@components/Popup/type';
 import useComponentVisible from '@hooks/useComponentVisible';
 import { useSearch } from '@hooks/useSearch';
 import { issueState } from '@recoil/atoms/issue';
@@ -14,7 +14,7 @@ import { FilterLabelTypes } from '@type/issue';
 interface IFilterProps {
   onPopup: boolean;
   item: FilterLabelTypes;
-  filterPopupData: IPopupData[];
+  filterPopupData: FilterPopupType[];
   handleFilterClick: (item: FilterLabelTypes, status: boolean) => void;
 }
 
@@ -37,7 +37,7 @@ export default function Filter({
 
   const handleItemClick = (
     e: React.MouseEvent<HTMLElement>,
-    popupData: IPopupData,
+    popupData: FilterPopupType,
   ) => {
     e.stopPropagation();
     if ((e.target as Element).classList.contains('popup-header')) return;
@@ -74,7 +74,7 @@ export default function Filter({
           {isComponentVisible && (
             <Popup>
               <header className="popup-header">{item} Filter</header>
-              {filterPopupData.map((popupData: IPopupData) => (
+              {filterPopupData.map((popupData: FilterPopupType) => (
                 <Contents
                   key={`popup-${popupData.id}`}
                   item={item}

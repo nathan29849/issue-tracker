@@ -12,6 +12,16 @@ import { CreateCommentFormLoader } from '@pages/IssuePage/Detail/Main/CommentFor
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
 import { ButtonClickEventHandler } from '@type/eventHandler';
 
+const CreateButton: React.FC<{
+  disabled: boolean;
+  onClick: ButtonClickEventHandler;
+}> = memo(({ disabled, onClick }) => (
+  <Button disabled={disabled} onClick={onClick}>
+    <I.Plus />
+    코멘트 작성
+  </Button>
+));
+
 export const CreateCommentForm: React.FC<{ issueId: string }> = ({
   issueId,
 }) => {
@@ -34,7 +44,7 @@ export const CreateCommentForm: React.FC<{ issueId: string }> = ({
     }
 
     globalThis.alert('코멘트 등록에 실패했습니다.');
-  }, [comment.value]);
+  }, [comment, mutateIssueComments]);
 
   return (
     <S.IssueCommentForm>
@@ -55,13 +65,3 @@ export const CreateCommentForm: React.FC<{ issueId: string }> = ({
     </S.IssueCommentForm>
   );
 };
-
-const CreateButton: React.FC<{
-  disabled: boolean;
-  onClick: ButtonClickEventHandler;
-}> = memo(({ disabled, onClick }) => (
-  <Button disabled={disabled} onClick={onClick}>
-    <I.Plus />
-    코멘트 작성
-  </Button>
-));

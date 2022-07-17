@@ -10,6 +10,48 @@ import * as PopupS from '@components/SideBar/popupStyle';
 import * as S from '@components/SideBar/style';
 import useComponentVisible from '@hooks/useComponentVisible';
 
+const MileStonePopup: React.FC<{ allowDuplicates?: boolean }> = ({
+  allowDuplicates = false,
+}) => {
+  const {
+    state: milestones,
+    replaceMileStone,
+    selectMileStone,
+  } = useMileStone();
+
+  const handleClickListItem = (milestoneId: number) => () => {
+    if (allowDuplicates) {
+      selectMileStone(milestoneId);
+      return;
+    }
+    replaceMileStone(milestoneId);
+  };
+
+  return (
+    <PopupS.PopupContainer>
+      <Popup>
+        <PopupS.InnerContainer>
+          <PopupS.Header>
+            <h2>마일스톤 선택</h2>
+          </PopupS.Header>
+          <PopupS.List>
+            {milestones.map(({ milestone: { id, title }, selected }: any) => (
+              <PopupS.ItemCommon
+                selected={selected}
+                onClick={handleClickListItem(id)}
+                key={id}
+              >
+                <PopupS.MileStoneTitle>{title}</PopupS.MileStoneTitle>
+                {selected ? <I.Circle.Check /> : <I.Circle.Plain />}
+              </PopupS.ItemCommon>
+            ))}
+          </PopupS.List>
+        </PopupS.InnerContainer>
+      </Popup>
+    </PopupS.PopupContainer>
+  );
+};
+
 const MileStonePanel: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
@@ -40,7 +82,7 @@ const MileStonePanel: React.FC<{ allowDuplicates?: boolean }> = ({
           ?.map(
             ({
               milestone: { id, title, openIssueCount, closedIssueCount },
-            }) => {
+            }: any) => {
               const totalIssueCount = openIssueCount + closedIssueCount;
               const progressWidth = (closedIssueCount / totalIssueCount) * 100;
               return (
@@ -53,48 +95,6 @@ const MileStonePanel: React.FC<{ allowDuplicates?: boolean }> = ({
           )}
       </S.List>
     </S.PanelContainer>
-  );
-};
-
-const MileStonePopup: React.FC<{ allowDuplicates?: boolean }> = ({
-  allowDuplicates = false,
-}) => {
-  const {
-    state: milestones,
-    replaceMileStone,
-    selectMileStone,
-  } = useMileStone();
-
-  const handleClickListItem = (milestoneId: number) => () => {
-    if (allowDuplicates) {
-      selectMileStone(milestoneId);
-      return;
-    }
-    replaceMileStone(milestoneId);
-  };
-
-  return (
-    <PopupS.PopupContainer>
-      <Popup>
-        <PopupS.InnerContainer>
-          <PopupS.Header>
-            <h2>마일스톤 선택</h2>
-          </PopupS.Header>
-          <PopupS.List>
-            {milestones.map(({ milestone: { id, title }, selected }) => (
-              <PopupS.ItemCommon
-                selected={selected}
-                onClick={handleClickListItem(id)}
-                key={id}
-              >
-                <PopupS.MileStoneTitle>{title}</PopupS.MileStoneTitle>
-                {selected ? <I.Circle.Check /> : <I.Circle.Plain />}
-              </PopupS.ItemCommon>
-            ))}
-          </PopupS.List>
-        </PopupS.InnerContainer>
-      </Popup>
-    </PopupS.PopupContainer>
   );
 };
 

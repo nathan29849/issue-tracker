@@ -33,7 +33,7 @@ export const DetailHeader: React.FC<{ issueId: string }> = memo(
         setIsEditMode(false);
         mutateIssueTitle(title);
       },
-      [],
+      [mutateIssueTitle],
     );
 
     const handleClickEditTitleButton = useCallback(
