@@ -65,7 +65,8 @@ export const Main = styled.div`
   border: 1px solid;
   border-color: ${({ theme }) => theme.color.line};
   border-radius: 1rem;
-  overflow: hidden;
+  overflow: scroll;
+  max-height: 34rem;
 `;
 
 export const LabelPageLayer = styled.div`
