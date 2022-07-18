@@ -39,7 +39,7 @@ export const NewMain = () => {
 
   const handleClickCancelButton = useCallback(
     () => navigate(issuePagePath),
-    [],
+    [navigate],
   );
   const handleClickSubmitButton = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
