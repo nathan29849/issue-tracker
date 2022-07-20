@@ -4,11 +4,11 @@ import * as S from './style';
 
 import UserAvatar from '@components/UserAvatar';
 
-interface Props {
+interface IUserAvatarLayerProps {
   profileImage: string;
 }
 
-const UserAvatarLayer: React.FC<Props> = ({ profileImage }) => (
+const UserAvatarLayer: React.FC<IUserAvatarLayerProps> = ({ profileImage }) => (
   <S.UserAvatar>
     <UserAvatar src={profileImage} size="lg" alt="유저 이미지" />
   </S.UserAvatar>

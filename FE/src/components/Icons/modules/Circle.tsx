@@ -2,20 +2,20 @@ import * as React from 'react';
 
 import * as S from './style';
 
-interface Circle {
+interface ICircle {
   fontSize?: number;
   color?: string;
 }
 
-function Plain(props: Circle) {
+function Plain(props: ICircle) {
   return <S.Icon className="ic-check-off-circle" {...props} />;
 }
 
-function Check(props: Circle) {
+function Check(props: ICircle) {
   return <S.Icon className="ic-check-on-circle" {...props} />;
 }
 
-function Alert(props: Circle) {
+function Alert(props: ICircle) {
   return <S.Icon className="ic-alert" {...props} />;
 }
 

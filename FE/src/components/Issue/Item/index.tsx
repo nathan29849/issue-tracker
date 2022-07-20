@@ -4,21 +4,10 @@ import React from 'react';
 import { ItemLayer, ContentLayer, Title, Description } from './style';
 
 import I from '@components/Icons';
+import { IIssue } from '@interfaces/IIssue';
 
-interface IIssueItem {
-  id: number;
-  author: { name: string; imageUrl: string }[];
-  date: string;
-  labels: string[];
-  manager: string[];
-  milestone: string;
-  number: number;
-  status: string;
-  title: string;
-}
-
-interface IssueItemProps {
-  issue: IIssueItem;
+interface IIssueItemProps {
+  issue: IIssue;
   lastIdx?: boolean;
   isCheck: boolean;
   handleIssueCheck: (id: number) => void;
@@ -29,7 +18,7 @@ export default function Item({
   lastIdx,
   isCheck,
   handleIssueCheck,
-}: IssueItemProps) {
+}: IIssueItemProps) {
   return (
     <ItemLayer lastIdx={lastIdx}>
       {isCheck ? (
@@ -47,9 +36,10 @@ export default function Item({
           <Title>{issue.title}</Title>
         </div>
         <div>
-          <Description>#{issue.number}</Description>
-          <Description>{issue.author[0].name}</Description>
-          <I.MileStone /> <Description>{issue.milestone}</Description>
+          <Description>#{issue.id}</Description>
+          <Description>{issue.author.username}</Description>
+          <I.MileStone />{' '}
+          <Description>{issue.milestone.description}</Description>
         </div>
         <div
           css={css`

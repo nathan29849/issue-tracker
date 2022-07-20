@@ -10,7 +10,7 @@ import { ProgressBar } from '@components/Indicator';
 import Form from '@components/Indicator/Form';
 import Modal from '@components/Modal';
 import TabList from '@components/TabList';
-import { IMileStone } from '@type/milestone';
+import { IMileStone } from '@interfaces/IMilestone';
 
 export default function Milestone() {
   const queryClient = useQueryClient();

@@ -1,25 +1,26 @@
 import { atom } from 'recoil';
 
+import { AuthorType } from '@type/user';
+
 export interface IAuthorTypes {
   id: number;
-  imageUrl: string;
+  profileImageUrl: string;
   name: string;
 }
 
-export const authorState = atom<{ info: IAuthorTypes[] }>({
+export const authorState = atom<{ info: AuthorType[] }>({
   key: 'authorState',
   default: {
     info: [
       {
-        id: 1,
-        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
-        name: 'cola',
+        userId: '1',
+        profileImageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        username: 'cola',
       },
       {
-        id: 2,
-
-        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
-        name: 'muffin',
+        userId: '2',
+        profileImageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        username: 'muffin',
       },
     ],
   },

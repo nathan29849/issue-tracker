@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN } from '@constants/cookie';
-import { Issue } from '@type/issue';
+import { IIssue } from '@interfaces/IIssue';
 import { getCookie } from '@utils/cookie';
 
 interface PostIssueRequestBody {
@@ -19,7 +19,7 @@ export const getIssues = async () => {
   return issues;
 };
 
-export const getIssue = async (issueId?: string): Promise<Issue> => {
+export const getIssue = async (issueId?: string): Promise<IIssue> => {
   const accessToken = getCookie(ACCESS_TOKEN);
   const response = await fetch(
     `${process.env.TEAM30_BASE_URL}/api/issues/${issueId}`,

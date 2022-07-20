@@ -8,12 +8,12 @@ import Modal from '@components/Modal';
 import DeleteIssueButtonLoader from '@pages/IssuePage/Detail/Main/DeleteIssueButtonLoader';
 import theme from '@styles/theme';
 
-interface Props {
+interface IDeleteIssueButtonProps {
   requestDeleteIssue: () => void;
   deleteIssueLoading: boolean;
 }
 
-const DeleteIssueButton: React.FC<Props> = ({
+const DeleteIssueButton: React.FC<IDeleteIssueButtonProps> = ({
   requestDeleteIssue,
   deleteIssueLoading,
 }) => {

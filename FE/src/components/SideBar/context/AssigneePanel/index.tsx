@@ -6,12 +6,12 @@ import React, {
   useCallback,
 } from 'react';
 
-import { User } from '@type/user';
+import { IUser } from '@interfaces/IUser';
 
-type AssigneePanelState = Array<{ user: User; selected: boolean }>;
+type AssigneePanelState = Array<{ user: IUser; selected: boolean }>;
 
 type AssigneePanelAction =
-  | { type: 'INIT_PANEL'; payload: { users: User[] } }
+  | { type: 'INIT_PANEL'; payload: { users: IUser[] } }
   | { type: 'SELECT_ASSIGNEE'; payload: { userId: string } }
   | { type: 'REPLACE_ASSIGNEE'; payload: { userId: string } };
 type AssigneePanelDispatch = React.Dispatch<AssigneePanelAction>;
@@ -67,8 +67,8 @@ const assigneePanelReducer = (
 
 // action creator
 const initPanelAction = (
-  users: User[],
-): { type: 'INIT_PANEL'; payload: { users: User[] } } => ({
+  users: IUser[],
+): { type: 'INIT_PANEL'; payload: { users: IUser[] } } => ({
   type: 'INIT_PANEL',
   payload: { users },
 });
@@ -116,7 +116,7 @@ export const useAssignee = () => {
   }
 
   const initPanel = useCallback(
-    (users: User[] = []) => {
+    (users: IUser[] = []) => {
       dispatch(initPanelAction(users));
     },
     [dispatch],
@@ -156,7 +156,7 @@ export const useSetAssigneeState = () => {
   }
 
   const initPanel = useCallback(
-    (users: User[] = []) => {
+    (users: IUser[] = []) => {
       dispatch(initPanelAction(users));
     },
     [dispatch],

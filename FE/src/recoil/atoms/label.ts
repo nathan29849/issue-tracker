@@ -1,14 +1,8 @@
 import { atom } from 'recoil';
 
-export interface ILabelTypes {
-  id: number;
-  backgroundColor: string;
-  title: string;
-  description?: string;
-  textColor: string;
-}
+import { ILabel } from '@interfaces/ILabel';
 
-export const labelState = atom<{ info: ILabelTypes[] }>({
+export const labelState = atom<{ info: ILabel[] }>({
   key: 'labelState',
   default: {
     info: [

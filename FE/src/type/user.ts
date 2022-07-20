@@ -1,7 +1,7 @@
-// 로그인 상태
-export interface User {
-  authId: string;
-  userId: string;
-  username: string;
-  profileImageUrl: string;
-}
+import { IUser } from '@interfaces/IUser';
+
+export type AuthorType = Pick<IUser, 'userId' | 'profileImageUrl' | 'username'>;
+export type AssigneeType = Pick<
+  IUser,
+  'userId' | 'profileImageUrl' | 'username'
+>;

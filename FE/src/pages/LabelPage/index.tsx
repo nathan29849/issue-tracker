@@ -10,7 +10,7 @@ import { Label } from '@components/Label';
 import Form from '@components/Label/Form';
 import Modal from '@components/Modal';
 import TabList from '@components/TabList';
-import { ILabelTypes } from '@recoil/atoms/label';
+import { ILabel } from '@interfaces/ILabel';
 
 export default function LabelPage() {
   const queryClient = useQueryClient();
@@ -89,7 +89,7 @@ export default function LabelPage() {
           {status === 'success' ? labelDatas.length : 0}개의 레이블
         </S.LabelCount>
         {status === 'success' &&
-          labelDatas.map((label: ILabelTypes) =>
+          labelDatas.map((label: ILabel) =>
             editOpenForm[label.id] ? (
               <Form
                 key={`EditLabelForm-${label.title}`}

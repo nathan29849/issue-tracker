@@ -6,12 +6,12 @@ import React, {
   useCallback,
 } from 'react';
 
-import { Label } from '@type/label';
+import { ILabel } from '@interfaces/ILabel';
 
-type LabelPanelState = Array<{ label: Label; selected: boolean }>;
+type LabelPanelState = Array<{ label: ILabel; selected: boolean }>;
 
 type LabelPanelAction =
-  | { type: 'INIT_PANEL'; payload: { labels: Label[] } }
+  | { type: 'INIT_PANEL'; payload: { labels: ILabel[] } }
   | { type: 'SELECT_LABEL'; payload: { labelId: number } }
   | { type: 'REPLACE_LABEL'; payload: { labelId: number } };
 type LabelPanelDispatch = React.Dispatch<LabelPanelAction>;
@@ -68,8 +68,8 @@ const labelPanelReducer = (
 
 // action creator
 const initPanelAction = (
-  labels: Label[],
-): { type: 'INIT_PANEL'; payload: { labels: Label[] } } => ({
+  labels: ILabel[],
+): { type: 'INIT_PANEL'; payload: { labels: ILabel[] } } => ({
   type: 'INIT_PANEL',
   payload: { labels },
 });
@@ -115,7 +115,7 @@ export const useLabel = () => {
   }
 
   const initPanel = useCallback(
-    (labels: Label[] = []) => {
+    (labels: ILabel[] = []) => {
       dispatch(initPanelAction(labels));
     },
     [dispatch],
@@ -155,7 +155,7 @@ export const useSetLabelState = () => {
   }
 
   const initPanel = useCallback(
-    (labels: Label[] = []) => {
+    (labels: ILabel[] = []) => {
       dispatch(initPanelAction(labels));
     },
     [dispatch],

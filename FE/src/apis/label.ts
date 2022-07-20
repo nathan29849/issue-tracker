@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN } from '@constants/cookie';
-import { Label } from '@type/label';
+import { ILabel } from '@interfaces/ILabel';
 import { getCookie } from '@utils/cookie';
 
 export interface PostLabelRequestBody {
@@ -9,7 +9,7 @@ export interface PostLabelRequestBody {
   textColor: string;
 }
 
-export const getLabels = async (): Promise<Label[]> => {
+export const getLabels = async (): Promise<ILabel[]> => {
   const response = await fetch(`${process.env.TEAM30_BASE_URL}/api/labels`);
   const labelData = await response.json();
 

@@ -1,8 +1,9 @@
 import { ACCESS_TOKEN } from '@constants/cookie';
-import { MileStone, MileStoneRequestBody } from '@type/milestone';
+import { IMileStoneList } from '@interfaces/IMilestone';
+import { MileStonePostParams } from '@type/milestone';
 import { getCookie } from '@utils/cookie';
 
-export const getMileStones = async (): Promise<MileStone> => {
+export const getMileStones = async (): Promise<IMileStoneList> => {
   const response = await fetch(`${process.env.TEAM30_BASE_URL}/api/milestones`);
   const mileStoneData = await response.json();
 
@@ -15,7 +16,7 @@ export const getMileStones = async (): Promise<MileStone> => {
 };
 
 export const postMileStone = async (
-  mileStoneRequestBody: MileStoneRequestBody,
+  mileStoneRequestBody: MileStonePostParams,
 ): Promise<{ mileStoneId: number }> => {
   const accessToken = getCookie(ACCESS_TOKEN);
   const response = await fetch(
@@ -39,7 +40,7 @@ export const postMileStone = async (
 
 export const patchMileStone = async (
   patchId: number,
-  mileStoneRequestBody: MileStoneRequestBody,
+  mileStoneRequestBody: MileStonePostParams,
 ) => {
   const accessToken = getCookie(ACCESS_TOKEN);
   if (!patchId) throw new Error('id is undefined');

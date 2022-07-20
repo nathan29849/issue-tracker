@@ -12,9 +12,9 @@ import { authorState } from '@recoil/atoms/author';
 import { issueState } from '@recoil/atoms/issue';
 import { labelState } from '@recoil/atoms/label';
 import { mileStoneState } from '@recoil/atoms/milestone';
-import { FilterLabelTypes } from '@type/issue';
+import { FilterLabelTypes } from '@type/filterPopup';
 
-interface NavigationProps {
+interface INavigationProps {
   allCheck: boolean;
   calculateCheckCount: () => number;
   handleIssueAllCheck: (allCheckStatus: boolean) => void;
@@ -24,7 +24,7 @@ export default function Navigation({
   allCheck,
   calculateCheckCount,
   handleIssueAllCheck,
-}: NavigationProps) {
+}: INavigationProps) {
   const { urlParamInit } = useSearch('q', 'is:open');
   const location = useLocation();
   const filterLabels: FilterLabelTypes[] = [

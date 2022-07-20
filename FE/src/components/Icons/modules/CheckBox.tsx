@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import * as S from './style';
 
-interface CheckBox {
+interface ICheckBox {
   fontSize?: number;
   color?: string;
 }
 
-interface ContainerProps extends CheckBox {
+interface ContainerProps extends ICheckBox {
   children: React.ReactNode;
   className: string;
 }
@@ -20,7 +20,7 @@ function Container({ children, className, fontSize, color }: ContainerProps) {
   );
 }
 
-function Initial(props: CheckBox) {
+function Initial(props: ICheckBox) {
   return (
     <Container className="ic-checkbox-initial" {...props}>
       <i className="path1" />
@@ -29,7 +29,7 @@ function Initial(props: CheckBox) {
   );
 }
 
-function Active(props: CheckBox) {
+function Active(props: ICheckBox) {
   return (
     <Container className="ic-checkbox-active" {...props}>
       <i className="path1 accent" />
@@ -38,7 +38,7 @@ function Active(props: CheckBox) {
   );
 }
 
-function Disable(props: CheckBox) {
+function Disable(props: ICheckBox) {
   return (
     <Container className="ic-checkbox-disable" {...props}>
       <i className="path1 accent" />

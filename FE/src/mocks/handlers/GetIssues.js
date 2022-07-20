@@ -13,7 +13,7 @@ export const GetIssues = rest.get('/issue', (req, res, ctx) =>
         manager: ['muffin', 'cola'],
         labels: ['feat', 'sub', 'bug'],
         milestone: '1주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
+        author: { username: 'muffin', profileImageUrl: 'http://xxx' },
         date: '2022-12-17T03:24:00',
       },
       {
@@ -24,7 +24,7 @@ export const GetIssues = rest.get('/issue', (req, res, ctx) =>
         manager: ['muffin', 'cola'],
         labels: ['feat', 'sub', 'bug'],
         milestone: '2주차 이슈트래커',
-        author: [{ name: 'cola', iamgeUrl: 'http://xxx' }],
+        author: { username: 'cola', profileImageUrl: 'http://xxx' },
         date: '2022-12-17T03:24:00',
       },
       {
@@ -35,7 +35,7 @@ export const GetIssues = rest.get('/issue', (req, res, ctx) =>
         manager: ['muffin', 'cola'],
         labels: ['feat', 'sub', 'bug'],
         milestone: '3주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
+        author: { username: 'muffin', profileImageUrl: 'http://xxx' },
         date: '2022-12-17T03:24:00',
       },
       {
@@ -46,7 +46,7 @@ export const GetIssues = rest.get('/issue', (req, res, ctx) =>
         manager: ['muffin'],
         labels: ['feat', 'sub'],
         milestone: '3주차 이슈트래커',
-        author: [{ name: 'muffin', iamgeUrl: 'http://xxx' }],
+        author: { username: 'muffin', profileImageUrl: 'http://xxx' },
         date: '2022-12-17T03:24:00',
       },
       {
@@ -57,7 +57,7 @@ export const GetIssues = rest.get('/issue', (req, res, ctx) =>
         manager: ['cola'],
         labels: ['feat', 'sub'],
         milestone: '3주차 이슈트래커',
-        author: [{ name: 'cola', iamgeUrl: 'http://xxx' }],
+        author: { username: 'cola', profileImageUrl: 'http://xxx' },
         date: '2022-12-17T03:24:00',
       },
     ]),

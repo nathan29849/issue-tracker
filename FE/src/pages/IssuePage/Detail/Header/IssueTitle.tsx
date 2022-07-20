@@ -4,21 +4,21 @@ import * as S from './style';
 
 import { Button } from '@components/Button';
 import I from '@components/Icons';
+import { IIssueStatus } from '@interfaces/IIssue';
 import IssueTitleLoader from '@pages/IssuePage/Detail/Header/IssueTitleLoader';
-import { ButtonClickEventHandler } from '@type/eventHandler';
-import { IssueStatus } from '@type/issue';
+import { ButtonClickEventHandler } from 'src/type/eventHandler';
 
-interface Props {
+interface IIssueTitleProps {
   isLoading: boolean;
   title: string;
   issueNumber: string;
-  issueStatus: IssueStatus;
+  issueStatus: IIssueStatus;
   handleClickEditTitleButton: ButtonClickEventHandler;
   handleClickCloseIssueButton: ButtonClickEventHandler;
   handleClickReopenIssueButton: ButtonClickEventHandler;
 }
 
-const IssueTitle: React.FC<Props> = ({
+const IssueTitle: React.FC<IIssueTitleProps> = ({
   isLoading,
   title,
   issueNumber,

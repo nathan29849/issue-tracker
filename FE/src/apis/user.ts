@@ -1,6 +1,6 @@
-import { User } from '@type/user';
+import { IUser } from '@interfaces/IUser';
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUsers = async (): Promise<IUser[]> => {
   const response = await fetch(`${process.env.TEAM30_BASE_URL}/users`);
   const userData = await response.json();
 

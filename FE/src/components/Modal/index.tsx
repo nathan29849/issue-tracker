@@ -6,7 +6,7 @@ import * as S from './style';
 import { Button } from '@components/Button';
 import { ButtonClickEventHandler } from '@type/eventHandler';
 
-interface ModalProps {
+interface IModalProps {
   title: string;
   handleCancelClick: ButtonClickEventHandler;
   handleSubmit: ButtonClickEventHandler;
@@ -16,7 +16,7 @@ export default function Modal({
   title,
   handleCancelClick,
   handleSubmit,
-}: ModalProps) {
+}: IModalProps) {
   return ReactDom.createPortal(
     <>
       <S.ModalOverlay />

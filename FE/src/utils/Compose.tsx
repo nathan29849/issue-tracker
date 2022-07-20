@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface Props {
+interface IComposeProps {
   components: Array<React.JSXElementConstructor<React.PropsWithChildren<any>>>;
   children: React.ReactNode;
 }
 
-export default function Compose(props: Props) {
+export default function Compose(props: IComposeProps) {
   const { components = [], children } = props;
 
   return (

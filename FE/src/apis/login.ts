@@ -1,7 +1,7 @@
-import { User } from '@type/user';
+import { IUser } from '@interfaces/IUser';
 import { getCookie } from '@utils/cookie';
 
-interface UserData extends User {
+interface UserData extends IUser {
   userId: string;
   username: string;
   profileImageUrl: string;

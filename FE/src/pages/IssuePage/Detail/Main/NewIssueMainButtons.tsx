@@ -4,16 +4,16 @@ import * as S from './style';
 
 import { Button, TextButton } from '@components/Button';
 import I from '@components/Icons';
-import { ButtonClickEventHandler } from '@type/eventHandler';
+import { ButtonClickEventHandler } from 'src/type/eventHandler';
 
-interface Props {
+interface INewIssueMainButtonsProps {
   handleClickSubmitButton: ButtonClickEventHandler;
   handleClickCancelButton: ButtonClickEventHandler;
   isLoading: boolean;
   submitButtonDisabled: boolean;
 }
 
-const NewIssueMainButtons: React.FC<Props> = ({
+const NewIssueMainButtons: React.FC<INewIssueMainButtonsProps> = ({
   handleClickSubmitButton,
   handleClickCancelButton,
   isLoading,

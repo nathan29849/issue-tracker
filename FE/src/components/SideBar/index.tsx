@@ -38,7 +38,14 @@ export const SideBar = () => {
       );
       initMileStonePanel(milestone);
     }
-  }, [userData, labelData, milestoneData]);
+  }, [
+    userData,
+    labelData,
+    milestoneData,
+    initAssigneePanel,
+    initLabelPanel,
+    initMileStonePanel,
+  ]);
 
   return (
     <Container>

@@ -3,11 +3,12 @@ import React, { memo, useMemo } from 'react';
 import * as S from './style';
 
 import { IssueLabel } from '@components/Label';
-import { IssueStatus, IssueStatusType } from '@type/issue';
+import { IIssueStatus } from '@interfaces/IIssue';
+import { IssueStatusType } from '@type/issue';
 import { getTimeDiffFromNow } from '@utils/time';
 
-interface Props {
-  issueStatus: IssueStatus;
+interface IIssueStatusInfoProps {
+  issueStatus: IIssueStatus;
   updatedAt: string;
 }
 
@@ -24,7 +25,10 @@ const getPredicateByIssueStatus = (status: IssueStatusType) => {
   }
 };
 
-const IssueStatusInfo: React.FC<Props> = ({ issueStatus, updatedAt }) => {
+const IssueStatusInfo: React.FC<IIssueStatusInfoProps> = ({
+  issueStatus,
+  updatedAt,
+}) => {
   const { editor, status } = issueStatus;
   const isIssueClosed = status === 'CLOSED';
   const timeDiff = useMemo(

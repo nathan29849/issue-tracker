@@ -1,22 +1,6 @@
-export interface IMileStone {
-  id: number;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  dueDate: string;
-  openIssueCount: number;
-  closedIssueCount: number;
-}
+import { IMileStone } from '@interfaces/IMilestone';
 
-export interface MileStone {
-  currentMilestones: IMileStone[];
-  expiredMilestones: IMileStone[];
-  nullDueDateMilestones: IMileStone[];
-}
-
-export interface MileStoneRequestBody {
-  title: string;
-  description: string;
-  dueDate: string;
-}
+export type MileStonePostParams = Pick<
+  IMileStone,
+  'title' | 'description' | 'dueDate'
+>;

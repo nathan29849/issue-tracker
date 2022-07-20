@@ -17,13 +17,13 @@ import {
   defaultBgColors,
 } from '@constants/default';
 import useComponentVisible from '@hooks/useComponentVisible';
-import { ILabelTypes } from '@recoil/atoms/label';
+import { ILabel } from '@interfaces/ILabel';
 import { typoXSmall, flexbox } from '@styles/mixin';
 import theme from '@styles/theme';
 
 interface FormProps {
   title: string;
-  labelData?: ILabelTypes;
+  labelData?: ILabel;
   onEdit: boolean;
   handleCloseForm: (id?: number) => void;
 }

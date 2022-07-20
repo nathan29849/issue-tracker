@@ -14,7 +14,7 @@ interface SystemComment {
   createdAt: Date;
 }
 
-interface Props extends SystemComment {
+interface ICommentProps extends SystemComment {
   text: string;
   isIssueAuthor: boolean;
   isEditable?: boolean;
@@ -23,7 +23,7 @@ interface Props extends SystemComment {
   textColor?: string;
 }
 
-export const Comment: React.FC<Props> = ({
+export const Comment: React.FC<ICommentProps> = ({
   text,
   userName,
   createdAt,

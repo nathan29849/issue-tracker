@@ -21,6 +21,7 @@
       "@constants/*": ["src/constants/*"],
       "@recoil/*": ["src/recoil/*"],
       "@utils/*": ["src/utils/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@type/*": ["src/type/*"],
       "@constants": ["src/constants/*"],
       "@apis/*": ["src/apis/*"],

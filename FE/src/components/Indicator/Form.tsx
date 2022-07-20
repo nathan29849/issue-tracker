@@ -9,7 +9,7 @@ import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
 import { IMileStoneTypes } from '@recoil/atoms/milestone';
-import { MileStoneRequestBody } from '@type/milestone';
+import { MileStonePostParams } from '@type/milestone';
 import { checkDueDate } from '@utils/date';
 
 interface FormProps {
@@ -52,7 +52,7 @@ export default function Form({
       newMileStone,
     }: {
       patchId: number;
-      newMileStone: MileStoneRequestBody;
+      newMileStone: MileStonePostParams;
     }) => patchMileStone(patchId, newMileStone),
     {
       onSuccess: () => {

@@ -1,18 +1,8 @@
 import { atom } from 'recoil';
 
-export interface IIssueTypes {
-  id: number;
-  number: number; // 이슈 고유값
-  status: string;
-  title: string;
-  manager: string[];
-  labels: string[];
-  milestone: string;
-  author: { name: string; imageUrl: string }[];
-  date: string;
-}
+import { IIssue } from '@interfaces/IIssue';
 
-export const issueState = atom<IIssueTypes[]>({
+export const issueState = atom<IIssue[]>({
   key: 'issueState',
   default: [],
 });

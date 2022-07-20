@@ -1,12 +1,8 @@
 import { atom } from 'recoil';
 
-export interface IAssigneeTypes {
-  id: number;
-  imageUrl: string;
-  name: string;
-}
+import { AssigneeType } from '@type/user';
 
-type AssigneeStateTypes = { info: IAssigneeTypes[] } & { none: boolean };
+type AssigneeStateTypes = { info: AssigneeType[] } & { none: boolean };
 
 export const assigneeState = atom<AssigneeStateTypes>({
   key: 'assigneeState',
@@ -14,15 +10,14 @@ export const assigneeState = atom<AssigneeStateTypes>({
     none: true,
     info: [
       {
-        id: 1,
-        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
-        name: 'assignee1',
+        userId: '1',
+        profileImageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        username: 'assignee1',
       },
       {
-        id: 2,
-
-        imageUrl: 'https://source.unsplash.com/user/erondu/20x20',
-        name: 'assignee1',
+        userId: '2',
+        profileImageUrl: 'https://source.unsplash.com/user/erondu/20x20',
+        username: 'assignee1',
       },
     ],
   },

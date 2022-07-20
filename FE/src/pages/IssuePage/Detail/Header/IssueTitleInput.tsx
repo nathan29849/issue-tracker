@@ -6,15 +6,15 @@ import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
 import { useInput } from '@hooks/useInput';
-import { ButtonClickEventHandler } from '@type/eventHandler';
+import { ButtonClickEventHandler } from 'src/type/eventHandler';
 
-interface Props {
+interface IIssueTitleInputProps {
   initialValue: string;
   handleClickEditCompleteButton: (title: string) => ButtonClickEventHandler;
   handleClickEditCancelButton: ButtonClickEventHandler;
 }
 
-const IssueTitleInput: React.FC<Props> = ({
+const IssueTitleInput: React.FC<IIssueTitleInputProps> = ({
   initialValue,
   handleClickEditCompleteButton,
   handleClickEditCancelButton,

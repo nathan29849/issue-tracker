@@ -6,7 +6,8 @@ import { IssueWrapperLayer } from './style';
 
 import Item from '@components/Issue/Item';
 import Navigation from '@components/Issue/Navigation';
-import { IIssueTypes, issueState } from '@recoil/atoms/issue';
+import { IIssue } from '@interfaces/IIssue';
+import { issueState } from '@recoil/atoms/issue';
 
 interface ICheckIssue {
   id: number;
@@ -86,7 +87,7 @@ export default function Issue() {
         handleIssueAllCheck={handleIssueAllCheck}
       />
       {issueList &&
-        issueList.map((issueData: IIssueTypes, index: number) => (
+        issueList.map((issueData: IIssue, index: number) => (
           <Item
             issue={issueData}
             lastIdx={issueList.length === index + 1}

@@ -7,14 +7,9 @@ import {
 } from '@components/Comment';
 import * as S from '@pages/IssuePage/Detail/Main/style';
 import UserAvatarLayer from '@pages/IssuePage/Detail/Main/UserAvatarLayer';
-import { CommentType } from '@type/issue';
+import { CommentEditParams } from '@type/comment';
 
-interface Props extends CommentType {
-  isEditable: boolean;
-  isIssueAuthor: boolean;
-}
-
-const IssueComment: React.FC<Props> = ({
+const IssueComment: React.FC<CommentEditParams> = ({
   author,
   content,
   type,

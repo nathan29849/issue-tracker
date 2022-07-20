@@ -1,14 +1,14 @@
 import I from '@components/Icons';
 import { getModalItem } from '@components/Popup/Item';
-import { FilterPopupType } from '@components/Popup/type';
 import theme from '@styles/theme';
+import { FilterContentType } from '@type/filterPopup';
 
-interface ContentsProps {
+interface IContentsProps {
   item: string;
-  popupData: FilterPopupType;
+  popupData: FilterContentType;
   handleItemClick: (
     e: React.MouseEvent<HTMLElement>,
-    popupData: FilterPopupType,
+    popupData: FilterContentType,
   ) => void;
 }
 
@@ -16,7 +16,7 @@ export default function Contents({
   item,
   popupData,
   handleItemClick,
-}: ContentsProps) {
+}: IContentsProps) {
   return (
     <button
       type="button"

@@ -6,12 +6,12 @@ import React, {
   useCallback,
 } from 'react';
 
-import { MileStone } from '@type/milestone';
+import { IMileStone } from '@interfaces/IMilestone';
 
-type MileStonePanelState = Array<{ milestone: MileStone; selected: boolean }>;
+type MileStonePanelState = Array<{ milestone: IMileStone; selected: boolean }>;
 
 type MileStonePanelAction =
-  | { type: 'INIT_PANEL'; payload: { milestones: MileStone[] } }
+  | { type: 'INIT_PANEL'; payload: { milestones: IMileStone[] } }
   | { type: 'SELECT_MILESTONE'; payload: { milestoneId: number } }
   | { type: 'REPLACE_MILESTONE'; payload: { milestoneId: number } };
 type MileStonePanelDispatch = React.Dispatch<MileStonePanelAction>;
@@ -67,8 +67,8 @@ const milestonePanelReducer = (
 
 // action creator
 const initPanelAction = (
-  milestones: MileStone[],
-): { type: 'INIT_PANEL'; payload: { milestones: MileStone[] } } => ({
+  milestones: IMileStone[],
+): { type: 'INIT_PANEL'; payload: { milestones: IMileStone[] } } => ({
   type: 'INIT_PANEL',
   payload: { milestones },
 });
@@ -116,7 +116,7 @@ export const useMileStone = () => {
   }
 
   const initPanel = useCallback(
-    (milestones: MileStone[] = []) => {
+    (milestones: IMileStone[] = []) => {
       dispatch(initPanelAction(milestones));
     },
     [dispatch],
@@ -156,7 +156,7 @@ export const useSetMileStoneState = () => {
   }
 
   const initPanel = useCallback(
-    (milestones: MileStone[] = []) => {
+    (milestones: IMileStone[] = []) => {
       dispatch(initPanelAction(milestones));
     },
     [dispatch],
