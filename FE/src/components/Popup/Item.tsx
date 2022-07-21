@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-import { IPopupData } from '@components/Popup/type';
+import { FilterPopupType } from '@components/Popup/type';
 
-export const getModalItem = (item: string, popupData: IPopupData) => {
+export const getModalItem = (item: string, popupData: FilterPopupType) => {
   switch (item) {
     case '이슈':
       return <div id={popupData.status}>{popupData.name}</div>;
@@ -12,7 +12,7 @@ export const getModalItem = (item: string, popupData: IPopupData) => {
         <>
           <div
             css={css`
-              background-image: url(${popupData.imageUrl});
+              background-image: url(${`${popupData.imageUrl}`});
               border-radius: 50%;
               width: 1.25rem;
               height: 1.25rem;
@@ -38,10 +38,10 @@ export const getModalItem = (item: string, popupData: IPopupData) => {
         </>
       );
     case 'mileStone':
-      return <div className="filter__name">{popupData.name}</div>;
+      return <div className="filter__name">{popupData.title}</div>;
 
-    case 'checkStatus':
-      return <div className="filter__name">{popupData.name}</div>;
+    case 'checkBoxStatus':
+      return <div className="filter__name">{popupData.title}</div>;
     default:
       throw Error('label type not found');
   }

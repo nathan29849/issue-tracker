@@ -47,7 +47,7 @@ export const patchLabel = async (
   if (!labelRequestBody) throw new Error('requestbody is undefined');
 
   const response = await fetch(
-    `${process.env.TEAM30_BASE_URL}/api/issues/${patchId}`,
+    `${process.env.TEAM30_BASE_URL}/api/label/${patchId}`,
     {
       method: 'PATCH',
       headers: {
@@ -71,7 +71,7 @@ export const deleteLabel = async (
   const accessToken = getCookie(ACCESS_TOKEN);
 
   const response = await fetch(
-    `${process.env.TEAM30_BASE_URL}/api/milestones/${deleteId}`,
+    `${process.env.TEAM30_BASE_URL}/api/label/${deleteId}`,
     {
       method: 'DELETE',
       headers: {

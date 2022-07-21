@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const DeleteLabel = rest.delete(
-  `${process.env.TEAM30_BASE_URL}/api/milestones/:deleteId`,
+  `${process.env.TEAM30_BASE_URL}/api/label/:deleteId`,
   (req, res, ctx) => {
     const { deleteId } = req.params;
 

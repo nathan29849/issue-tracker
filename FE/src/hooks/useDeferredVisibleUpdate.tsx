@@ -21,7 +21,7 @@ export function useDeferredVisibleUpdate(
       () => setIsElementVisible(false),
       visibleDelay,
     );
-  }, []);
+  }, [visibleDelay]);
 
   useEffect(() => {
     if (!mount.current) {
@@ -35,7 +35,7 @@ export function useDeferredVisibleUpdate(
     }, debounceDelay);
 
     return () => clearTimeout(timer);
-  }, deps);
+  }, [debounceDelay, handler]);
 
   return { isElementVisible, setIsElementVisible };
 }

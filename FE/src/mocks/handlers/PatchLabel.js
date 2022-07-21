@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const PatchLabel = rest.patch(
-  `${process.env.TEAM30_BASE_URL}/api/issues/:patchId`,
+  `${process.env.TEAM30_BASE_URL}/api/label/:patchId`,
   (req, res, ctx) => {
     const { patchId } = req.params;
     const patchLabelData = req.body;

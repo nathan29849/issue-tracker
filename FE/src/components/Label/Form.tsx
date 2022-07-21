@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import * as S from './formStyle';
 
-import { postLabels, patchLabel, PostLabelRequestBody } from '@apis/label';
+import { postLabels, patchLabel } from '@apis/label';
 import { Button } from '@components/Button';
 import I from '@components/Icons';
 import { Input } from '@components/Input';
@@ -41,7 +41,7 @@ export default function Form({
 
   const [openFormValue, setOpenFormValue] = useState({
     labelText: labelData?.title || '',
-    descriptionText: labelData?.description || '',
+    description: labelData?.description || '',
     bgColor: labelData?.backgroundColor || initBgColor,
     textColor:
       labelData?.textColor === 'BLACK'
@@ -51,7 +51,7 @@ export default function Form({
 
   const [initFormValue, setInitFormValue] = useState({
     labelText: openFormValue.labelText,
-    descriptionText: openFormValue.descriptionText,
+    description: openFormValue.description,
     bgColor: openFormValue.bgColor,
     textColor: openFormValue.textColor,
   });
@@ -78,10 +78,10 @@ export default function Form({
     }));
   };
 
-  const handleDescriptionText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLabelDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOpenFormValue(prevState => ({
       ...prevState,
-      descriptionText: e.target.value,
+      description: e.target.value,
     }));
   };
 
@@ -137,7 +137,7 @@ export default function Form({
     e.preventDefault();
     const newLabel = {
       title: openFormValue.labelText,
-      description: openFormValue.descriptionText,
+      description: openFormValue.description,
       backgroundColor: openFormValue.bgColor,
       textColor: openFormValue.textColor === '어두운색' ? 'BLACK' : 'WHITE',
     };
@@ -151,14 +151,12 @@ export default function Form({
 
   useEffect(() => {
     if (fetchPostLabels.isSuccess) {
-      console.log(fetchPostLabels.data);
       handleCloseForm();
     }
-  }, [fetchPostLabels, fetchPatchLabel, handleCloseForm]);
+  }, [fetchPostLabels, handleCloseForm]);
 
   useEffect(() => {
     if (fetchPatchLabel.isSuccess) {
-      console.log(fetchPatchLabel.data);
       handleCloseForm(fetchPatchLabel.data.patchId);
     }
   }, [fetchPatchLabel, handleCloseForm]);
@@ -167,8 +165,11 @@ export default function Form({
     <S.FormWrapper title={title}>
       <S.FormLeftInner>
         <S.FormTitle>{title}</S.FormTitle>
-        <Label bgColor="#EFF0F6" darkText>
-          레이블 이름
+        <Label
+          bgColor={openFormValue.bgColor}
+          darkText={openFormValue.textColor === '어두운색'}
+        >
+          {openFormValue.labelText || '레이블 이름'}
         </Label>
         <div />
       </S.FormLeftInner>
@@ -184,9 +185,9 @@ export default function Form({
           <Input
             type="text"
             width="56.25rem"
-            value={openFormValue.descriptionText || ''}
+            value={openFormValue.description || ''}
             placeholder="설명(선택)"
-            onChange={handleDescriptionText}
+            onChange={handleLabelDescription}
           />
           <S.FormInnerWrapper>
             <S.ColorWrapper>
@@ -244,6 +245,7 @@ export default function Form({
                             background-color: ${color};
                             cursor: pointer;
                           `}
+                          aria-label="color button"
                           onClick={handleColorClick}
                         />
                       ))}
@@ -282,8 +284,7 @@ export default function Form({
                 disabled={
                   initFormValue.labelText === openFormValue.labelText &&
                   initFormValue.bgColor === openFormValue.bgColor &&
-                  initFormValue.descriptionText ===
-                    openFormValue.descriptionText &&
+                  initFormValue.description === openFormValue.description &&
                   initFormValue.textColor === openFormValue.textColor
                 }
                 onClick={(e: React.SyntheticEvent<HTMLFormElement>) =>

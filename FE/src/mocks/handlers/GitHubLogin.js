@@ -7,7 +7,9 @@ export const GitHubLogin = rest.get(
       ctx.status(200),
       ctx.delay(1500),
       ctx.json({
+        authId: '123',
         userId: 'mjsdo',
+        username: 'mjsdo',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
         profileImageUrl:
@@ -34,7 +36,9 @@ export const RefreshGitHubLogin = rest.get(
       ctx.status(200),
       ctx.delay(500),
       ctx.json({
+        authId: '123',
         userId: 'mjsdo',
+        username: 'mjsdo',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
         profileImageUrl:

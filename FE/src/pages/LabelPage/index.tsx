@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
@@ -134,24 +133,11 @@ export default function LabelPage() {
             ),
           )}
         {modalVisible && (
-          <Modal>
-            <header>해당 레이블을 정말 삭제하시겠습니까?</header>
-            <div>
-              <Button
-                outlined
-                type="button"
-                onClick={handleLabelDeleteCancel}
-                css={css`
-                  margin-right: 1rem;
-                `}
-              >
-                닫기
-              </Button>
-              <Button type="button" onClick={handleLabelDeleteSubmit}>
-                확인
-              </Button>
-            </div>
-          </Modal>
+          <Modal
+            title="해당 레이블을 정말 삭제하시겠습니까?"
+            handleCancelClick={handleLabelDeleteCancel}
+            handleSubmit={handleLabelDeleteSubmit}
+          />
         )}
       </S.Main>
     </S.LabelPageLayer>

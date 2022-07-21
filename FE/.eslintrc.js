@@ -19,22 +19,20 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    'import/prefer-default-export': 'off',
-    'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': ['warn', { extensions: ['tsx', 'jsx'] }],
     'react/react-in-jsx-scope': 'off',
-    'implicit-arrow-linebreak': 'off',
-    'function-paren-newline': 'off',
-    'react/require-default-props': 'off',
-    'arrow-parens': ['warn', 'as-needed'],
-    'react/prop-types': 'off',
-    'no-nested-ternary': 'off',
-    'react/function-component-definition': 'off',
-    'jsx-a11y/label-has-associated-control': 'off',
-    'no-use-before-define': 'off',
-    'jsx-a11y/control-has-associated-label': 'off',
-    'react-hooks/rules-of-hooks': 'off',
+    'import/prefer-default-export': 'off', // export default 가 아닌 default 없이 export 할 수 있도록
+    'react/require-default-props': 'off', // type 지정시 optional 연산자를 사용했을때 막기 위한 속성
+    'react/prop-types': 'off', //  props의 타입체크를 처리에 proptypes가 아닌 typescript 사용
+    'no-nested-ternary': 'off', // 중첩 삼항연산자 옵션 끄기
+    'react/function-component-definition': [
+      // 함수형 컴포넌트 선언방식
+      2,
+      {
+        namedComponents: ['function-declaration', 'arrow-function'],
+      },
+    ],
 
     'import/order': [
       'error',

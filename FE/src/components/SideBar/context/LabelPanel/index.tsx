@@ -114,17 +114,26 @@ export const useLabel = () => {
     throw Error('Label Panel Provider Or Label Panel Dispatch Provider Error');
   }
 
-  const initPanel = useCallback((labels: Label[] = []) => {
-    dispatch(initPanelAction(labels));
-  }, []);
+  const initPanel = useCallback(
+    (labels: Label[] = []) => {
+      dispatch(initPanelAction(labels));
+    },
+    [dispatch],
+  );
 
-  const selectLabel = useCallback((labelId: number) => {
-    dispatch(selectLabelAction(labelId));
-  }, []);
+  const selectLabel = useCallback(
+    (labelId: number) => {
+      dispatch(selectLabelAction(labelId));
+    },
+    [dispatch],
+  );
 
-  const replaceLabel = useCallback((labelId: number) => {
-    dispatch(replaceLabelAction(labelId));
-  }, []);
+  const replaceLabel = useCallback(
+    (labelId: number) => {
+      dispatch(replaceLabelAction(labelId));
+    },
+    [dispatch],
+  );
 
   return { state, initPanel, selectLabel, replaceLabel };
 };
@@ -145,17 +154,26 @@ export const useSetLabelState = () => {
     throw Error('Label Panel Dispatch Provider Error');
   }
 
-  const initPanel = useCallback((labels: Label[] = []) => {
-    dispatch(initPanelAction(labels));
-  }, []);
+  const initPanel = useCallback(
+    (labels: Label[] = []) => {
+      dispatch(initPanelAction(labels));
+    },
+    [dispatch],
+  );
 
-  const selectLabel = useCallback((labelId: number) => {
-    dispatch(selectLabelAction(labelId));
-  }, []);
+  const selectLabel = useCallback(
+    (labelId: number) => {
+      dispatch(selectLabelAction(labelId));
+    },
+    [dispatch],
+  );
 
-  const replaceLabel = useCallback((labelId: number) => {
-    dispatch(replaceLabelAction(labelId));
-  }, []);
+  const replaceLabel = useCallback(
+    (labelId: number) => {
+      dispatch(replaceLabelAction(labelId));
+    },
+    [dispatch],
+  );
 
   return { initPanel, selectLabel, replaceLabel };
 };

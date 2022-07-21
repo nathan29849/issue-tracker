@@ -8,10 +8,8 @@ export default function useComponentVisible(initialIsVisible: boolean) {
   const handleClickOutside = (
     e: React.BaseSyntheticEvent | MouseEvent,
   ): void => {
-    if (ref.current) {
-      if (!ref.current.contains(e.target)) {
-        setIsComponentVisible(false);
-      }
+    if (ref.current && !ref.current.contains(e.target)) {
+      setIsComponentVisible(false);
     }
   };
 

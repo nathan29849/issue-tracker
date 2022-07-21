@@ -15,43 +15,6 @@ const COLOR = {
   BLACK: 'BLACK',
 };
 
-const LabelPanel: React.FC<{ allowDuplicates?: boolean }> = ({
-  allowDuplicates = false,
-}) => {
-  const { state } = useLabel();
-  const { isComponentVisible, setIsComponentVisible, ref } =
-    useComponentVisible(false);
-
-  return (
-    <S.PanelContainer>
-      <div
-        ref={ref}
-        css={css`
-          position: relative;
-        `}
-      >
-        <Header title="레이블" onClick={() => setIsComponentVisible(p => !p)} />
-        {isComponentVisible && <LabelPopup allowDuplicates={allowDuplicates} />}
-      </div>
-
-      <S.List>
-        {state
-          .filter(({ selected }) => selected)
-          ?.map(({ label: { id, title, backgroundColor, textColor } }) => (
-            <S.LabelItem key={id}>
-              <Label
-                bgColor={backgroundColor}
-                darkText={textColor === COLOR.BLACK}
-              >
-                {title}
-              </Label>
-            </S.LabelItem>
-          ))}
-      </S.List>
-    </S.PanelContainer>
-  );
-};
-
 const LabelPopup: React.FC<{ allowDuplicates?: boolean }> = ({
   allowDuplicates = false,
 }) => {
@@ -92,6 +55,43 @@ const LabelPopup: React.FC<{ allowDuplicates?: boolean }> = ({
         </PopupS.InnerContainer>
       </Popup>
     </PopupS.PopupContainer>
+  );
+};
+
+const LabelPanel: React.FC<{ allowDuplicates?: boolean }> = ({
+  allowDuplicates = false,
+}) => {
+  const { state } = useLabel();
+  const { isComponentVisible, setIsComponentVisible, ref } =
+    useComponentVisible(false);
+
+  return (
+    <S.PanelContainer>
+      <div
+        ref={ref}
+        css={css`
+          position: relative;
+        `}
+      >
+        <Header title="레이블" onClick={() => setIsComponentVisible(p => !p)} />
+        {isComponentVisible && <LabelPopup allowDuplicates={allowDuplicates} />}
+      </div>
+
+      <S.List>
+        {state
+          .filter(({ selected }) => selected)
+          ?.map(({ label: { id, title, backgroundColor, textColor } }) => (
+            <S.LabelItem key={id}>
+              <Label
+                bgColor={backgroundColor}
+                darkText={textColor === COLOR.BLACK}
+              >
+                {title}
+              </Label>
+            </S.LabelItem>
+          ))}
+      </S.List>
+    </S.PanelContainer>
   );
 };
 

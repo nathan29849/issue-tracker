@@ -5,6 +5,30 @@ import { postImage } from '@apis/image';
 
 const FORM_DATA_KEY = 'files';
 
+const filterByTypeAndSize = (
+  fileList: FileList,
+  fileTypes: string[],
+  fileSize: number,
+) => {
+  const files: File[] = [];
+
+  Array.prototype.forEach.call(fileList, (file: File) => {
+    if (fileTypes.includes(file.type) && file.size <= fileSize) {
+      files.push(file);
+    }
+  });
+
+  return files;
+};
+
+const toFormData = (files: File[]) => {
+  const formData = new FormData();
+  files.forEach(file => {
+    formData.append(FORM_DATA_KEY, file);
+  });
+  return formData;
+};
+
 export const useFileUpload = (
   allowedFileTypes: string[],
   allowedFileSize = 400 * 1024,
@@ -33,28 +57,4 @@ export const useFileUpload = (
 
   // 로딩 상태와 uploadFiles 반환
   return { isLoading, uploadFiles };
-};
-
-const filterByTypeAndSize = (
-  fileList: FileList,
-  fileTypes: string[],
-  fileSize: number,
-) => {
-  const files: File[] = [];
-
-  Array.prototype.forEach.call(fileList, (file: File) => {
-    if (fileTypes.includes(file.type) && file.size <= fileSize) {
-      files.push(file);
-    }
-  });
-
-  return files;
-};
-
-const toFormData = (files: File[]) => {
-  const formData = new FormData();
-  files.forEach(file => {
-    formData.append(FORM_DATA_KEY, file);
-  });
-  return formData;
 };

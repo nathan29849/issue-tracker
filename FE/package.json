@@ -11,7 +11,6 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "@testing-library/jest-dom": "^5.16.4",
     "install-peerdeps": "^3.0.3",
     "msw": "^0.42.1",
     "react": "^18.1.0",
@@ -28,6 +27,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@emotion/babel-plugin": "^11.9.2",
     "@emotion/jest": "^11.9.3",
+    "@testing-library/jest-dom": "^5.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.2",

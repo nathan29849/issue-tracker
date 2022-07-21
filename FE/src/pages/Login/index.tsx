@@ -26,7 +26,7 @@ export default function Login() {
     // 유저 정보가 없으면 Silent Refresh
     // 성공시 user 세팅 -> 다시한번 Effect가 실행되면서 issue페이지로 이동
     silentRefresh();
-  }, [isLoggedIn]);
+  }, [navigate, isLoggedIn, silentRefresh]);
 
   return (
     <S.LoginPageLayer>

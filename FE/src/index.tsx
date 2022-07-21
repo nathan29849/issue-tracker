@@ -1,8 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 
 import './index.css';
@@ -31,7 +30,6 @@ root.render(
       <RecoilRoot>
         <GlobalStyle />
         <App />
-        <ReactQueryDevtools initialIsOpen={false} />
       </RecoilRoot>
     </ThemeProvider>
   </QueryClientProvider>,

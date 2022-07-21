@@ -115,17 +115,26 @@ export const useAssignee = () => {
     );
   }
 
-  const initPanel = useCallback((users: User[] = []) => {
-    dispatch(initPanelAction(users));
-  }, []);
+  const initPanel = useCallback(
+    (users: User[] = []) => {
+      dispatch(initPanelAction(users));
+    },
+    [dispatch],
+  );
 
-  const selectAssignee = useCallback((userId: string) => {
-    dispatch(selectAssigneeAction(userId));
-  }, []);
+  const selectAssignee = useCallback(
+    (userId: string) => {
+      dispatch(selectAssigneeAction(userId));
+    },
+    [dispatch],
+  );
 
-  const replaceAssignee = useCallback((userId: string) => {
-    dispatch(replaceAssigneeAction(userId));
-  }, []);
+  const replaceAssignee = useCallback(
+    (userId: string) => {
+      dispatch(replaceAssigneeAction(userId));
+    },
+    [dispatch],
+  );
 
   return { state, initPanel, selectAssignee, replaceAssignee };
 };
@@ -146,17 +155,26 @@ export const useSetAssigneeState = () => {
     throw Error('Assignee Panel Dispatch Provider Error');
   }
 
-  const initPanel = useCallback((users: User[] = []) => {
-    dispatch(initPanelAction(users));
-  }, []);
+  const initPanel = useCallback(
+    (users: User[] = []) => {
+      dispatch(initPanelAction(users));
+    },
+    [dispatch],
+  );
 
-  const selectAssignee = useCallback((userId: string) => {
-    dispatch(selectAssigneeAction(userId));
-  }, []);
+  const selectAssignee = useCallback(
+    (userId: string) => {
+      dispatch(selectAssigneeAction(userId));
+    },
+    [dispatch],
+  );
 
-  const replaceAssignee = useCallback((userId: string) => {
-    dispatch(replaceAssigneeAction(userId));
-  }, []);
+  const replaceAssignee = useCallback(
+    (userId: string) => {
+      dispatch(replaceAssigneeAction(userId));
+    },
+    [dispatch],
+  );
 
   return { initPanel, selectAssignee, replaceAssignee };
 };
@@ -178,7 +196,9 @@ export const useSelectedAssigneeId = () => {
     throw Error('Assignee Panel Provider Error');
   }
 
-  return state.filter(({ selected }) => selected).map(({ user: { id } }) => id);
+  return state
+    .filter(({ selected }) => selected)
+    .map(({ user: { id } }: any) => id);
 };
 
 // Not Selected Assignee 도 필요하면 만들기.

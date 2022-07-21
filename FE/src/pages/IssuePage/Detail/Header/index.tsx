@@ -1,54 +1,90 @@
-import React from 'react';
+import React, { memo, useCallback, useState } from 'react';
+import { useQuery } from 'react-query';
 
 import * as S from './style';
 
-import { Button } from '@components/Button';
-import I from '@components/Icons';
-import { IssueLabel } from '@components/Label';
+import { getIssue } from '@apis/issue';
+import { usePatchIssueTitle } from '@hooks/usePatchIssue';
+import DetailHeaderLoader from '@pages/IssuePage/Detail/Header/DetailHeaderLoader';
+import IssueCommentCount from '@pages/IssuePage/Detail/Header/IssueCommentCount';
+import IssueStatusInfo from '@pages/IssuePage/Detail/Header/IssueStatusInfo';
+import IssueTitle from '@pages/IssuePage/Detail/Header/IssueTitle';
+import IssueTitleInput from '@pages/IssuePage/Detail/Header/IssueTitleInput';
 
 // READ ISSUE
-export const DetailHeader: React.FC<{
-  title: string;
-  num: number;
-}> = ({ title, num }) => (
-  <S.DetailHeaderLayer>
-    <S.Title>
-      <S.IssueTitle>{title}</S.IssueTitle>
-      <S.IssueNumber>#{num}</S.IssueNumber>
-    </S.Title>
-    <S.Buttons>
-      <Button outlined>
-        <I.Edit />
-        제목 편집
-      </Button>
-      <Button outlined>
-        <I.Bucket />
-        이슈 닫기
-      </Button>
-      <Button outlined>
-        <I.XMark />
-        편집 취소
-      </Button>
-      <Button>
-        <I.Edit />
-        편집 완료
-      </Button>
-    </S.Buttons>
-    <S.MetaData>
-      <S.IssueStatus>
-        <IssueLabel />
-      </S.IssueStatus>
-      <S.IssueDateInfo>이 이슈가 N분전에 X에 의해 열렸습니다</S.IssueDateInfo>
-      <S.IssueCommentInfo>코멘트 Y개</S.IssueCommentInfo>
-    </S.MetaData>
-  </S.DetailHeaderLayer>
+export const DetailHeader: React.FC<{ issueId: string }> = memo(
+  ({ issueId }) => {
+    const [isEditMode, setIsEditMode] = useState(false);
+    const { mutate: mutateIssueTitle, isLoading: patchTitleLoading } =
+      usePatchIssueTitle(issueId);
+
+    const { data: issueDetailData, isLoading: getIssueLoading } = useQuery(
+      ['issueDetail'],
+      () => getIssue(issueId),
+    );
+
+    const handleClickEditCancelButton = useCallback(
+      () => setIsEditMode(false),
+      [],
+    );
+
+    const handleClickEditCompleteButton = useCallback(
+      (title: string) => () => {
+        setIsEditMode(false);
+        mutateIssueTitle(title);
+      },
+      [mutateIssueTitle],
+    );
+
+    const handleClickEditTitleButton = useCallback(
+      () => setIsEditMode(true),
+      [],
+    );
+    const handleClickCloseIssueButton = useCallback(() => {
+      // 이슈 닫기 요청 PATCH
+    }, []);
+    const handleClickReopenIssueButton = useCallback(() => {
+      // 이슈 열기 요청 PATCH
+    }, []);
+
+    return getIssueLoading || !issueDetailData ? (
+      <DetailHeaderLoader />
+    ) : (
+      <S.DetailHeaderLayer>
+        {isEditMode ? (
+          <IssueTitleInput
+            initialValue={issueDetailData.title}
+            handleClickEditCancelButton={handleClickEditCancelButton}
+            handleClickEditCompleteButton={handleClickEditCompleteButton}
+          />
+        ) : (
+          <IssueTitle
+            isLoading={patchTitleLoading}
+            title={issueDetailData.title}
+            issueNumber={issueDetailData.id}
+            issueStatus={issueDetailData.issueStatus}
+            handleClickEditTitleButton={handleClickEditTitleButton}
+            handleClickCloseIssueButton={handleClickCloseIssueButton}
+            handleClickReopenIssueButton={handleClickReopenIssueButton}
+          />
+        )}
+        <S.MetaData>
+          <IssueStatusInfo
+            issueStatus={issueDetailData.issueStatus}
+            updatedAt={issueDetailData.updatedAt}
+          />
+          <IssueCommentCount commentCount={issueDetailData.comments.length} />
+        </S.MetaData>
+      </S.DetailHeaderLayer>
+    );
+  },
 );
 
 // ADD ISSUE
-export const NewHeader = () => (
+export const NewHeader = memo(() => (
   <S.DetailHeaderLayer>
     <S.Title>
       <S.IssueTitle>새로운 이슈 작성</S.IssueTitle>
     </S.Title>
   </S.DetailHeaderLayer>
-);
+));

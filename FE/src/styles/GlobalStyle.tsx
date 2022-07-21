@@ -149,6 +149,12 @@ const style = css`
     cursor: pointer;
     background-color: transparent;
   }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export default function GlobalStyle() {

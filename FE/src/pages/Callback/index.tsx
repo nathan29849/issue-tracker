@@ -11,7 +11,7 @@ function Callback() {
 
   useEffect(() => {
     login(search);
-  }, [search]);
+  }, [login, search]);
 
   return (
     <div
